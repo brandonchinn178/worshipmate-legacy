@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+    About Me
+{% endblock %}
+
+{% block quote %}
+    Our mouths were filled with laughter, our tongues with songs of joy ~Psalm 126:2
+{% endblock %}
+
+{% block body %}
+<p>My name is Brandon, and I am a student at UC Berkeley. I have lead worship since 2007 at a small church in Southern California before becoming a part of the Livingwater Church at Berkeley since 2013. I can play guitar, bass, drums, and piano, in addition to singing. My favorite Christian artists are Phil Wickham, Chris Tomlin, Jesus Culture, etc. but they're all pretty much good! Check out my <a href="http://soundcloud.com/brandonchinn178" target="_blank">SoundCloud</a> if you want to listen to some of my covers! If you are a worship leader, remember to keep the focus on God! God bless!</p>
+    
+<h1>About the Database</h1>
+<p>Don't forget to like the <a href="http://facebook.com/WorshipSongDatabase" target="_blank">Facebook page</a>, and thank you for supporting my project!</p>
+
+<h2>Files</h2>
+<p>The files for each song can be downloaded either as a .doc or a .pdf. After going to a song's page, scroll to the bottom and click one of the buttons to download. The songs are in the keys that I like, or the key my church usually does, so if you don't feel comfortable with the keys, transpose the song to the key you would like. Click <a href={% url 'transpose:index' %}>here</a> for transposition or other chord-related help.</p>
+
+<h2>Artist</h2>
+<p>The artist listed for each song is only the artist whose version of the song I used to write the chord sheets. Each artist sings and plays the song differently, so feel free to look up different versions of the song. I tried to make the chords as simple as possible, so it may be different from what the artist plays. Exactly what chords the artist is playing is just a Google search away.</p>
+
+<h2>Themes and Speed</h2>
+<p> The tag sections contain words that describe the given song. The tags are sorted in order of most prevalent theme, then the type of the song, then the speed of the song.</p>
+<p> Some song themes﻿ include <b>Devotion, God's Love, Affirmation,</b> etc.</p>
+<p> Some song types include <b>Hymn, Simple,</b> or any association with holidays such as Christmas, Easter, or Pentecost.</p>
+<p> The song speeds are <b>Fast</b> (Energetic, upbeat, call to worship-type songs like One Way or Every Move I Make), <b>Slow</b> (Reflective or Inspirational songs like From the Inside Out or Amazing Grace), and <b>Fast/Slow</b>, which are songs that could be played at either speed.</p>
+
+<h2>Contributions</h2>
+<p>The navigation icons were made by various artists from <a href="http://www.flaticon.com" target="_blank">www.flaticon.com</a></p>
+{% endblock %}

@@ -1,0 +1,120 @@
+span#artist
+{
+    font: small-caps .7em "Webly";
+    margin-left: .5em;  
+    color: #887C64;
+}
+
+span#artist:before
+{
+    content: "/ ";
+}
+
+#songs
+{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2em;
+}
+
+#songs .sort
+{
+    float: right;
+    margin: 0;
+    color: #FFF;
+    font-size: 1.2em;
+}
+
+#songs tr:nth-child(odd)
+{
+    background: #E7F4FF;
+}
+
+#songs td, #songs th
+{
+    padding: .2em .5em;
+    border: 1px solid #655643;
+    text-align: center;
+}
+
+#songs td:nth-child(3)
+{
+    text-align: left;
+    width: 40%;
+    padding: 1px;
+}
+
+#songs th
+{
+    background: #655643;
+    color: #FFF;
+    height: 1.5em;
+    cursor: default;
+}
+
+#backbutton + h1
+{
+    margin-top: 0;
+}
+
+#songpdf
+{
+    width: 100%;
+    height: 700px;
+}
+
+#songcontainer
+{
+    margin-top: 1em;
+    width: 100%;
+    text-align: center;
+}
+
+#buttons
+{
+    margin-top: 1em;
+    width: 100%;
+    text-align: center;
+}
+
+#buttons td
+{
+    padding: .5em;
+    width: 50%;
+}
+
+#buttons tr:first-child td:first-child,
+#buttons tr:last-child td:last-child
+{
+    text-align: right;
+}
+
+#buttons tr:first-child td:last-child,
+#buttons tr:last-child td:first-child
+{
+    text-align: left;
+}
+
+a.submit
+{
+    font: small-caps bold 1em "Webly";
+    padding: .3em;
+    background: #655643;
+    color: #FFF;
+    border: 3px outset #BF4D28;
+}
+
+button
+{
+    cursor: pointer;
+    border: 0;
+    background: rgba(200, 200, 200, .5);
+    color: #BF4D28;
+    font: 1em "WeblyLight";
+    padding: 0;
+    margin: 2px;
+}
+
+button:hover {
+    background: rgba(255, 255, 255, .7);
+}

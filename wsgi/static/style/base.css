@@ -1,0 +1,142 @@
+@import url(fonts.css);
+
+html, body
+{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body
+{
+    background: #F8F4D3;
+}
+
+h1
+{
+    margin-bottom: .2em;
+    color: #BF4D28;
+    font: italic small-caps bold 3em "Webly";
+}
+
+h2
+{
+    margin: 0;
+    margin-bottom: 0;
+    font: small-caps bold 2em "Webly";
+    color: #887C64;
+}
+
+p
+{
+    margin-top: 0;
+    margin-bottom: .5em;
+    color: #655643;
+    font: 1.5em "WeblyLight";
+}
+
+a
+{
+    text-decoration: none;
+    color: #80BCA3;
+}
+
+a:hover
+{
+    color: #E6AC27;
+}
+
+input
+{
+    font: 1em "WeblyLight";
+    background: #FFF;
+    color: #655643;
+    margin: 0;
+}
+
+input[type='submit']
+{
+    font: small-caps bold 1em "Webly";
+    margin: 0;
+    background: #655643;
+    color: #FFF;
+    border-color: #BF4D28;
+    cursor: pointer;
+}
+
+table
+{
+    font: 1.5em "WeblyLight";
+    color: #655643;
+}
+
+#wrapper
+{
+    position: relative;
+    min-height: 100%;
+}
+
+header h1
+{
+    position: absolute;
+    top: 0px;
+    right: 50px;
+    font: italic small-caps bold 3em "Webly";
+    color: #E6AC27;
+    cursor: default;
+    white-space: nowrap;
+}
+
+nav
+{
+    padding: 15px 20px .5em;
+    background: #655643;
+}
+
+nav td
+{
+    padding: 0 1em;
+    text-align: center;
+}
+
+nav tr:first-child td
+{
+    height: 65px;
+}
+
+nav a
+{
+    padding: .2em;
+    font: small-caps bold 1.2em "Webly";
+    color: #FFFFFF;
+}
+
+nav a:hover
+{
+    text-decoration: underline;
+}
+
+.icon
+{
+    position: relative;
+}
+
+#quote
+{
+    text-align: center;
+    font: italic 1.5em "WeblyLight";
+}
+
+#content
+{
+    padding: 25px 100px 80px;
+}
+
+footer
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background: #E9EFF2;
+}

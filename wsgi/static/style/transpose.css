@@ -1,0 +1,99 @@
+@import url(fonts.css);
+
+#content table
+{
+    font-family: "Webly";
+    color: #655643;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#chordchart
+{
+    margin: 1em 0;
+    font-size: 1.7em;
+    background: -moz-linear-gradient(to right, #E6AC27 0%, #F8F4D3 60%, #FFF 100%);
+    background: -webkit-linear-gradient(right, #E6AC27 0%, #F8F4D3 60%, #FFF 100%);
+    background: linear-gradient(to right, #E6AC27 0%, #F8F4D3 60%, #FFF 100%);
+}
+
+#chordchart tr
+{
+    border: 1px solid #655643;
+}
+
+#chordchart td
+{
+    cursor: default;
+    margin: 0;
+    width: 8%;
+    text-align: center;
+}
+
+#chords td:hover
+{
+    cursor: pointer;
+    background: rgba(191,77,40,.5);
+}
+
+#app-container td
+{
+    width: 50%;
+}
+
+#app-container>tbody>tr>td
+{
+    vertical-align: top;
+}
+
+#app textarea
+{
+    width: 90%;
+    height: 7em;
+    resize: none;
+    font-family: "WeblyLight";
+    font-size: .7em;
+}
+
+#app select
+{
+    text-align: center;
+    font-family: "Webly";
+    font-size: .6em;
+    color: #655643;
+    width: 4em;
+}
+
+#app td
+{
+    width: inherit;
+}
+
+#app td:last-child
+{
+    vertical-align: inherit;
+    text-align: center;
+}
+
+table#result
+{
+    margin: 0;
+    padding: 0;
+    width: initial;
+    margin-left: 50px;
+    font-size: 1.2em;
+}
+
+#result td
+{
+    margin: 0;
+    padding: 0 .5em;
+    width: inherit;
+    text-align: center;
+    white-space: nowrap;
+}
+
+input[type="submit"]
+{
+    font-size: .8em;
+}

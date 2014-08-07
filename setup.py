@@ -1,10 +1,17 @@
 from setuptools import setup
 
-setup(name='YourAppName',
+import os
+
+if 'REDISCLOUD_URL' in os.environ and 'REDISCLOUD_PORT' in os.environ and 'REDISCLOUD_PASSWORD' in os.environ:
+     packages.append('django-redis-cache')
+     packages.append('hiredis')
+
+setup(name='worshipdatabase',
       version='1.0',
-      description='OpenShift App',
-      author='Your Name',
-      author_email='example@example.com',
-      url='http://www.python.org/sigs/distutils-sig/',
-#      install_requires=['Django>=1.3'],
-     )
+      description='Database of worship songs',
+      author='Brandon Chinn',
+      author_email='brandonchinn178@berkeley.edu',
+      url='brandonchinn178.github.io',
+      install_requires=open('requirements.txt').readlines(),
+)
+

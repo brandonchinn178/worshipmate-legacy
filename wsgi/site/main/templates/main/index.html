@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block quote %}
+    Sing joyfully to the Lord, you righteous; it is fitting for the upright to praise him ~Psalm 33:1
+{% endblock %}
+
+{% block body %}
+<p>Welcome to the Worship Song Database! I will be updating this site with more and more worship songs. This site will hopefully be a helpful tool for any worship leaders out there with choosing songs. Check out the <a href={% url 'about' %}>About</a> page if this is your first time to this site to learn about how this database works. If you have any need to contact me, refer to the <a href={% url 'contact:index' %}>Contact</a> page. If you found this site helpful, please share this site with friends and fellow worship leaders! Best of luck, and worship hard!</p>
+<p><b>**Disclaimer** I do not own these songs. These songs are the property of their respective artists, and I do not intend to gain or profit from the use of their songs. Visit the <a href='http://ccli.com' target="_blank">CCLI</a> webpage for the songs' respective CCLI codes.</b></p>
+<table id="buttons">
+    <tr>
+        <td>
+            <form action={% url 'database:index' %}>
+                <input type="submit" value="Go to Database">
+            </form>
+        </td>
+        <td>
+            <form action={% url 'transpose:index' %}>
+                <input type="submit" value="Go to Transposition App">
+            </form>
+        </td>
+    </tr>
+</table>
+{% endblock %}

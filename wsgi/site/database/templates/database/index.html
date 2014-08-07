@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+
+{% block quote %}
+    Worship the Lord with gladness; come before him with joyful songs ~Psalm 100:2
+{% endblock %}
+
+{% block body %}
+<p>To get the Dropbox folder with all of the songs, click <a href="https://www.dropbox.com/sh/c6rryyatkpsnmm8/AADt5uOeBHgHqdvN-1b2ndbYa" target="_blank">here</a>. To sort by title or artist, click the column header to sort the songs ascending, and again to sort descending. To see songs only matching a certain theme or speed, click one of the buttons to filter, and click again to unfilter.</p>
+
+<table>
+    <th>Filter by: </th>
+    <td id="filters"></td>
+</table>
+
+<table id="songs">
+    <tr>
+        <th id="title">Song Title<span class="sort">&ndash;</span></th>
+        <th id="artist">Artist<span class="sort">&ndash;</span></th>
+        <th>Themes</th>
+        <th>Speed</th>
+    </tr>
+    {% for song in songs %}
+        <tr class="song">
+            <td><a href="{% url 'database:detail' song.title|hyphenate %}">{{ song.title }}</a></td>
+            <td>{{ song.artist }}</td>
+            <td>{{ song.themes }}</td>
+            <td>{{ song.speed|convert_speed }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

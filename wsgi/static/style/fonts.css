@@ -1,0 +1,55 @@
+@font-face
+{
+    font-family: "Webly";
+    src: url(fonts/weblysleek_ui/weblysleekuisl.ttf) format("truetype");
+}
+
+@font-face
+{
+    font-family: "Webly";
+    src: url(fonts/weblysleek_ui/weblysleekuisb.ttf) format("truetype");
+    font-weight: bold;
+}
+
+@font-face
+{
+    font-family: "Webly";
+    src: url(fonts/weblysleek_ui/weblysleekuisli.ttf) format("truetype");
+    font-style: italic;
+}
+
+@font-face
+{
+    font-family: "Webly";
+    src: url(fonts/weblysleek_ui/weblysleekuisbi.ttf) format("truetype");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face
+{
+    font-family: "WeblyLight";
+    src: url(fonts/weblysleek_ui/weblysleekuil.ttf) format("truetype");
+}
+
+@font-face
+{
+    font-family: "WeblyLight";
+    src: url(fonts/weblysleek_ui/weblysleekuili.ttf) format("truetype");
+    font-style: italic;
+}
+
+@font-face
+{
+    font-family: "WeblyLight";
+    src: url(fonts/weblysleek_ui/weblysleekuisb.ttf) format("truetype");
+    font-weight: bold;
+}
+
+@font-face
+{
+    font-family: "WeblyLight";
+    src: url(fonts/weblysleek_ui/weblysleekuisbi.ttf) format("truetype");
+    font-style: italic;
+    font-weight: bold;
+}

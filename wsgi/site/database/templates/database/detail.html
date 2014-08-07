@@ -1,0 +1,30 @@
+{% extends "database/index.html" %}
+{% load staticfiles custom_filters %}
+
+{% block content %}
+<p id="backbutton"><a href="javascript:history.back()">&larr; Back</a></p>
+
+<h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
+
+<h2>Themes</h2>
+<p>{{ song.themes }}</p>
+<h2>Speed</h2>
+<p>{{ song.speed|convert_speed }}</p>
+
+<table id="songcontainer"><td>
+    <object type="application/pdf" data="{% static 'songs/pdf/'|add:song.title|add:'.pdf' %}" id="songpdf">
+        <p>Your browser does not support embedded PDF files. To view the song, click one of the buttons below.</p>
+    </object>
+</td></table>
+
+<table id="buttons">
+    <tr>
+        <td><a class="submit" href="{% static 'songs/doc/'|add:song.title|add:'.doc' %}" download>Get .doc file</a></td>
+        <td><a class="submit" href="{% static 'songs/pdf/'|add:song.title|add:'.pdf' %}" download>Get .pdf file</a></td>
+    </tr>
+    <tr id="navigation">
+        <td>{% if navigate.before %} <a href="{% url 'database:detail' navigate.before.0.title %}">&larr; {{ navigate.before.0 }}</a> {% endif %}</td>
+        <td>{% if navigate.after %} <a href="{% url 'database:detail' navigate.after.0.title %}">{{ navigate.after.0 }} &rarr; {% endif %}</a></td>
+    </tr>
+</table>
+{% endblock %}

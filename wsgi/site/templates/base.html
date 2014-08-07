@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Worship Song Database | {{ title }}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style/base.css' %}" />
+        {% if style %}
+            <link rel="stylesheet" type="text/css" href="{% static 'style/'|add:style %}" />
+        {% endif %}
+        <link rel="shortcut icon" href="{% static 'icons/favicon.ico' %}" >
+        <script src="{% static 'scripts/jquery.js' %}"></script>
+        <script src="{% static 'scripts/nav.js' %}"></script>
+        {% if script %}
+            <script src="{% static 'scripts/'|add:script %}"></script>
+        {% endif %}
+    <body>
+        <div id="wrapper">
+            <header>
+                <h1>Worship Song Database</h1>
+            </header>
+
+            <nav>
+                <table>
+                    <tr>
+                        <td><img src="{% static 'icons/home.png' %}" id="home-icon" class="icon"></td>
+                        <td><img src="{% static 'icons/database.png' %}" id="database-icon" class="icon"></td>
+                        <td><img src="{% static 'icons/about.png' %}" id="about-icon" class="icon"></td>
+                        <td><img src="{% static 'icons/contact.png' %}" id="contact-icon" class="icon"></td>
+                    </tr>
+                    <tr>
+                        <td><a href={% url 'home' %} id="nav-home">Home</a></td>
+                        <td><a href={% url 'database:index' %} id="nav-database">Database</a></td>
+                        <td><a href={% url 'about' %} id="nav-about">About</a></td>
+                        <td><a href={% url 'contact:index' %} id="nav-contact">Contact</a></td>
+                    </tr>
+                </table>
+            </nav>
+    
+            <div id="content">
+                <p id="quote">
+                    {% block quote %}{% endblock %}
+                </p>
+                
+                {% block content %}
+                    <h1>{% block title %} {{ title }} {% endblock %}</h1>
+                    {% block body %}{% endblock %}
+                {% endblock %}
+            </div>
+    
+            <footer>
+            </footer>
+        </div>
+    </body>
+</html>
