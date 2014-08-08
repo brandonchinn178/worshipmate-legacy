@@ -15,6 +15,7 @@ import imp
 ON_OPENSHIFT = False
 if os.environ.has_key('OPENSHIFT_REPO_DIR'):
      ON_OPENSHIFT = True
+     sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'site'))
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
