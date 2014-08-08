@@ -18,5 +18,3 @@ fi
 
 echo "Executing 'python $OPENSHIFT_REPO_DIR/site/manage.py collectstatic --noinput'"
 python "$OPENSHIFT_REPO_DIR"site/manage.py collectstatic --noinput
-
-python -c "import sys; print sys.path"
