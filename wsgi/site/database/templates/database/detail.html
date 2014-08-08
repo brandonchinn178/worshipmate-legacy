@@ -12,15 +12,15 @@
 <p>{{ song.speed|convert_speed }}</p>
 
 <table id="songcontainer"><td>
-    <object type="application/pdf" data="{% static 'songs/pdf/'|add:song.title|add:'.pdf' %}" id="songpdf">
+    <object type="application/pdf" data="http://brandonchinn178.github.io/worshipdatabase/songs/pdf/{{ song.title }}.pdf" id="songpdf">
         <p>Your browser does not support embedded PDF files. To view the song, click one of the buttons below.</p>
     </object>
 </td></table>
 
 <table id="buttons">
     <tr>
-        <td><a class="submit" href="{% static 'songs/doc/'|add:song.title|add:'.doc' %}" download>Get .doc file</a></td>
-        <td><a class="submit" href="{% static 'songs/pdf/'|add:song.title|add:'.pdf' %}" download>Get .pdf file</a></td>
+        <td><a class="submit" href="http://brandonchinn178.github.io/worshipdatabase/songs/doc/{{ song.title }}.doc" download>Get .doc file</a></td>
+        <td><a class="submit" href="http://brandonchinn178.github.io/worshipdatabase/songs/pdf/{{ song.title }}.pdf" download>Get .pdf file</a></td>
     </tr>
     <tr id="navigation">
         <td>{% if navigate.before %} <a href="{% url 'database:detail' navigate.before.0.title %}">&larr; {{ navigate.before.0 }}</a> {% endif %}</td>
