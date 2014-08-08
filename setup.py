@@ -1,5 +1,6 @@
 from setuptools import setup
 
+<<<<<<< HEAD
 import os
 
 if 'REDISCLOUD_URL' in os.environ and 'REDISCLOUD_PORT' in os.environ and 'REDISCLOUD_PASSWORD' in os.environ:
@@ -14,4 +15,3 @@ setup(name='worshipdatabase',
       url='brandonchinn178.github.io',
       install_requires=open('requirements.txt').readlines(),
 )
-
