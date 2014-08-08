@@ -12,9 +12,9 @@ then
     cp "$OPENSHIFT_REPO_DIR"wsgi/site/db.sqlite3 $OPENSHIFT_DATA_DIR
     python "$OPENSHIFT_REPO_DIR".site/action_hooks/secure_db.py | tee ${OPENSHIFT_DATA_DIR}/CREDENTIALS
 else
-    echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/site/manage.py syncdb --noinput'"
-    python "$OPENSHIFT_REPO_DIR"wsgi/site/manage.py syncdb --noinput
+    echo "Executing 'python $OPENSHIFT_REPO_DIR/site/manage.py syncdb --noinput'"
+    python "$OPENSHIFT_REPO_DIR"site/manage.py syncdb --noinput
 fi
 
-echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/site/manage.py collectstatic --noinput'"
-python "$OPENSHIFT_REPO_DIR"wsgi/site/manage.py collectstatic --noinput
+echo "Executing 'python $OPENSHIFT_REPO_DIR/site/manage.py collectstatic --noinput'"
+python "$OPENSHIFT_REPO_DIR"site/manage.py collectstatic --noinput
