@@ -11,7 +11,7 @@ import sys
 
 
 if os.environ.has_key('OPENSHIFT_REPO_DIR'):
-     sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'site'))
+     sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'site'))
      os.environ['DJANGO_SETTINGS_MODULE'] = 'site_settings.settings'
      virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
      os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python2.7/site-packages')
