@@ -1,17 +1,18 @@
 #!/usr/bin/env python
-import hashlib, imp, os, sqlite3, sys
+import hashlib, imp, os, MySQLdb, sys
 
 # Load the openshift helper library
-lib_path      = os.environ['OPENSHIFT_REPO_DIR'] + 'wsgi/worshipdatabase/'
+lib_path      = os.environ['OPENSHIFT_REPO_DIR'] + 'wsgi/site/'
 modinfo       = imp.find_module('openshiftlibs', [lib_path])
 openshiftlibs = imp.load_module('openshiftlibs', modinfo[0], modinfo[1], modinfo[2])
 
 # Open the database
-conn = sqlite3.connect(os.environ['OPENSHIFT_DATA_DIR'] + '/db.sqlite3')
+conn = MySQLdb.connect(host=os.environ['OPENSHIFT_MYSQL_DB_HOST'], user='brandon',
+    db=os.environ['OPENSHIFT_APP_NAME'], port=os.environ['OPENSHIFT_MYSQL_DB_PORT'])
 c    = conn.cursor()
 
 # Grab the default security info
-c.execute('SELECT password FROM AUTH_USER WHERE id = 1')
+c.execute('SELECT password FROM auth_user WHERE id = 1')
 pw_info = c.fetchone()[0]
 
 # The password is stored as [hashtype]$[iterations]$[salt]$[hashed]
@@ -34,8 +35,8 @@ c.close()
 conn.close()
 
 # Update the user admin password
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'worshipdatabase'))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'site_settings.settings'
+sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'site'))
 from django.contrib.auth.models import User
 usr = User.objects.get(username__exact='admin')
 usr.set_password(new_pass)
