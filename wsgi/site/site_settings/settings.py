@@ -142,6 +142,6 @@ STATIC_URL = '/static/'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USER = 'brandonchinn178@gmail.com'
 EMAIL_PASSWORD = 'berkeley123'
-EMAIL_PORT = '25'
+EMAIL_PORT = 25
 EMAIL_SUBJECT_PREFIX = '[Worship Song Database] '
 EMAIL_USE_TLS = True
