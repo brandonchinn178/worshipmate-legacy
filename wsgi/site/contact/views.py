@@ -13,16 +13,15 @@ def index(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             body = form.cleaned_data['message']
-            recipients = ['brandonchinn178@gmail.com']
+            
             context = {
                 'name': name,
                 'email': email,
                 'body': body,
             }
             message = render_to_string('contact/email.txt', context)
-            subject = "Contacted by " + name
 
-            send_mail(subject, message, email, recipients)
+            send_simple_message(name, message)
             return HttpResponseRedirect('thanks/')
     else:
         form = ContactForm()
@@ -37,3 +36,12 @@ def index(request):
 def thanks(request):
     context = {'title': 'Thanks'}
     return render(request, 'contact/thanks.html', context)
+
+def send_simple_message(name, message):
+    return requests.post(
+        "https://api.mailgun.net/v2/sandbox996408bf02a04b19b4fc47549c378601.mailgun.org/messages",
+        auth=("api", "key-946fb135e22d87f1f81c6ccf124ea427"),
+        data={"from": "Worship Song Database <no-reply@worshipdb.com>",
+              "to": "Brandon Chinn <brandonchinn178@gmail.com>",
+              "subject": "[Worship Song Database] Contacted by " + name,
+              "text": message})
