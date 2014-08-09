@@ -138,9 +138,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static')
 STATIC_URL = '/static/'
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_USER = 'postmaster@worshipdatabase.info'
-EMAIL_HOST_PASSWORD = 'worshipcontact'
-EMAIL_SUBJECT_PREFIX = '[Worship Song Database] '
