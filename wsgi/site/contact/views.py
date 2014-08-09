@@ -16,10 +16,10 @@ def index(request):
             recipients = ['brandonchinn178@gmail.com']
             context = {
                 'name': name,
+                'email': email,
                 'body': body,
             }
             message = render_to_string('contact/email.txt', context)
-            print type(message)
             subject = "Contacted by " + name
 
             send_mail(subject, message, email, recipients)
