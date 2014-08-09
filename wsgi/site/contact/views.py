@@ -16,6 +16,7 @@ def index(request):
             recipients = ['brandonchinn178@gmail.com']
             context = {
                 'name': name,
+                'email': email,
                 'body': body,
             }
             message = render_to_string('contact/email.txt', context)
