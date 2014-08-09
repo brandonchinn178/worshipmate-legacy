@@ -4,4 +4,3 @@ Dear Brandon,
 
 Sincerely,
 {{ name }}
-{{ email }}
