@@ -19,9 +19,9 @@ def index(request):
 
             recipients = ['brandonchinn178@gmail.com']
             subject = "Contacted by " + name
-            sender = "Worship Song Database <no-reply@worshipdatabase.info>"
+            sender = "Worship Song Database <contact@worshipdatabase.info>"
 
-            send_mail(subject, message, sender, recipients)
+            send_mail(subject, message, sender, recipients, fail_silently=False)
             return HttpResponseRedirect('thanks/')
     else:
         form = ContactForm()
