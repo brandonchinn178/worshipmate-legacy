@@ -40,9 +40,9 @@ def thanks(request):
 
 def send_simple_message(name, message):
     return requests.post(
-        "https://api.mailgun.net/v2/sandbox996408bf02a04b19b4fc47549c378601.mailgun.org/messages",
+        "https://api.mailgun.net/v2/worshipdatabase.info/messages",
         auth=("api", "key-946fb135e22d87f1f81c6ccf124ea427"),
-        data={"from": "Worship Song Database <no-reply@worshipdb.com>",
+        data={"from": "Worship Song Database <no-reply@worshipdatabase.info>",
               "to": "Brandon Chinn <brandonchinn178@gmail.com>",
               "subject": "[Worship Song Database] Contacted by " + name,
               "text": message})
