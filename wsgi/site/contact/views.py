@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from forms import ContactForm
+import requests
 
 # Create your views here.
 
@@ -13,7 +14,7 @@ def index(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             body = form.cleaned_data['message']
-            
+
             context = {
                 'name': name,
                 'email': email,
