@@ -139,8 +139,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static')
 STATIC_URL = '/static/'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USER = 'brandonchinn178@gmail.com'
-EMAIL_PASSWORD = 'berkeley123'
-EMAIL_PORT = '25'
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = '25'
 EMAIL_SUBJECT_PREFIX = '[Worship Song Database] '
