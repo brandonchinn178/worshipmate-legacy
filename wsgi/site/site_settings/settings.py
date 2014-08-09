@@ -142,5 +142,5 @@ STATIC_URL = '/static/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_HOST_USER = 'postmaster@worshipdatabase.info'
-EMAIL_HOST_PASSWORD = '3dc839c0d1d82a08be76429546afa008'
+EMAIL_HOST_PASSWORD = 'worshipcontact'
 EMAIL_SUBJECT_PREFIX = '[Worship Song Database] '
