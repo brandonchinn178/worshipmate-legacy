@@ -5,17 +5,19 @@ $(document).ready(function() {
         var icon = "#" + nav[i] + "-icon";
         $(icon).hide();
 
-        var enterFunction = function(id) {
-            return function() {
-                $(id).drop();
-            };
-        }(icon);
-        var exitFunction = function(id) {
-            return function() {
-                $(id).fadeOut();
-            };
-        }(icon);
-        $(button).hover(enterFunction, exitFunction);
+        if (!('ontouchstart' in window)) {
+            var enterFunction = function(id) {
+                return function() {
+                    $(id).drop();
+                };
+            }(icon);
+            var exitFunction = function(id) {
+                return function() {
+                    $(id).fadeOut();
+                };
+            }(icon);
+            $(button).hover(enterFunction, exitFunction);
+        }
     }
 });
 
