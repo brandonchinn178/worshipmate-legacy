@@ -38,7 +38,7 @@ def thanks(request):
     context = {'title': 'Thanks'}
     return render(request, 'contact/thanks.html', context)
 
-def send_simple_message(name, message):
+def send_simple_message(name, email, message):
     return requests.post(
         "https://api.mailgun.net/v2/worshipdatabase.info/messages",
         auth=("api", "key-946fb135e22d87f1f81c6ccf124ea427"),
