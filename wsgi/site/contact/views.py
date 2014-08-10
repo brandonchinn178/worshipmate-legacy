@@ -22,7 +22,7 @@ def index(request):
             }
             message = render_to_string('contact/email.txt', context)
 
-            send_simple_message(name, message)
+            send_simple_message(name, email, message)
             return HttpResponseRedirect('thanks/')
     else:
         form = ContactForm()
@@ -42,7 +42,7 @@ def send_simple_message(name, message):
     return requests.post(
         "https://api.mailgun.net/v2/worshipdatabase.info/messages",
         auth=("api", "key-946fb135e22d87f1f81c6ccf124ea427"),
-        data={"from": "Worship Song Database <no-reply@worshipdatabase.info>",
+        data={"from": name + " <" + email + ">",
               "to": "Brandon Chinn <brandonchinn178@gmail.com>",
-              "subject": "[Worship Song Database] Contacted by " + name,
+              "subject": "[Worship Song Database] Contact Form",
               "text": message})
