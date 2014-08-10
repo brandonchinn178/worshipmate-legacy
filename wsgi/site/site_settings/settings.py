@@ -44,7 +44,7 @@ TEMPLATE_DEBUG = DEBUG
 if DEBUG:
      ALLOWED_HOSTS = []
 else:
-     ALLOWED_HOSTS = ['.rhcloud.com']
+     ALLOWED_HOSTS = ['rhcloud.com']
 
 # Application definition
 
