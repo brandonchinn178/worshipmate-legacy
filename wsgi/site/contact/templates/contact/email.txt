@@ -1,6 +1,0 @@
-Dear Brandon,
-
-{{ body }}
-
-Sincerely,
-{{ name }}

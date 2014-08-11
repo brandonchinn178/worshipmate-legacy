@@ -14,13 +14,8 @@ def index(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             body = form.cleaned_data['message']
-
-            context = {
-                'name': name,
-                'email': email,
-                'body': body,
-            }
-            message = render_to_string('contact/email.txt', context)
+            
+            message = "Dear Brandon,\n\n" + body + "\n\nSincerely,\n" + name
 
             send_simple_message(name, email, message)
             return HttpResponseRedirect('thanks/')
