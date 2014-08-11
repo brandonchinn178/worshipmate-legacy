@@ -25,7 +25,7 @@ I'll find a new quote!
 
 {% if lyrics %}
     <h2>Song Lyrics Found</h2>
-    {% for song, link in titles %}
+    {% for song, link in lyrics %}
     <h3><a href="{{ link }}">{{ song }}</a></h3>
     {% endfor %}
 {% endif %}
