@@ -32,6 +32,12 @@
                         <td><a href={% url 'database:index' %} id="nav-database">Database</a></td>
                         <td><a href={% url 'about' %} id="nav-about">About</a></td>
                         <td><a href={% url 'contact:index' %} id="nav-contact">Contact</a></td>
+                        <td style="padding:0 .5em;">
+                            <img src="{% static 'icons/search.png' %}" id="search">
+                            <form action="{% url 'search' %}" method="GET">
+                                <input name="query" id="searchbox"></input>
+                            </form>
+                        </td>
                     </tr>
                 </table>
             </nav>

@@ -19,6 +19,19 @@ $(document).ready(function() {
             $(button).hover(enterFunction, exitFunction);
         }
     }
+
+    $("#searchbox").hide();
+    $("#search").click(function(){
+        if (!$("#searchbox").is(":visible")) {
+            $("#searchbox").css('width', '0');
+            $("#searchbox").show();
+            $("#searchbox").animate({ width: "300px" });
+            $("#searchbox").focus();
+        } else {
+            $("#searchbox").animate({ width: "0"});
+            $("#searchbox").hide(1);
+        }
+    });
 });
 
 (function($) {

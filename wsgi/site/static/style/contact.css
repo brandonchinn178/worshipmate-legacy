@@ -5,12 +5,12 @@ input
     font-family: "WeblyLight";
 }
 
-form
+#content form
 {
     font-size: 1.5em;
 }
 
-input[type="submit"]
+#content input[type="submit"]
 {
     position: relative;
     margin-top: .5em;

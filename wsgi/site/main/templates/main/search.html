@@ -1,31 +1,24 @@
 {% extends "base.html" %}
 
 {% block quote %}
-I'll find a new quote!
+Therefore I will praise you, Lord, among the nations; I will sing the praises of your name ~2 Samuel 22:50
 {% endblock %}
 
 {% block body %}
-{% if not pages and not titles and not lyrics %}
+{% if not pages and not songs %}
     <h2>No results found.</h2>
 {% endif %}
 
 {% if pages %}
-    <h2>Pages</h2>
+    <h2>Pages Found</h2>
     {% for page, link in pages %}
     <h3><a href="{{ link }}">{{ page }}</a></h3>
     {% endfor %}
 {% endif %}
 
-{% if titles %}
-    <h2>Song Titles Found</h2>
-    {% for title, link in titles %}
-    <h3><a href="{{ link }}">{{ title }}</a></h3>
-    {% endfor %}
-{% endif %}
-
-{% if lyrics %}
-    <h2>Song Lyrics Found</h2>
-    {% for song, link in lyrics %}
+{% if songs %}
+    <h2>Songs Found</h2>
+    {% for song, link in songs %}
     <h3><a href="{{ link }}">{{ song }}</a></h3>
     {% endfor %}
 {% endif %}

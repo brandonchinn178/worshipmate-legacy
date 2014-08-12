@@ -79,7 +79,7 @@ table
 header h1
 {
     position: absolute;
-    top: 0px;
+    top: -15px;
     right: 50px;
     font: italic small-caps bold 3em "Webly";
     color: #E6AC27;
@@ -114,6 +114,36 @@ nav a
 nav a:hover
 {
     text-decoration: underline;
+}
+
+nav #search
+{
+     width: 40px;
+     vertical-align: bottom;
+     cursor: pointer;
+}
+
+nav #search:hover
+{
+    background: rgba(255,255,255,.2);
+    border: 1px outset #E6AC27;
+}
+
+nav #search:active
+{
+    background: rgba(200,200,200,.2);
+}
+
+nav #search+form
+{
+    display: inline;
+}
+
+nav #searchbox
+{
+    padding-left: .2em;
+    background: #F8F4D3;
+    border: 3px inset #655643;
 }
 
 .icon
