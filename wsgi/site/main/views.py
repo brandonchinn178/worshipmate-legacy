@@ -52,7 +52,7 @@ def doSearch(query):
             user=os.environ['OPENSHIFT_MYSQL_DB_USERNAME'],
             passwd=os.environ['OPENSHIFT_MYSQL_DB_PASSWORD'],
             db=os.environ['OPENSHIFT_APP_NAME'],
-            port=os.environ['OPENSHIFT_MYSQL_DB_PORT']
+            port=int(os.environ['OPENSHIFT_MYSQL_DB_PORT'])
         )
     else:
         conn = MySQLdb.connect(user='root', db='worshipdb')
