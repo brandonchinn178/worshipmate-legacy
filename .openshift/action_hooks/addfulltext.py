@@ -1,5 +1,5 @@
 import MySQLdb, os
-
+print os.environ
 conn = MySQLdb.connect(host=os.environ['OPENSHIFT_MYSQL_DB_HOST'], user='brandon',
     db=os.environ['OPENSHIFT_APP_NAME'], port=os.environ['OPENSHIFT_MYSQL_DB_PORT'])
 c = conn.cursor()
