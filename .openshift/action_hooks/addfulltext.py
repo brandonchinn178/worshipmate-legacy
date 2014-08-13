@@ -3,7 +3,7 @@ import MySQLdb, os
 conn = MySQLdb.connect(
     host=os.environ['OPENSHIFT_MYSQL_DB_HOST'],
     user=os.environ['OPENSHIFT_MYSQL_DB_USERNAME'],
-    password=os.environ['OPENSHIFT_MYSQL_DB_PASSWORD'],
+    passwd=os.environ['OPENSHIFT_MYSQL_DB_PASSWORD'],
     db=os.environ['OPENSHIFT_APP_NAME'],
     port=int(os.environ['OPENSHIFT_MYSQL_DB_PORT'])
 )
