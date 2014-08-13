@@ -5,6 +5,10 @@ Therefore I will praise you, Lord, among the nations; I will sing the praises of
 {% endblock %}
 
 {% block body %}
+<form action="{% url 'search' %}" method="GET">
+    <input name="query" id="searchbox" value="{{ query }}"></input>
+</form>
+
 {% if not pages and not songs %}
     <h2>No results found.</h2>
 {% endif %}

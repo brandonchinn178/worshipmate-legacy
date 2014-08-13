@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-import MySQLdb, os, string, requests
+import MySQLdb, os, string
 
 # Create your views here.
 def home(request):
@@ -24,6 +24,8 @@ def search(request):
 
     context = {
         'title': 'Search',
+        'style': 'search.css',
+        'query': query,
         'pages': result['pages'],
         'songs': result['songs']
     }
