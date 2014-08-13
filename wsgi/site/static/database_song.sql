@@ -204,7 +204,7 @@ CREATE TABLE `database_song` (
   `lyrics` text,
   PRIMARY KEY (`title`),
   FULLTEXT KEY `title` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -13,4 +13,5 @@ echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/site/manage.py collectstatic --
 python "$OPENSHIFT_REPO_DIR"wsgi/site/manage.py collectstatic --noinput
 
 echo "Adding FULLTEXT search to MySQL db"
+ls
 python addfulltext.py
