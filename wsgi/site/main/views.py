@@ -47,9 +47,13 @@ def doSearch(query):
 
     # search songs
     if 'OPENSHIFT' in os.environ:
-        conn = MySQLdb.connect(host=os.environ['OPENSHIFT_MYSQL_DB_HOST'],
-            user='brandon', db=os.environ['OPENSHIFT_APP_NAME'],
-            port=os.environ['OPENSHIFT_MYSQL_DB_PORT'])
+        conn = MySQLdb.connect(
+            host=os.environ['OPENSHIFT_MYSQL_DB_HOST'],
+            user=os.environ['OPENSHIFT_MYSQL_DB_USERNAME'],
+            passwd=os.environ['OPENSHIFT_MYSQL_DB_PASSWORD'],
+            db=os.environ['OPENSHIFT_APP_NAME'],
+            port=os.environ['OPENSHIFT_MYSQL_DB_PORT']
+        )
     else:
         conn = MySQLdb.connect(user='root', db='worshipdb')
 
