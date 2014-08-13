@@ -37,15 +37,15 @@ def doSearch(query):
     # search pages
     pages = []
     for page, link in {
-        ('Home', reverse('home')),
-        ('About', reverse('about')),
-        ('Database', reverse('database:index')),
-        ('Contact', reverse('contact:index')),
-        ('Transpose', reverse('transpose:index')),
-        ('Transposition', reverse('transpose:index'))
+        ('Home', 'home'),
+        ('About', 'about'),
+        ('Database', 'database:index'),
+        ('Contact', 'contact:index'),
+        ('Transpose', 'transpose:index'),
+        ('Transposition', 'transpose:index')
     }:
         if page.lower() in query:
-            pages.append((page, link))
+            pages.append((page, reverse(link)))
 
     # search songs
     if 'OPENSHIFT' in os.environ:
@@ -65,6 +65,7 @@ def doSearch(query):
     songs = [(song[0], reverse('database:detail', args=[song[0].replace(" ", "-")]\
         )) for song in c.fetchall()]
     c.close()
+    conn.close()
 
     return {
         'pages': pages,
