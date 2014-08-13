@@ -54,8 +54,8 @@ def doSearch(query):
         conn = MySQLdb.connect(user='root', db='worshipdb')
 
     c = conn.cursor()
-    c.execute("SELECT title FROM database_song WHERE MATCH (title, artist, \
-        themes, lyrics) AGAINST (\'" + query + "\')")
+    c.execute("SELECT title FROM database_song WHERE MATCH \
+        (title, artist, themes, lyrics) AGAINST (\'" + query + "\')")
     songs = [(song[0], reverse('database:detail', args=[song[0].replace(" ", "-")]\
         )) for song in c.fetchall()]
     c.close()
