@@ -16,14 +16,14 @@ Therefore I will praise you, Lord, among the nations; I will sing the praises of
 {% if pages %}
     <h2>Pages Found</h2>
     {% for page, link in pages %}
-    <h3><a href="{{ link }}">{{ page }}</a></h3>
+    <p><a href="{{ link }}">{{ page }}</a></p>
     {% endfor %}
 {% endif %}
 
 {% if songs %}
     <h2>Songs Found</h2>
     {% for title, link in songs %}
-    <h3><a href="{{ link }}">{{ title }}</a></h3>
+    <p><a href="{{ link }}">{{ title }}</a></p>
     {% endfor %}
 {% endif %}
 {% endblock %}
