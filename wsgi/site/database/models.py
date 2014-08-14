@@ -10,8 +10,9 @@ class Song(models.Model):
 
     title = models.CharField(max_length=50, primary_key=True)
     artist = models.CharField(max_length=50)
-    themes = models.TextField(max_length=500)
+    themes = models.TextField()
     speed = models.CharField(max_length=10, choices=SPEEDS.items())
+    lyrics = models.TextField()
 
     def __unicode__(self):
         return self.title + " | " + self.artist
