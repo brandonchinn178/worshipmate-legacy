@@ -43,7 +43,7 @@ a
 
 a:hover
 {
-    color: #E6AC27;
+    color: #E6BF65 ;
 }
 
 input
@@ -82,7 +82,7 @@ header h1
     top: -15px;
     right: 50px;
     font: italic small-caps bold 3em "Webly";
-    color: #E6AC27;
+    color: #E6BF65;
     cursor: default;
     white-space: nowrap;
 }

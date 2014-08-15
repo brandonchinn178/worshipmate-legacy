@@ -12,9 +12,9 @@
 {
     margin: 1em 0;
     font-size: 1.7em;
-    background: -moz-linear-gradient(to right, #E6AC27 0%, #F8F4D3 60%, #FFF 100%);
-    background: -webkit-linear-gradient(right, #E6AC27 0%, #F8F4D3 60%, #FFF 100%);
-    background: linear-gradient(to right, #E6AC27 0%, #F8F4D3 60%, #FFF 100%);
+    background: -moz-linear-gradient(to right, #E6BF65 0%, #F8F4D3 60%, #FFF 100%);
+    background: -webkit-linear-gradient(right, #E6BF65 0%, #F8F4D3 60%, #FFF 100%);
+    background: linear-gradient(to right, #E6BF65 0%, #F8F4D3 60%, #FFF 100%);
 }
 
 #chordchart tr
