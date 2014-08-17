@@ -8,11 +8,13 @@
             <link rel="stylesheet" type="text/css" href="{% static 'style/'|add:style %}" />
         {% endif %}
         <link rel="shortcut icon" href="{% static 'icons/favicon.ico' %}" >
+        <script src="{% static 'scripts/analytics.js' %}"></script>
         <script src="{% static 'scripts/jquery.js' %}"></script>
         <script src="{% static 'scripts/nav.js' %}"></script>
         {% if script %}
             <script src="{% static 'scripts/'|add:script %}"></script>
         {% endif %}
+    </head>
     <body>
         <div id="wrapper">
             <header>
