@@ -12,3 +12,6 @@ virtenv/
 dist/
 build/
 songs/
+
+# Contains information about API key
+wsgi/site/contact/mailgun.py

@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 from forms import ContactForm
-import requests
+from mailgun import send_simple_message
 
 # Create your views here.
 
@@ -32,12 +30,3 @@ def index(request):
 def thanks(request):
     context = {'title': 'Thanks'}
     return render(request, 'contact/thanks.html', context)
-
-def send_simple_message(name, email, message):
-    return requests.post(
-        "https://api.mailgun.net/v2/worshipdatabase.info/messages",
-        auth=("api", "key-946fb135e22d87f1f81c6ccf124ea427"),
-        data={"from": name + " <" + email + ">",
-              "to": "Brandon Chinn <brandonchinn178@gmail.com>",
-              "subject": "[Worship Song Database] Contact Form",
-              "text": message})
