@@ -20,7 +20,7 @@ $(document).ready(function() {
         $("#"+id).css("cursor", "pointer");
     }
     getSymbolNode(current).textContent = UPARR;
-    sortBy("title");
+    //sortBy("title");
 
     setUpTags();
 });
@@ -68,11 +68,21 @@ function getSymbolNode(id) {
 }
 
 function setUpTags() {
-    function setClick(tag, column) {
+    function setClick(tag) {
         return function() {
-            filter(tag, column);
-        }
-    }
+            var tags = $(".filter").select2("val");
+            if (tags.indexOf(tag) == -1) {
+                tags.push(tag);
+                $(".filter").select2("val", tags).trigger("addTag", [tag]);
+            } else {
+                tags.splice(tags.indexOf(tag), 1);
+                $(".filter").select2("val", tags).trigger("removeTag", [tag])
+            }
+        };
+    };
+
+    var tags = new Set();
+
     for (var i = 0; i < songs.length; i++) {
         var themeColumn = songs[i].children[2];
         var speedColumn = songs[i].children[3];
@@ -81,86 +91,102 @@ function setUpTags() {
         for (var j = 0; j < themes.length; j++) {
             var button = document.createElement("button");
             button.textContent = themes[j];
-            button.onclick = setClick(button.textContent, 2)
+            button.onclick = setClick(themes[j]);
             themeColumn.appendChild(button);
+
+            tags.add(themes[j]);
         }
 
         var speed = document.createElement("button");
         speed.textContent = speedColumn.textContent;
-        speed.onclick = setClick(speed.textContent, 3);
         speedColumn.textContent = "";
+        speed.onclick = setClick(speed.textContent);
         speedColumn.appendChild(speed);
-
-        songs[i].contains = function(row) {
-            return function(tag, column) {
-                var buttons = row.querySelectorAll("button");
-                for (var i = 0; i < buttons.length; i++) {
-                    if (buttons[i].textContent === tag) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-        }(songs[i]);
     }
+
+    var tagArray = ["Fast", "Slow", "Fast/Slow"];
+    tags.forEach(function(tag) {
+        tagArray.push(tag);
+    });
+
+    tagArray.sort().forEach(function(tag) {
+        var option = document.createElement("option");
+        option.text = tag;
+        $(".filter").append(option);
+    });
+
+    $(".filter")
+        .select2({
+            placeholder: "Filter by...",
+            formatNoMatches: "No tags found"
+        })
+        .change(function(evt, params) {
+            if (evt.added) {
+                $(".filter").trigger("addTag", [evt.added.text]);
+            } else {
+                $(".filter").trigger("removeTag", [evt.removed.text]);
+            }
+        })
+        .on("addTag", function(evt, params) {
+            filter(params);
+        })
+        .on("removeTag", function(evt, params) {
+            unfilter(params);
+        });
 }
 
-var filtered = {
-    "tags": [],
-    "songs": [],
-};
+function filter(tag) {
+    var songs = $(".song").not(":hidden");
 
-function filter(tag, column) {
-    if (filtered["tags"].indexOf(tag) != -1) {
-        var buttons = document.getElementById("filters").children;
+    function isFiltered(buttons) {
         for (var i = 0; i < buttons.length; i++) {
-            if (buttons[i].textContent === tag) {
-                buttons[i].click();
-                return;
+            if (buttons[i].textContent == tag) {
+                return false;
             }
         }
-        console.error("Something went wrong");
+        return true;
     }
-
-    filtered["tags"].push(tag);
 
     for (var i = 0; i < songs.length; i++) {
-        var song = songs[i];
-        if (!song.contains(tag, column)) {
-            var removed = song.parentNode.removeChild(song);
-            filtered["songs"].push(removed);
-            i--;
+        if (isFiltered(songs[i].querySelectorAll("button"))) {
+            songs[i].style.display = "none";
         }
     }
-    var button = document.createElement("button");
-    button.textContent = tag;
-    button.onclick = function() {
-        return function() {
-            this.parentNode.removeChild(this);
-            unfilter(tag, column);
-        };
-    }(tag, column);
-    document.getElementById("filters").appendChild(button);
+    reColor();
 }
 
-function unfilter(tag, column) {
-    var alltags = filtered["tags"];
-    var allsongs = filtered["songs"];
+function unfilter(tag) {
+    var tags = $(".filter option:selected").toArray().map(function(option) {
+        return option.textContent;
+    });
+    var songs = $(".song:hidden");
 
-    alltags.splice(alltags.indexOf(tag), 1);
-    for (var i = 0; i < allsongs.length; i++) {
-        var skip = false;
-        for (var j = 0; j < alltags.length; j++) {
-            if (!allsongs[i].contains(alltags[j])) {
-                skip = true;
-                break;
+    function isShowable(buttons) {
+        var label = [];
+        for (var i = 0; i < buttons.length; i++) {
+            label.push(buttons[i].textContent);
+        }
+
+        for (var i = 0; i < tags.length; i++) {
+            if (label.indexOf(tags[i]) == -1) {
+                return false;
             }
         }
+        return true;
+    }
 
-        if (!skip) {
-            parent.appendChild(allsongs[i]);
-            allsongs.splice(i--, 1);
+    for (var i = 0; i < songs.length; i++) {
+        if (isShowable(songs[i].querySelectorAll("button"))) {
+            songs[i].style.display = "";
         }
     }
-    sortBy(current);
+    
+    reColor();
+}
+
+function reColor() { 
+    // odd rows that aren't hidden should have the "odd" class
+    $(".song:not(:hidden)").filter(":odd").removeClass("even").addClass("odd");
+    // even rows that aren't hidden should have the "even" class
+    $(".song:not(:hidden)").filter(":even").removeClass("odd").addClass("even");
 }

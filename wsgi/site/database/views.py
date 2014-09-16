@@ -3,7 +3,7 @@ from models import Song
 
 # Create your views here.
 def index(request):
-    songs = Song.objects.all()
+    songs = Song.objects.order_by('title')
     context = {
         'title': 'Database',
         'style': 'database.css',

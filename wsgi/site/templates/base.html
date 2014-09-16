@@ -4,12 +4,14 @@
     <head>
         <title>Worship Song Database | {{ title }}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'style/base.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'style/select2.css' %}" />
         {% if style %}
             <link rel="stylesheet" type="text/css" href="{% static 'style/'|add:style %}" />
         {% endif %}
         <link rel="shortcut icon" href="{% static 'icons/favicon.ico' %}" >
         <script src="{% static 'scripts/analytics.js' %}"></script>
         <script src="{% static 'scripts/jquery.js' %}"></script>
+        <script src="{% static 'scripts/select2.min.js' %}"></script>
         <script src="{% static 'scripts/nav.js' %}"></script>
         {% if script %}
             <script src="{% static 'scripts/'|add:script %}"></script>
