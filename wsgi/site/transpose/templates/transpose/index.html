@@ -23,20 +23,9 @@
 <h2>Mass Transpose</h2>
 <p>To automatically transpose your chords, type your chords below and select the amount by which you want to change the key.</p>
 
-<table id="app-container">
-    <td>
-        <table id="app">
-            <tr>
-                <td rowspan="2"><textarea id="old-chords"></textarea></td>
-                <td><select id="change"></select></td>
-            </tr>
-            <tr>
-                <td><input type="submit" id="submit" value="Submit"></td>
-            </tr>
-        </table>
-    </td>
-    <td>
-        <table id="result"></table>
-    </td>
-</table>
+<div class="app-container">
+    <textarea class="input-chords"></textarea>
+    <select class="input-change"></select>
+    <div class="result-container"><table class="app-result"></table></div>
+</div>
 {% endblock %}

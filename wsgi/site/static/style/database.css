@@ -20,9 +20,16 @@ body {
 #songs {
   width: 100%;
   border-collapse: collapse;
-  font-size: 19.2px;
+  font: 19.2px "WeblyLight";
+  color: #655643;
 }
-#songs .sort {
+#songs th {
+  background: #655643;
+  color: #FFF;
+  height: 1.5em;
+  cursor: default;
+}
+#songs th .sort {
   float: right;
   margin: 0;
   color: #FFF;
@@ -63,12 +70,6 @@ body {
 #songs td button :hover {
   background: rgba(255, 255, 255, 0.7);
 }
-#songs th {
-  background: #655643;
-  color: #FFF;
-  height: 1.5em;
-  cursor: default;
-}
 #content h1 {
   margin-top: 0;
 }
@@ -84,27 +85,32 @@ body {
   width: 100%;
   height: 700px;
 }
-#buttons {
+#buttons-container {
   margin-top: 1em;
   width: 100%;
   text-align: center;
 }
-#buttons td {
-  padding: .5em;
-  width: 50%;
+#buttons-container .download a {
+  margin: 0 .5em;
 }
-#buttons tr:first-child td:first-child,
-#buttons tr:last-child td:last-child {
-  text-align: right;
+#buttons-container .download a button {
+  font-family: "WeblyLight";
 }
-#buttons tr:first-child td:last-child,
-#buttons tr:last-child td:first-child {
-  text-align: left;
+#buttons-container .navigation {
+  font: 24px "WeblyLight";
+  margin-top: 1em;
+  overflow: hidden;
 }
-a.submit {
-  font: small-caps bold 24px "Webly";
-  padding: .3em;
-  background: #655643;
-  color: #FFF;
-  border: 3px outset #bf4d28;
+#buttons-container .navigation a:first-child {
+  float: left;
+}
+#buttons-container .navigation a:last-child {
+  float: right;
+}
+#back-button {
+  font: 24px "WeblyLight";
+  color: #80bca3;
+}
+#back-button:hover {
+  color: #e6bf65;
 }

@@ -3,12 +3,12 @@
 #content table {
     font-family: "Webly";
     color: @brown;
-    width: 100%;
     border-collapse: collapse;
 }
 
 #chordchart {
     margin: 1em 0;
+    width: 100%;
     font-size: (@font-size * 2);
     background: -moz-linear-gradient(to right, @orange 0%, #F8F4D3 60%, #FFF 100%);
     background: -webkit-linear-gradient(right, @orange 0%, #F8F4D3 60%, #FFF 100%);
@@ -31,50 +31,36 @@
     background: rgba(191,77,40,.5);
 }
 
-#app-container {
-    &>tbody>tr>td {
-        width: 50%;
+.app-container {
+    width: 100%;
+    > * {
+        display: inline;
         vertical-align: top;
     }
-}
-
-#app {
-    textarea {
-        width: 90%;
-        height: 7em;
-        resize: none;
+    .input-chords {
+        width: 40%;
+        padding: 5px;
+        height: (@font-size * 11);
         font: (@font-size * 1.5) "WeblyLight";
+        resize: none;
     }
-    select {
-        text-align: center;
+    .input-change {
+        margin: (@font-size * 2);
         font: (@font-size * 1.2) "Webly";
         color: @brown;
+        text-align: center;
         width: 4em;
     }
-    td {
-        width: inherit;
-        &:last-child {
-            vertical-align: inherit;
+    div {
+        width: 50%;
+        .app-result {
+            display: inline;
             text-align: center;
+            font-size: @font-size * 1.7;
+            width: initial;
+            td, th {
+                padding: 0 .5em;
+            }
         }
-    }
-}
-
-input[type="submit"] {
-    font-size: (@font-size * 1.7);
-}
-
-#result {
-    margin: 0;
-    padding: 0;
-    width: initial;
-    margin-left: 50px;
-    font-size: (@font-size * 1.7);
-    td {
-        margin: 0;
-        padding: 0 .5em;
-        width: inherit;
-        text-align: center;
-        white-space: nowrap;
     }
 }

@@ -19,12 +19,19 @@
 #songs {
     width: 100%;
     border-collapse: collapse;
-    font-size: (@font-size * 1.2);
-    .sort {
-        float: right;
-        margin: 0;
+    font: (@font-size * 1.2) "WeblyLight";
+    color: @brown;
+    th {
+        background: @brown;
         color: #FFF;
-        font-size: (@font-size * 1.2);
+        height: 1.5em;
+        cursor: default;
+        .sort {
+            float: right;
+            margin: 0;
+            color: #FFF;
+            font-size: (@font-size * 1.2);
+        }
     }
     tr.odd {
         background: @lightblue;
@@ -62,13 +69,6 @@
             }
         }
     }
-
-    th {
-        background: @brown;
-        color: #FFF;
-        height: 1.5em;
-        cursor: default;
-    }
 }
 
 #content h1 {
@@ -88,31 +88,33 @@
     height: 700px;
 }
 
-#buttons {
+#buttons-container {
     margin-top: 1em;
     width: 100%;
     text-align: center;
-
-    td {
-        padding: .5em;
-        width: 50%;
+    .download a {
+        margin: 0 .5em;
+        button {
+            font-family: "WeblyLight";
+        }
     }
-
-    tr:first-child td:first-child,
-    tr:last-child td:last-child {
-        text-align: right;
-    }
-
-    tr:first-child td:last-child,
-    tr:last-child td:first-child {
-        text-align: left;
+    .navigation {
+        font: (@font-size * 1.5) "WeblyLight";
+        margin-top: 1em;
+        overflow: hidden;
+        a:first-child {
+            float: left;
+        }
+        a:last-child {
+            float: right;
+        }
     }
 }
 
-a.submit {
-    font: small-caps bold (@font-size * 1.5) "Webly";
-    padding: .3em;
-    background: @brown;
-    color: #FFF;
-    border: 3px outset @red;
+#back-button {
+    font: (@font-size * 1.5) "WeblyLight";
+    color: @teal;
+    &:hover {
+        color: @orange;
+    }
 }

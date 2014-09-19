@@ -92,10 +92,6 @@ button {
   border-color: #bf4d28;
   cursor: pointer;
 }
-table {
-  font: 24px "WeblyLight";
-  color: #655643;
-}
 header h1 {
   position: absolute;
   top: -15px;
@@ -114,7 +110,7 @@ nav {
   background: #655643;
 }
 nav td {
-  padding: 0 1em;
+  padding: 0 1.5em;
   text-align: center;
 }
 nav tr:first-child td {

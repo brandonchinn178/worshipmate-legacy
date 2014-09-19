@@ -43,7 +43,7 @@ function shiftChords(base) {
 
 function setupTranspose() {
     const defaultVal = 0;
-    var select = document.getElementById("change");
+    var select = $(".input-change")[0];
     for (i = -6; i < 6; i++) {
         var option = document.createElement("option");
         option.innerHTML = i;
@@ -53,18 +53,23 @@ function setupTranspose() {
         select.appendChild(option);
     }
 
-    $("#submit").click(transposeChords);
+    $(".app-container .input-change").change(function(evt, params) {
+        transposeChords();
+    });
+    $(".app-container .input-chords").change(function(evt, params) {
+        transposeChords();
+    });
 }
 
 function transposeChords() {
-    if ($("chords").value == "") {
+    if ($(".input-chords")[0].value === "") {
         return;
     }
 
     const chords = ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'G#'];
 
     function extractChords() {
-        var parsed = $("#old-chords").val().replace(/[^\w\d\/#]/g," ").split(" ");
+        var parsed = $(".input-chords").val().replace(/[^\w\d\/#]/g," ").split(" ");
         for (i = 0; i < parsed.length; i++) {
             if (parsed[i] === "") {
                 parsed.splice(i--, 1);
@@ -108,36 +113,22 @@ function transposeChords() {
     }
 
     function changeHTML(chordDict) {
-        Element.prototype.createChild = function(type, inner) {
-            var element = document.createElement(type);
-            element.innerHTML = inner;
-            this.appendChild(element);
-        }
-
-        $("#result").empty();
-        var table = document.getElementById("result");
-        var firstRow = document.createElement("tr");
-
-
-        firstRow.createChild("th", "Original");
-        firstRow.createChild("th", "");
-        firstRow.createChild("th", "Transposed");
-
-        table.appendChild(firstRow);
+        $(".app-result").empty();
+        var row = "<tr><th>Original</th><th></th><th>Transposed</th></tr>";
+        $(".app-result").append(row);
 
         for (oldChord in chordDict) {
             var newChord = chordDict[oldChord];
-            var row = document.createElement("tr");
-            row.createChild("td", oldChord);
-            row.createChild("td", "&rarr;");
-            row.createChild("td", newChord=="NaN"? "Not a valid chord" : newChord);
-
-            table.appendChild(row);
+            if (newChord === "NaN") {
+                newChord = "Not a valid chord";
+            }
+            row = "<tr><td>" + oldChord + "</td><td>&rarr;</td><td>" + newChord + "</td></tr>";
+            $(".app-result").append(row);
         }
     }
 
     var oldChords = extractChords();
-    var diff = parseInt($("#change").val())
+    var diff = parseInt($(".input-change").val())
     var chordDict = transposeAndPair(oldChords, diff);
     changeHTML(chordDict);
 }

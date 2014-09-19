@@ -2,7 +2,7 @@
 {% load staticfiles custom_filters %}
 
 {% block content %}
-<p id="backbutton"><a href="javascript:history.back()">&larr; Back</a></p>
+<a id="back-button" href="javascript:history.back()">&larr; Back</a>
 
 <h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
 
@@ -12,7 +12,7 @@
 <p>{{ song.speed|convert_speed }}</p>
 
 <object type="application/pdf" data="http://brandonchinn178.github.io/worshipdatabase/songs/pdf/{{ song.title }}.pdf" id="songpdf">
-    <p>Your browser does not support embedded PDF files. To view the song, click one of the buttons below.</p>
+    <p>Your browser does not support embedded PDF files. To download or view the song, click one of the buttons below.</p>
 </object>
 
 <div id="buttons-container">
