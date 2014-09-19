@@ -1,15 +1,10 @@
-input[type='submit'] {
+button {
   height: 2.5em;
+  margin: 0 1em;
   text-align: center;
-}
-form {
-  margin: 0;
 }
 #buttons {
   width: 50%;
   margin: 2em 25% 2em auto;
-}
-#buttons td {
-  width: 50%;
   text-align: center;
 }

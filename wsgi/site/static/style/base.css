@@ -85,7 +85,7 @@ input {
   background: #FFF;
   color: #655643;
 }
-input[type='submit'] {
+button {
   font: small-caps bold 24px "Webly";
   background: #655643;
   color: #FFF;
