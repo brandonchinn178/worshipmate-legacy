@@ -1,0 +1,45 @@
+.webly(@fontcode, @weight: normal, @style: normal) {
+    font-family: "Webly";
+    src: url('fonts/weblysleek_ui/weblysleekui@{fontcode}.ttf') format('truetype');
+    font-weight: @weight;
+    font-style: @style;
+}
+
+@font-face {
+    .webly(@fontcode: 'sl');
+}
+
+@font-face {
+    .webly(@fontcode: 'sb', @weight: bold);
+}
+
+@font-face {
+    .webly(@fontcode: 'sli', @style: italic);
+}
+
+@font-face {
+    .webly(@fontcode: 'sbi', @weight: bold, @style: italic);
+}
+
+.weblyLight(@fontcode, @weight: normal, @style: normal) {
+    font-family: "WeblyLight";
+    src: url('fonts/weblysleek_ui/weblysleekui@{fontcode}.ttf') format('truetype');
+    font-weight: @weight;
+    font-style: @style;
+}
+
+@font-face {
+    .weblyLight(@fontcode: 'l');
+}
+
+@font-face {
+    .weblyLight(@fontcode: 'li', @style: italic);
+}
+
+@font-face {
+    .weblyLight(@fontcode: 'sb', @weight: bold);
+}
+
+@font-face {
+    .weblyLight(@fontcode: 'sbi', @weight: bold, @style: italic);
+}

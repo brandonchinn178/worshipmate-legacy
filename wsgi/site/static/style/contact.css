@@ -1,35 +1,28 @@
-@import url(fonts.css);
-
-input
-{
-    font-family: "WeblyLight";
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
-
-#content form
-{
-    font-size: 1.5em;
+input {
+  font-family: "WeblyLight";
 }
-
-#content input[type="submit"]
-{
-    position: relative;
-    margin-top: .5em;
-    margin-left: 500px;
-    left: -95px;
+#content form {
+  font-size: 24px;
 }
-
-textarea
-{
-    height: 10em;
-    width: 500px;
-    font-size: inherit;
-    color: #655643;
-    font-family: "WeblyLight";
+#content form label {
+  font: 28.8px "WeblyLight";
+  color: #655643;
 }
-
-label
-{
-    font-family: "WeblyLight";
-    font-size: 1.2em;
-    color: #655643;
+#content form textarea {
+  height: 10em;
+  width: 500px;
+  font-size: inherit;
+  color: #655643;
+  font-family: "WeblyLight";
+}
+#content form input[type="submit"] {
+  position: relative;
+  margin-top: .5em;
+  margin-left: 500px;
+  left: -95px;
 }

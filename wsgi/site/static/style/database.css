@@ -1,9 +1,14 @@
-span#artist #artist {
-  font: small-caps 0.7em "Webly";
-  margin-left: .5em;
-  color: #887C64;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
-span#artist #artist :before {
+span#artist {
+  font: small-caps 32px "Webly";
+  margin-left: .5em;
+  color: #907b5f;
+}
+span#artist:before {
   content: "/ ";
 }
 .filter {
@@ -12,28 +17,28 @@ span#artist #artist :before {
 }
 .select2-container-multi,
 .select2-results {
-  font: 20px "Webly";
-  color: #BF4D28;
+  font: 20.8px "Webly";
+  color: #bf4d28;
 }
 .select2-container-multi .select2-choices .select2-search-choice,
 .select2-results .select2-choices .select2-search-choice {
-  font: 18px "Webly";
+  font: 19.2px "Webly";
   line-height: 1em;
-  color: #BF4D28;
+  color: #bf4d28;
 }
 #songs {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1.2em;
+  font-size: 19.2px;
 }
 #songs .sort {
   float: right;
   margin: 0;
   color: #FFF;
-  font-size: 1.2em;
+  font-size: 19.2px;
 }
 #songs tr.odd {
-  background: #E7F4FF;
+  background: #e7f4ff;
 }
 #songs td,
 #songs th {
@@ -91,18 +96,18 @@ span#artist #artist :before {
   text-align: left;
 }
 a.submit {
-  font: small-caps bold 1em "Webly";
+  font: small-caps bold 24px "Webly";
   padding: .3em;
   background: #655643;
   color: #FFF;
-  border: 3px outset #BF4D28;
+  border: 3px outset #bf4d28;
 }
 button {
   cursor: pointer;
   border: 0;
-  background: rgba(200, 200, 200, 0.5);
-  color: #BF4D28;
-  font: 1em "WeblyLight";
+  background: rgba(201, 201, 201, 0.5);
+  color: #bf4d28;
+  font: 19.2px "WeblyLight";
   padding: 0;
   margin: 2px;
 }

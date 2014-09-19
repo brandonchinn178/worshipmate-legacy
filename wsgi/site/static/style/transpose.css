@@ -1,99 +1,71 @@
-@import url(fonts.css);
-
-#content table
-{
-    font-family: "Webly";
-    color: #655643;
-    width: 100%;
-    border-collapse: collapse;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
-
-#chordchart
-{
-    margin: 1em 0;
-    font-size: 1.7em;
-    background: -moz-linear-gradient(to right, #E6BF65 0%, #F8F4D3 60%, #FFF 100%);
-    background: -webkit-linear-gradient(right, #E6BF65 0%, #F8F4D3 60%, #FFF 100%);
-    background: linear-gradient(to right, #E6BF65 0%, #F8F4D3 60%, #FFF 100%);
+#content table {
+  font-family: "Webly";
+  color: #655643;
+  width: 100%;
+  border-collapse: collapse;
 }
-
-#chordchart tr
-{
-    border: 1px solid #655643;
+#chordchart {
+  margin: 1em 0;
+  font-size: 32px;
+  background: -moz-linear-gradient(to right, #e6bf65 0%, #f8f4d3 60%, #ffffff 100%);
+  background: -webkit-linear-gradient(right, #e6bf65 0%, #f8f4d3 60%, #ffffff 100%);
+  background: linear-gradient(to right, #e6bf65 0%, #f8f4d3 60%, #ffffff 100%);
 }
-
-#chordchart td
-{
-    cursor: default;
-    margin: 0;
-    width: 8%;
-    text-align: center;
+#chordchart tr {
+  border: 1px solid #655643;
 }
-
-#chords td:hover
-{
-    cursor: pointer;
-    background: rgba(191,77,40,.5);
+#chordchart td {
+  cursor: default;
+  margin: 0;
+  width: 8%;
+  text-align: center;
 }
-
-#app-container td
-{
-    width: 50%;
+#chords td:hover {
+  cursor: pointer;
+  background: rgba(191, 77, 40, 0.5);
 }
-
-#app-container>tbody>tr>td
-{
-    vertical-align: top;
+#app-container > tbody > tr > td {
+  width: 50%;
+  vertical-align: top;
 }
-
-#app textarea
-{
-    width: 90%;
-    height: 7em;
-    resize: none;
-    font-family: "WeblyLight";
-    font-size: .7em;
+#app textarea {
+  width: 90%;
+  height: 7em;
+  resize: none;
+  font: 24px "WeblyLight";
 }
-
-#app select
-{
-    text-align: center;
-    font-family: "Webly";
-    font-size: .6em;
-    color: #655643;
-    width: 4em;
+#app select {
+  text-align: center;
+  font: 19.2px "Webly";
+  color: #655643;
+  width: 4em;
 }
-
-#app td
-{
-    width: inherit;
+#app td {
+  width: inherit;
 }
-
-#app td:last-child
-{
-    vertical-align: inherit;
-    text-align: center;
+#app td:last-child {
+  vertical-align: inherit;
+  text-align: center;
 }
-
-table#result
-{
-    margin: 0;
-    padding: 0;
-    width: initial;
-    margin-left: 50px;
-    font-size: 1.2em;
+input[type="submit"] {
+  font-size: 27.2px;
 }
-
-#result td
-{
-    margin: 0;
-    padding: 0 .5em;
-    width: inherit;
-    text-align: center;
-    white-space: nowrap;
+#result {
+  margin: 0;
+  padding: 0;
+  width: initial;
+  margin-left: 50px;
+  font-size: 27.2px;
 }
-
-input[type="submit"]
-{
-    font-size: .8em;
+#result td {
+  margin: 0;
+  padding: 0 .5em;
+  width: inherit;
+  text-align: center;
+  white-space: nowrap;
 }

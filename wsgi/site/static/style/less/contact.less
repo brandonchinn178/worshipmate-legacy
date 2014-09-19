@@ -1,0 +1,27 @@
+@import (reference) "base";
+
+input {
+    font-family: "WeblyLight";
+}
+
+#content form {
+    font-size: (@font-size * 1.5);
+
+    label {
+        font: (@font-size * 1.8) "WeblyLight";
+        color: @brown;
+    }
+    textarea {
+        height: 10em;
+        width: 500px;
+        font-size: inherit;
+        color: @brown;
+        font-family: "WeblyLight";
+    }
+    input[type="submit"] {
+        position: relative;
+        margin-top: .5em;
+        margin-left: 500px;
+        left: -95px;
+    }
+}

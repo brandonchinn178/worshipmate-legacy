@@ -1,172 +1,166 @@
-@import url(fonts.css);
-
-html, body
-{
-    margin: 0;
-    padding: 0;
-    height: 100%;
+@font-face {
+  font-family: "Webly";
+  src: url('fonts/weblysleek_ui/weblysleekuisl.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
-
-body
-{
-    background: #F8F4D3;
+@font-face {
+  font-family: "Webly";
+  src: url('fonts/weblysleek_ui/weblysleekuisb.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
-
-h1
-{
-    margin-bottom: .2em;
-    color: #BF4D28;
-    font: italic small-caps bold 3em "Webly";
+@font-face {
+  font-family: "Webly";
+  src: url('fonts/weblysleek_ui/weblysleekuisli.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
 }
-
-h2
-{
-    margin: 0;
-    margin-bottom: 0;
-    font: small-caps bold 2em "Webly";
-    color: #887C64;
+@font-face {
+  font-family: "Webly";
+  src: url('fonts/weblysleek_ui/weblysleekuisbi.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
 }
-
-p
-{
-    margin-top: 0;
-    margin-bottom: .5em;
-    color: #655643;
-    font: 1.5em "WeblyLight";
+@font-face {
+  font-family: "WeblyLight";
+  src: url('fonts/weblysleek_ui/weblysleekuil.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
-
-a
-{
-    text-decoration: none;
-    color: #80BCA3;
+@font-face {
+  font-family: "WeblyLight";
+  src: url('fonts/weblysleek_ui/weblysleekuili.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
 }
-
-a:hover
-{
-    color: #E6BF65 ;
+@font-face {
+  font-family: "WeblyLight";
+  src: url('fonts/weblysleek_ui/weblysleekuisb.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
-
-input
-{
-    font: 1em "WeblyLight";
-    background: #FFF;
-    color: #655643;
-    margin: 0;
+@font-face {
+  font-family: "WeblyLight";
+  src: url('fonts/weblysleek_ui/weblysleekuisbi.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
 }
-
-input[type='submit']
-{
-    font: small-caps bold 1em "Webly";
-    margin: 0;
-    background: #655643;
-    color: #FFF;
-    border-color: #BF4D28;
-    cursor: pointer;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
-
-table
-{
-    font: 1.5em "WeblyLight";
-    color: #655643;
+body {
+  background: #f8f4d3;
 }
-
-#wrapper
-{
-    position: relative;
-    min-height: 100%;
+h1 {
+  margin-bottom: .2em;
+  color: #bf4d28;
+  font: italic small-caps bold 48px "Webly";
 }
-
-header h1
-{
-    position: absolute;
-    top: -15px;
-    right: 50px;
-    font: italic small-caps bold 3em "Webly";
-    color: #E6BF65;
-    cursor: default;
-    white-space: nowrap;
+h2 {
+  margin: 0;
+  margin-bottom: 0;
+  font: small-caps bold 32px "Webly";
+  color: #847057;
 }
-
-nav
-{
-    padding: 15px 20px .5em;
-    background: #655643;
+p {
+  margin-top: 0;
+  margin-bottom: .5em;
+  color: #655643;
+  font: 24px "WeblyLight";
 }
-
-nav td
-{
-    padding: 0 1em;
-    text-align: center;
+a {
+  text-decoration: none;
+  color: #80bca3;
 }
-
-nav tr:first-child td
-{
-    height: 65px;
+a:hover {
+  color: #e6bf65;
 }
-
-nav a
-{
-    padding: .2em;
-    font: small-caps bold 1.2em "Webly";
-    color: #FFFFFF;
+input {
+  margin: 0;
+  font: 24px "WeblyLight";
+  background: #FFF;
+  color: #655643;
 }
-
-nav a:hover
-{
-    text-decoration: underline;
+input[type='submit'] {
+  font: small-caps bold 24px "Webly";
+  background: #655643;
+  color: #FFF;
+  border-color: #bf4d28;
+  cursor: pointer;
 }
-
-nav #search
-{
-     width: 40px;
-     vertical-align: bottom;
-     cursor: pointer;
+table {
+  font: 24px "WeblyLight";
+  color: #655643;
 }
-
-nav #search:hover
-{
-    background: rgba(255,255,255,.2);
-    border: 1px outset #E6AC27;
+header h1 {
+  position: absolute;
+  top: -15px;
+  right: 50px;
+  font: italic small-caps bold 48px "Webly";
+  color: #e6bf65;
+  cursor: default;
+  white-space: nowrap;
 }
-
-nav #search:active
-{
-    background: rgba(200,200,200,.2);
+#wrapper {
+  position: relative;
+  min-height: 100%;
 }
-
-nav #search+form
-{
-    display: inline;
+nav {
+  padding: 15px 20px .5em;
+  background: #655643;
 }
-
-nav #searchbox
-{
-    padding-left: .2em;
-    background: #F8F4D3;
-    border: 3px inset #655643;
+nav td {
+  padding: 0 1em;
+  text-align: center;
 }
-
-.icon
-{
-    position: relative;
+nav tr:first-child td {
+  height: 65px;
 }
-
-#quote
-{
-    text-align: center;
-    font: italic 1.5em "WeblyLight";
+nav a {
+  padding: .2em;
+  font: small-caps bold 28.8px "Webly";
+  color: #FFF;
 }
-
-#content
-{
-    padding: 25px 100px 80px;
+nav a:hover {
+  text-decoration: underline;
 }
-
-footer
-{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 50px;
-    background: #E9EFF2;
+nav #search {
+  width: 40px;
+  vertical-align: bottom;
+  cursor: pointer;
+}
+nav #search:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+nav #search:active {
+  background: rgba(201, 201, 201, 0.2);
+}
+nav #search + form {
+  display: inline;
+}
+nav #searchbox {
+  padding-left: .2em;
+  background: #f8f4d3;
+  border: 3px inset #655643;
+}
+nav .icon {
+  position: relative;
+}
+#quote {
+  text-align: center;
+  font: italic 24px "WeblyLight";
+}
+#content {
+  padding: 25px 100px 80px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background: #e9eff2;
 }
