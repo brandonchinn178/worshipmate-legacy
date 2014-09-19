@@ -1,0 +1,6 @@
+#!/bin/bash
+cd `dirname $0`
+FILES=(base contact database home search transpose)
+for file in ${FILES[*]}; do
+    lessc $file.less ../$file.css
+done
