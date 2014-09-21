@@ -1,44 +1,55 @@
 Number.prototype.mod = function(n) {
     return ((this % n) + n) % n;
 };
+const chords = ['F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F'];
+var middle = 6;
 
 $(document).ready(function() {
     setScale();
-    shiftChords(0);
     setupTranspose();
 });
 
 function setScale() {
-    var scaleRow = document.getElementById("scale");
-    for (i = -6; i < 6; i++) {
-        var scaleNode = document.createElement("td");
-        scaleNode.innerHTML = (i > 0 ? "+" : "") + i;
-        scaleRow.appendChild(scaleNode);
+    var scale = $("#scale");
+    for (i = -6; i <= 6; i++) {
+        // add a + sign to positive numbers
+        var num = (i > 0 ? "+" : "") + i;
+        scale.append("<td>" + num + "</td>");
     }
-}
 
-function shiftChords(base) {
-    const chords = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B'];
-    var chordRow = document.getElementById("chords");
-    var start = (base + 6) % chords.length;
-    var val = start;
-
-    $.fn.setClick = function(base) {
-        this.click(function() {
-            $("#chords").empty();
-            shiftChords(base);
-        });
-        return this;
-    };
-
-    for (var i = 0; i < chords.length; i++, val++) {
-        val = val == chords.length ? 0 : val;
-        var chordNode = document.createElement("td");
-        chordNode.innerHTML = chords[val];
-        chordNode.id = "chord" + val;
-        chordRow.appendChild(chordNode);
-        $("#chord"+val).setClick(val);
+    function setClick() {
+        var index = chords.indexOf(this.textContent);
+        var diff = index - middle;
+        shiftChords(diff);
     }
+
+    var chordRow = $("#chords");
+    chords.forEach(function(chord, i, array) {
+        $("<td class='chord'></td>")
+            .text(chord)
+            .click(setClick)
+            .appendTo(chordRow);
+    });
+
+    $("<td class='chord'></td>")
+        .text(chords[0])
+        .click(setClick)
+        .appendTo(chordRow);
+};
+
+function shiftChords(diff) {
+    if (diff == 0) return;
+
+    var last = $(".chord:last-child");
+    var row = $("#chords");
+    if (diff < 0) {
+        $(".chord:gt(" + (diff - 2) + ")").prependTo(row);
+    } else {
+        $(".chord:lt(" + diff + ")").appendTo(row);
+    }
+    row.append(last);
+    last.text(row.children()[0].textContent);
+    middle = chords.indexOf(row.children()[6].textContent);
 }
 
 function setupTranspose() {
@@ -53,12 +64,8 @@ function setupTranspose() {
         select.appendChild(option);
     }
 
-    $(".app-container .input-change").change(function(evt, params) {
-        transposeChords();
-    });
-    $(".app-container .input-chords").change(function(evt, params) {
-        transposeChords();
-    });
+    $(".app-container .input-change").change(transposeChords);
+    $(".app-container .input-chords").change(transposeChords);
 }
 
 function transposeChords() {
@@ -82,7 +89,7 @@ function transposeChords() {
         var dict = {};
         for (i = 0; i < oldChords.length; i++) {
             var chord = oldChords[i];
-            if (typeof dict[chord] === "undefined") {
+            if (!(chord in dict)) {
                 dict[chord] = transpose(chord, diff);
             }
         }

@@ -9,32 +9,35 @@
 #chordchart {
     margin: 1em 0;
     width: 100%;
-    font-size: (@font-size * 2);
+    font-size: (@font-size * 1.6);
     background: -moz-linear-gradient(to right, @orange 0%, #F8F4D3 60%, #FFF 100%);
     background: -webkit-linear-gradient(right, @orange 0%, #F8F4D3 60%, #FFF 100%);
     background: linear-gradient(to right, @orange 0%, #F8F4D3 60%, #FFF 100%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    table-layout: fixed;
 
     tr {
         border: 1px solid @brown;
-    }
-
-    td {
-        cursor: default;
-        margin: 0;
-        width: 8%;
-        text-align: center;
+        td {
+            width: 77px;
+            cursor: default;
+            margin: 0;
+            text-align: center;
+        }
+        .chord:hover {
+            cursor: pointer;
+            background: rgba(191,77,40,.5);
+        }
     }
 }
 
-#chords td:hover {
-    cursor: pointer;
-    background: rgba(191,77,40,.5);
-}
 
 .app-container {
     width: 100%;
     > * {
-        display: inline;
+        display: inline-table;
         vertical-align: top;
     }
     .input-chords {
