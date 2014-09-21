@@ -3,7 +3,8 @@ body {
   padding: 0;
   height: 100%;
 }
-#content table {
+#content table,
+#chordchart {
   font-family: "Webly";
   color: #655643;
   border-collapse: collapse;
@@ -18,18 +19,24 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  table-layout: fixed;
+  overflow: scroll;
 }
-#chordchart tr {
+#chordchart #scale,
+#chordchart #chords {
+  min-width: 1001px;
   border: 1px solid #655643;
 }
-#chordchart tr td {
-  width: 77px;
+#chordchart #scale div,
+#chordchart #chords div {
+  display: inline-block;
+  min-width: 77px;
+  width: 7.69230769%;
   cursor: default;
   margin: 0;
   text-align: center;
 }
-#chordchart tr .chord:hover {
+#chordchart #scale .chord:hover,
+#chordchart #chords .chord:hover {
   cursor: pointer;
   background: rgba(191, 77, 40, 0.5);
 }

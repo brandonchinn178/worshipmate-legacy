@@ -14,7 +14,7 @@ function setScale() {
     for (i = -6; i <= 6; i++) {
         // add a + sign to positive numbers
         var num = (i > 0 ? "+" : "") + i;
-        scale.append("<td>" + num + "</td>");
+        scale.append("<div>" + num + "</div>");
     }
 
     function setClick() {
@@ -25,13 +25,13 @@ function setScale() {
 
     var chordRow = $("#chords");
     chords.forEach(function(chord, i, array) {
-        $("<td class='chord'></td>")
+        $("<div class='chord'></div>")
             .text(chord)
             .click(setClick)
             .appendTo(chordRow);
     });
 
-    $("<td class='chord'></td>")
+    $("<div class='chord'></div>")
         .text(chords[0])
         .click(setClick)
         .appendTo(chordRow);

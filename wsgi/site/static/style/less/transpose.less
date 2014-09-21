@@ -7,6 +7,7 @@
 }
 
 #chordchart {
+    &:extend(#content table);
     margin: 1em 0;
     width: 100%;
     font-size: (@font-size * 1.6);
@@ -16,12 +17,16 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    table-layout: fixed;
+    overflow: scroll;
 
-    tr {
+    @div_width: 77px;
+    #scale, #chords {
+        min-width: @div_width * 13;
         border: 1px solid @brown;
-        td {
-            width: 77px;
+        div {
+            display: inline-block;
+            min-width: @div_width;
+            width: (100%/13);
             cursor: default;
             margin: 0;
             text-align: center;
