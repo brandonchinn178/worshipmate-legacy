@@ -65,7 +65,7 @@ body {
   width: 50%;
 }
 .app-container div .app-result {
-  display: inline;
+  display: inline-table;
   text-align: center;
   font-size: 27.2px;
   width: initial;
