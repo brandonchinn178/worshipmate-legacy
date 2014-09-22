@@ -136,7 +136,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-print BASE_DIR
-STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
+
+if ON_OPENSHIFT:
+    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'site', 'static')

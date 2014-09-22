@@ -6,11 +6,11 @@
 
 source $OPENSHIFT_HOMEDIR/python/virtenv/bin/activate
 
-echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/site/manage.py syncdb --noinput'"
-python "$OPENSHIFT_REPO_DIR"wsgi/site/manage.py syncdb --noinput
+echo "Executing 'python $OPENSHIFT_REPO_DIR/site/manage.py syncdb --noinput'"
+python "$OPENSHIFT_REPO_DIR"site/manage.py syncdb --noinput
 
-echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/site/manage.py collectstatic --noinput'"
-python "$OPENSHIFT_REPO_DIR"wsgi/site/manage.py collectstatic --noinput
+echo "Executing 'python $OPENSHIFT_REPO_DIR/site/manage.py collectstatic --noinput'"
+python "$OPENSHIFT_REPO_DIR"site/manage.py collectstatic --noinput
 
 echo "Adding FULLTEXT search to MySQL db"
 python "$OPENSHIFT_REPO_DIR".openshift/action_hooks/addfulltext.py
