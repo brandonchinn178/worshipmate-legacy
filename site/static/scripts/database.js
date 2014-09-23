@@ -1,71 +1,15 @@
-const NDASH = "\u2013";
-const UPARR = "\u2191";
-const DOWNARR = "\u2193";
-var songs;
-var parent;
-var current = "title";
-
 $(document).ready(function() {
-    songs = document.getElementById("songs").getElementsByClassName("song");
-    parent = songs[0].parentNode;
-
-    const IDs = ["title", "artist"];
-    for (var i = 0; i < IDs.length; i++) {
-        var id = IDs[i];
-        $("#"+id).click(function(_id) {
-            return function() {
-                sortTable(_id);
-            };
-        }(id));
-        $("#"+id).css("cursor", "pointer");
-    }
-    getSymbolNode(current).textContent = UPARR;
-    //sortBy("title");
+    $('#song-table')
+        .tablesorter({
+            headers: {
+                2: { sorter: false },
+                3: { sorter: false }
+            }
+        })
+        .bind('sortEnd', reColor);
 
     setUpTags();
 });
-
-function sortTable(id) {
-    var symbolNode = getSymbolNode(id);
-
-    if (id === current) {
-        var symbol = symbolNode.textContent === UPARR ? DOWNARR : UPARR;
-        symbolNode.textContent = symbol;
-        flip();
-    } else {
-        getSymbolNode(current).textContent = NDASH;
-        symbolNode.textContent = UPARR;
-        current = id;
-        sortBy(id);
-    }
-}
-
-function sortBy(sortId) {
-    function isCorrectOrder(s1, s2) {
-        return s1.children[sortColumn].textContent <=
-            s2.children[sortColumn].textContent;
-    }
-
-    var sortColumn = sortId == "title" ? 0 : 1;
-    for (var i = 1; i < songs.length; i++) {
-        for (var j = 0; j < i; j++) {
-            if (!isCorrectOrder(songs[j], songs[i])) {
-                parent.insertBefore(songs[i], songs[j]);
-                break;
-            }
-        }
-    }
-}
-
-function flip() {
-    for (var i = 1; i < songs.length; i++) {
-        parent.insertBefore(songs[i], songs[0]);
-    }
-}
-
-function getSymbolNode(id) {
-    return document.getElementById(id).querySelector(".sort");
-}
 
 function setUpTags() {
     function setClick(tag) {
@@ -82,6 +26,7 @@ function setUpTags() {
     };
 
     var tags = new Set();
+    var songs = $(".song");
 
     for (var i = 0; i < songs.length; i++) {
         var themeColumn = songs[i].children[2];

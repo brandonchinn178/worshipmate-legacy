@@ -3,6 +3,9 @@ body {
   padding: 0;
   height: 100%;
 }
+body {
+  min-width: 1000px;
+}
 .select2-container-multi {
   font: 20.8px "Webly";
   margin: 5px;
@@ -17,48 +20,55 @@ body {
   font: 20.8px "Webly";
   color: #bf4d28;
 }
-#songs {
+#song-table {
   width: 100%;
   border-collapse: collapse;
   font: 19.2px "WeblyLight";
   color: #655643;
 }
-#songs th {
-  background: #655643;
+#song-table th {
+  background-color: #655643;
+  background-image: url(vendor/tablesorter-unsorted.gif);
+  background-position: 95% 50%;
+  background-repeat: no-repeat;
   color: #FFF;
   height: 1.5em;
+  cursor: pointer;
+}
+#song-table th.tablesorter-headerAsc {
+  background-image: url(vendor/tablesorter-asc.gif);
+}
+#song-table th.tablesorter-headerDesc {
+  background-image: url(vendor/tablesorter-desc.gif);
+}
+#song-table th.sorter-false {
+  background-image: none;
   cursor: default;
 }
-#songs th .sort {
-  float: right;
-  margin: 0;
-  color: #FFF;
-  font-size: 19.2px;
-}
-#songs tr.odd {
+#song-table tr.odd {
   background: #e7f4ff;
 }
-#songs td,
-#songs th {
+#song-table td,
+#song-table th {
   padding: .2em .5em;
   border: 1px solid #655643;
   text-align: center;
 }
-#songs td:nth-child(1) {
+#song-table td:nth-child(1) {
   width: 30%;
 }
-#songs td:nth-child(2) {
+#song-table td:nth-child(2) {
   width: 20%;
 }
-#songs td:nth-child(3) {
+#song-table td:nth-child(3) {
   text-align: left;
   width: 45%;
   padding: 1px;
 }
-#songs td:nth-child(4) {
+#song-table td:nth-child(4) {
   width: 5%;
 }
-#songs td button {
+#song-table td button {
   cursor: pointer;
   border: 0;
   background: rgba(201, 201, 201, 0.5);
@@ -67,7 +77,7 @@ body {
   padding: 0;
   margin: 2px;
 }
-#songs td button :hover {
+#song-table td button :hover {
   background: rgba(255, 255, 255, 0.7);
 }
 #content h1 {
