@@ -2,12 +2,12 @@
 {% load staticfiles custom_filters %}
 
 {% block content %}
-<a id="back-button" href="javascript:history.back()">&larr; Back</a>
+<p><a href="javascript:history.back()">&larr; Back</a></p>
 
 <h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
 
 <h2>Themes</h2>
-<p>{{ song.themes }}</p>
+<p>{{ song.themes }} <a href="{% url 'contact:index' %}" id="feedback">Comments or Suggestions?</a></p>
 <h2>Speed</h2>
 <p>{{ song.speed|convert_speed }}</p>
 

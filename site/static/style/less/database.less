@@ -71,14 +71,28 @@
     }
 }
 
-#content h1 {
-    margin-top: 0;
-    span#artist {
-        font: small-caps (@font-size * 2) "Webly";
-        margin-left: .5em;  
-        color: lighten(@brown, 14%);
+#content {
+    h1 {
+        margin-top: 0;
+        span#artist {
+            font: small-caps (@font-size * 2) "Webly";
+            margin-left: .5em;  
+            color: lighten(@brown, 14%);
+            &:before {
+                content: "/ ";
+            }
+        }
+    }
+
+    a#feedback {
+        font: small-caps italic (@font-size * 1.2) "Webly";
+        color: @red;
+        margin-left: 30px;
+        &:hover {
+            color: @orange;
+        }
         &:before {
-            content: "/ ";
+            content: "// ";
         }
     }
 }
@@ -108,13 +122,5 @@
         a:last-child {
             float: right;
         }
-    }
-}
-
-#back-button {
-    font: (@font-size * 1.5) "WeblyLight";
-    color: @teal;
-    &:hover {
-        color: @orange;
     }
 }

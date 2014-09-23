@@ -81,6 +81,17 @@ body {
 #content h1 span#artist:before {
   content: "/ ";
 }
+#content a#feedback {
+  font: small-caps italic 19.2px "Webly";
+  color: #bf4d28;
+  margin-left: 30px;
+}
+#content a#feedback:hover {
+  color: #e6bf65;
+}
+#content a#feedback:before {
+  content: "// ";
+}
 #songpdf {
   width: 100%;
   height: 700px;
@@ -106,11 +117,4 @@ body {
 }
 #buttons-container .navigation a:last-child {
   float: right;
-}
-#back-button {
-  font: 24px "WeblyLight";
-  color: #80bca3;
-}
-#back-button:hover {
-  color: #e6bf65;
 }
