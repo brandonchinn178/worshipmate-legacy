@@ -26,28 +26,27 @@ function setUpTags() {
     };
 
     var tags = new Set();
-    var songs = $(".song");
 
-    for (var i = 0; i < songs.length; i++) {
-        var themeColumn = songs[i].children[2];
-        var speedColumn = songs[i].children[3];
-        var themes = themeColumn.textContent.split(", ");
-        themeColumn.textContent = "";
-        for (var j = 0; j < themes.length; j++) {
-            var button = document.createElement("button");
-            button.textContent = themes[j];
-            button.onclick = setClick(themes[j]);
-            themeColumn.appendChild(button);
+    $(".song").each(function(index) {
+        var themeColumn = $("td:eq(2)", this);
+        var themes = themeColumn.text().split(", ");
+        themeColumn.text("");
 
-            tags.add(themes[j]);
-        }
+        themes.forEach(function(theme) {
+            $("<button>" + theme + "</button>")
+                .click(setClick(theme))
+                .appendTo(themeColumn);
 
-        var speed = document.createElement("button");
-        speed.textContent = speedColumn.textContent;
-        speedColumn.textContent = "";
-        speed.onclick = setClick(speed.textContent);
-        speedColumn.appendChild(speed);
-    }
+            tags.add(theme);
+        });
+
+        var speedColumn = $("td:eq(3)", this);
+        var speed = speedColumn.text();
+        speedColumn.text("");
+        $("<button>" + speed + "</button>")
+            .click(setClick(speed))
+            .appendTo(speedColumn);
+    });
 
     var tagArray = ["Fast", "Slow", "Fast/Slow"];
     tags.forEach(function(tag) {
@@ -55,9 +54,7 @@ function setUpTags() {
     });
 
     tagArray.sort().forEach(function(tag) {
-        var option = document.createElement("option");
-        option.text = tag;
-        $(".filter").append(option);
+        $("<option>" + tag + "</option>").appendTo(".filter");
     });
 
     $(".filter")
@@ -81,8 +78,6 @@ function setUpTags() {
 }
 
 function filter(tag) {
-    var songs = $(".song").not(":hidden");
-
     function isFiltered(buttons) {
         for (var i = 0; i < buttons.length; i++) {
             if (buttons[i].textContent == tag) {
@@ -92,11 +87,12 @@ function filter(tag) {
         return true;
     }
 
-    for (var i = 0; i < songs.length; i++) {
-        if (isFiltered(songs[i].querySelectorAll("button"))) {
-            songs[i].style.display = "none";
+    $(".song").not(":hidden").each(function(index) {
+        if (isFiltered($("button", this))) {
+            this.style.display = "none";
         }
-    }
+    })
+
     reColor();
 }
 
@@ -104,7 +100,6 @@ function unfilter(tag) {
     var tags = $(".filter option:selected").toArray().map(function(option) {
         return option.textContent;
     });
-    var songs = $(".song:hidden");
 
     function isShowable(buttons) {
         var label = [];
@@ -120,12 +115,12 @@ function unfilter(tag) {
         return true;
     }
 
-    for (var i = 0; i < songs.length; i++) {
-        if (isShowable(songs[i].querySelectorAll("button"))) {
-            songs[i].style.display = "";
+    $(".song:hidden").each(function(index) {
+        if (isShowable($("button", this))) {
+            this.style.display = "";
         }
-    }
-    
+    })
+
     reColor();
 }
 
