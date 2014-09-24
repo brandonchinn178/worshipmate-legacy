@@ -25,7 +25,7 @@ function setUpTags() {
         };
     };
 
-    var tags = new Set();
+    var tags = ["Fast", "Slow", "Fast/Slow"];
 
     $(".song").each(function(index) {
         var themeColumn = $("td:eq(2)", this);
@@ -37,7 +37,9 @@ function setUpTags() {
                 .click(setClick(theme))
                 .appendTo(themeColumn);
 
-            tags.add(theme);
+            if (tags.indexOf(theme) == -1) {
+                tags.push(theme);
+            }
         });
 
         var speedColumn = $("td:eq(3)", this);
@@ -48,12 +50,7 @@ function setUpTags() {
             .appendTo(speedColumn);
     });
 
-    var tagArray = ["Fast", "Slow", "Fast/Slow"];
-    tags.forEach(function(tag) {
-        tagArray.push(tag);
-    });
-
-    tagArray.sort().forEach(function(tag) {
+    tags.sort().forEach(function(tag) {
         $("<option>" + tag + "</option>").appendTo(".filter");
     });
 

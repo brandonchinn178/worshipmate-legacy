@@ -61,16 +61,12 @@ body {
   text-align: center;
   width: 4em;
 }
-.app-container div {
-  width: 50%;
-}
-.app-container div .app-result {
-  display: inline-table;
+.app-container .result-container .app-result {
   text-align: center;
   font-size: 27.2px;
   width: initial;
 }
-.app-container div .app-result td,
-.app-container div .app-result th {
+.app-container .result-container .app-result td,
+.app-container .result-container .app-result th {
   padding: 0 .5em;
 }
