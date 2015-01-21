@@ -1,7 +1,7 @@
 Setup Openshift
 ==============
 
-In order to setup Openshift, run these from terminal, possibly with "--app <app name>" at the end:
+In order to setup Openshift, run these from terminal, possibly with "--app [app name]" at the end:
 
 ```
 # to set up AWS keys
