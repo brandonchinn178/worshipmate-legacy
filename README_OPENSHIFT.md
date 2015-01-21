@@ -1,4 +1,4 @@
-Setup AWS
+Setup Openshift
 =========
 
 In order to setup AWS, ssh into openshift app, and run:
