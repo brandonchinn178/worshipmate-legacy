@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'database',
     'contact',
     'transpose',
+    'storages'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,5 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
 STATIC_URL = '/static/'
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
