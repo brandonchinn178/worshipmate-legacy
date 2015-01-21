@@ -10,12 +10,9 @@ $ rhc env set AWS_SECRET_ACCESS_KEY=<secret key>
 $ rhc env set AWS_STORAGE_BUCKET_NAME=<bucket name>
 $ rhc env set OPENSHIFT_PYTHON_WSGI_APPLICATION=site/site_settings/wsgi.py
 ```
-<<<<<<< HEAD
 
 Also, to reset up domain hosting (if need be), use
 
 ```
 $ rhc alias add [app name] [sub-domain].[domain]
 ```
-=======
->>>>>>> cf084f6918ef02c34871840c052313d76936d7e5
