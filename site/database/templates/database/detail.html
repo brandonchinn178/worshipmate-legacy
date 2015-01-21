@@ -2,6 +2,8 @@
 {% load staticfiles custom_filters %}
 
 {% block content %}
+{% static "songs/pdf/"|add:song.title|add:".pdf" as pdf_url %}
+{% static "songs/doc/"|add:song.title|add:".doc" as doc_url %}
 <p><a href="{% url 'database:index' %}">&larr; Back to Database</a></p>
 
 <h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
@@ -11,14 +13,12 @@
 <h2>Speed</h2>
 <p>{{ song.speed|convert_speed }}</p>
 
-<object type="application/pdf" data="{% static 'songs/pdf/'|add:song.title|add:'.pdf' %}" id="songpdf">
+<object type="application/pdf" data="{{ pdf_url }}" id="songpdf">
     <p>Your browser does not support embedded PDF files. To download or view the song, click one of the buttons below.</p>
 </object>
 
 <div id="buttons-container">
     <div class="download">
-        {% static "songs/pdf/"|add:song.title|add:".pdf" as pdf_url %}
-        {% static "songs/doc/"|add:song.title|add:".doc" as doc_url %}
         <a href="{{ doc_url }}" download>
             <button type="submit">Get .doc file</button>
         </a>

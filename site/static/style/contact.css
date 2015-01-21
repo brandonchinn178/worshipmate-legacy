@@ -20,7 +20,7 @@ input {
   color: #655643;
   font-family: "WeblyLight";
 }
-#content form input[type="submit"] {
+#content form button {
   position: relative;
   margin-top: .5em;
   margin-left: 500px;
