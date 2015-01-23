@@ -22,8 +22,8 @@ Therefore I will praise you, Lord, among the nations; I will sing the praises of
 
 {% if songs %}
     <h2>Songs Found</h2>
-    {% for title, link in songs %}
-    <p><a href="{{ link }}">{{ title }}</a></p>
+    {% for song in songs %}
+    <p><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></p>
     {% endfor %}
 {% endif %}
 {% endblock %}

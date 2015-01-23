@@ -17,3 +17,7 @@ class Song(models.Model):
 
     def __unicode__(self):
         return self.title + " | " + self.artist
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('database:detail', (), {'title': self.title.replace(' ', '-')})

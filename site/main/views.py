@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.db.models import Q
+
 import os, string
 from database.models import Song
 
@@ -36,21 +38,23 @@ def doSearch(query):
     # search pages
     pages = []
     for page, link in {
-        ('Home', 'home'),
-        ('About', 'about'),
-        ('Database', 'database:index'),
-        ('Contact', 'contact:index'),
-        ('Transpose', 'transpose:index'),
-        ('Transposition', 'transpose:index')
-    }:
+            ('Home', 'home'),
+            ('About', 'about'),
+            ('Database', 'database:index'),
+            ('Contact', 'contact:index'),
+            ('Transpose', 'transpose:index'),
+            ('Transposition', 'transpose:index')
+        }:
         if page.lower() in query:
             pages.append((page, reverse(link)))
 
     # search songs
-    song_query = Song.objects.raw("SELECT title FROM database_song WHERE MATCH \
-        (title, artist, themes, lyrics) AGAINST (%s)", [query])
-    songs = [(song.title, reverse('database:detail', \
-        args=[song.title.replace(" ", "-")])) for song in song_query]
+    songs = Song.objects.filter(
+        Q(title__search=query) |
+        Q(artist__search=query) |
+        Q(themes__search=query) |
+        Q(lyrics__search=query)
+    )
 
     return {
         'pages': pages,
