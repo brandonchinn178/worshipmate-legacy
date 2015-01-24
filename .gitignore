@@ -12,5 +12,4 @@ virtenv/
 dist/
 build/
 songs/
-*.sql
 **/sync
