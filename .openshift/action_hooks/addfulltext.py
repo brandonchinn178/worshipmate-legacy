@@ -9,6 +9,9 @@ conn = MySQLdb.connect(
 )
 c = conn.cursor()
 
-c.execute('ALTER TABLE database_song ADD FULLTEXT(title, artist, themes, lyrics)')
+c.execute('ALTER TABLE database_song ADD FULLTEXT (title)')
+c.execute('ALTER TABLE database_song ADD FULLTEXT (artist)')
+c.execute('ALTER TABLE database_song ADD FULLTEXT (themes)')
+c.execute('ALTER TABLE database_song ADD FULLTEXT (lyrics)')
 conn.commit()
-c.close()
+conn.close()

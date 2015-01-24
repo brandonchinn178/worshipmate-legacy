@@ -1,5 +1,14 @@
 {% extends "base.html" %}
-{% load custom_filters %}
+{% load staticfiles custom_filters %}
+{% load cycle from future %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/vendor/select2.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style/database.css' %}" />
+    <script src="{% static 'scripts/vendor/select2.min.js' %}"></script>
+    <script src="{% static 'scripts/vendor/jquery.tablesorter.min.js' %}"></script>
+    <script src="{% static 'scripts/database.js' %}"></script>
+{% endblock %}
 
 {% block quote %}
     Worship the Lord with gladness; come before him with joyful songs ~Psalm 100:2
@@ -21,7 +30,7 @@
     <tbody>
     {% for song in songs %}
         <tr class="song {% cycle 'even' 'odd' %}">
-            <td><a href="{% url 'database:detail' song.title|hyphenate %}">{{ song.title }}</a></td>
+            <td><a href="{% url 'song' title=song.slug %}">{{ song.title }}</a></td>
             <td>{{ song.artist }}</td>
             <td>{{ song.themes }}</td>
             <td>{{ song.speed|convert_speed }}</td>

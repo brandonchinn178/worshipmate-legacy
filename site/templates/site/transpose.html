@@ -1,5 +1,10 @@
 {% extends "base.html" %}
-{% load custom_filters %}
+{% load staticfiles custom_filters %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/transpose.css' %}" />
+    <script href="{% static 'scripts/transpose.js' %}"></script>
+{% endblock %}
 
 {% block title %}
     Transposing

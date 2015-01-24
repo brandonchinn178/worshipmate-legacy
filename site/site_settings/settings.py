@@ -58,7 +58,6 @@ INSTALLED_APPS = (
     'main',
     'database',
     'contact',
-    'transpose',
     'storages'
 )
 
@@ -137,11 +136,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
 AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 AWS_PRELOAD_METADATA = True
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-STATIC_URL = 'https://%s/' % AWS_S3_CUSTOM_DOMAIN
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
+
+MEDIAFILES_LOCATION = 'songs'
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
+
 if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')

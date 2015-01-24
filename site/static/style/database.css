@@ -122,9 +122,15 @@ body {
   margin-top: 1em;
   overflow: hidden;
 }
-#buttons-container .navigation a:first-child {
+#buttons-container .navigation .before {
   float: left;
 }
-#buttons-container .navigation a:last-child {
+#buttons-container .navigation .before a {
+  text-align: left;
+}
+#buttons-container .navigation .after {
   float: right;
+}
+#buttons-container .navigation .after a {
+  text-align: right;
 }

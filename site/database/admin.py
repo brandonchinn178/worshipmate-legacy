@@ -41,5 +41,6 @@ class SongAdmin(admin.ModelAdmin):
     list_filter = [SongFilter, SpeedFilter]
     list_per_page = 50
     ordering = ['title']
+    prepopulated_fields = {'title_slug': ('title',)}
 
 admin.site.register(Song, SongAdmin)
