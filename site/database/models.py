@@ -8,6 +8,7 @@ class Song(models.Model):
     }
 
     title = models.CharField(max_length=50, primary_key=True)
+    title_slug = models.SlugField(default='')
     artist = models.CharField(max_length=50, null=True)
     themes = models.TextField(null=True)
     speed = models.CharField(max_length=10, choices=SPEEDS.items(), null=True)
@@ -20,4 +21,4 @@ class Song(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('database:detail', (), {'title': self.title.replace(' ', '-')})
+        return ('song', (), {'title': self.title_slug})

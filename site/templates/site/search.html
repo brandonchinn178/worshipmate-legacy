@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/search.css' %}" />
+{% endblock %}
 
 {% block quote %}
 Therefore I will praise you, Lord, among the nations; I will sing the praises of your name ~2 Samuel 22:50

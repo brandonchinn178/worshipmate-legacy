@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('lyrics', models.TextField(null=True)),
                 ('doc', models.FileField(default=b'', upload_to=b'doc')),
                 ('pdf', models.FileField(default=b'', upload_to=b'pdf')),
+                ('title_slug', models.SlugField(default=b'')),
             ],
             options={
             },

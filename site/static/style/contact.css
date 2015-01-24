@@ -26,3 +26,7 @@ input {
   margin-left: 500px;
   left: -95px;
 }
+#content .message {
+  margin-top: 1em;
+  font-weight: bold;
+}

@@ -58,7 +58,6 @@ INSTALLED_APPS = (
     'main',
     'database',
     'contact',
-    'transpose',
     'storages'
 )
 

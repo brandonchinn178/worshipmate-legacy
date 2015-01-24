@@ -12,4 +12,5 @@ virtenv/
 dist/
 build/
 songs/
-database_song.sql
+*.sql
+**/sync

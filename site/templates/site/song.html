@@ -1,13 +1,13 @@
-{% extends "database/index.html" %}
-{% load staticfiles custom_filters %}
+{% extends "site/database.html" %}
+{% load custom_filters %}
 
 {% block content %}
-<p><a href="{% url 'database:index' %}">&larr; Back to Database</a></p>
+<p><a href="{% url 'database' %}">&larr; Back to Database</a></p>
 
 <h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
 
 <h2>Themes</h2>
-<p>{{ song.themes }} <a href="{% url 'contact:index' %}" id="feedback">Comments or Suggestions?</a></p>
+<p>{{ song.themes }} <a href="{% url 'contact' %}" id="feedback">Comments or Suggestions?</a></p>
 <h2>Speed</h2>
 <p>{{ song.speed|convert_speed }}</p>
 
@@ -25,16 +25,20 @@
         </a>
     </div>
     <div class="navigation">
-        {% if navigate.before %}
-            <a href="{{ navigate.before.0.get_absolute_url }}">
-                &larr; {{ navigate.before.0 }}
-            </a>
-        {% endif %}
-        {% if navigate.after %}
-            <a href="{{ navigate.after.0.get_absolute_url }}">
-                {{ navigate.after.0 }} &rarr;
-            </a>
-        {% endif %}
+        <div class="before">
+            {% if before %}
+                <a href="{{ before.get_absolute_url }}">
+                    &larr; {{ before }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="after">
+            {% if after %}
+                <a href="{{ after.get_absolute_url }}">
+                    {{ after }} &rarr;
+                </a>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

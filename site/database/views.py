@@ -1,26 +1,29 @@
-from django.shortcuts import render, get_object_or_404
-from models import Song
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
-# Create your views here.
-def index(request):
-    songs = Song.objects.order_by('title')
-    context = {
-        'title': 'Database',
-        'style': 'database.css',
-        'script': 'database.js',
-        'songs': songs
-    }
-    return render(request, 'database/index.html', context)
+from database.models import Song
+from main.views import add_title_mixin
 
-def detail(request, title):
-    title = title.replace("-", " ");
-    song = get_object_or_404(Song, title=title)
-    before = Song.objects.filter(title__lt=song.title).order_by('title').reverse()
-    after = Song.objects.filter(title__gt=song.title)
-    context = {
-        'title': song.title,
-        'style': 'database.css',
-        'song': song,
-        'navigate': {'before': before, 'after': after}
-    }
-    return render(request, 'database/detail.html', context)
+class DatabaseView(add_title_mixin(ListView)):
+    template_name = 'site/database.html'
+    model = Song
+    queryset = Song.objects.order_by('title')
+    title = 'Database'
+    context_object_name = 'songs'
+
+class SongView(DetailView):
+    template_name = 'site/song.html'
+    model = Song
+    slug_field = 'title_slug'
+    slug_url_kwarg = 'title'
+    context_object_name = 'song'
+
+    def get_context_data(self, **kwargs):
+        context = super(SongView, self).get_context_data(**kwargs)
+        less = Song.objects.filter(title__lt=self.object.title).order_by('title').reverse()
+        greater = Song.objects.filter(title__gt=self.object.title).order_by('title')
+        if less.count() != 0:
+            context['before'] = less[0]
+        if greater.count() != 0:
+            context['after'] = greater[0]
+        return context

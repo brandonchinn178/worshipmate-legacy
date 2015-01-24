@@ -1,32 +1,36 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from forms import ContactForm
-from mailgun import send_simple_message
+from django.shortcuts import redirect
+from django.views.generic.edit import FormView
+from django.contrib import messages
 
-# Create your views here.
+from contact.forms import ContactForm
+from main.views import add_title_mixin
 
-def index(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            body = form.cleaned_data['message']
-            
-            message = "Dear Brandon,\n\n" + body + "\n\nSincerely,\n" + name
+import requests, os
 
-            send_simple_message(name, email, message)
-            return HttpResponseRedirect('thanks/')
-    else:
-        form = ContactForm()
+class ContactView(add_title_mixin(FormView)):
+    template_name = 'site/contact.html'
+    form_class = ContactForm
+    title = 'Contact'
 
-    context = {
-        'title': 'Contact',
-        'style': 'contact.css',
-        'form': form,
-    }
-    return render(request, 'contact/index.html', context)
+    def get(self, request, *args, **kwargs):
+        response = super(ContactView, self).get(request, *args, **kwargs)
+        response.context_data.update({'title': self.title})
+        return response
 
-def thanks(request):
-    context = {'title': 'Thanks'}
-    return render(request, 'contact/thanks.html', context)
+    def form_valid(self, form):
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        body = form.cleaned_data['message']
+        message = "Dear Brandon,\n\n%s\n\nSincerely,\n%s" % (body, name)
+        self.send_simple_message(name, email, message)
+        messages.success(self.request, 'Thank you! I will respond to your message as soon as I can.')
+        return redirect(self.request.path)
+
+    def send_simple_message(self, name, email, message):
+        return requests.post(
+            "https://api.mailgun.net/v2/worshipdatabase.info/messages",
+            auth=("api", os.environ['MAILGUN_KEY']),
+            data={"from": name + " <" + email + ">",
+                  "to": "Brandon Chinn <brandonchinn178@gmail.com>",
+                  "subject": "[Worship Song Database] Contact Form",
+                  "text": message})

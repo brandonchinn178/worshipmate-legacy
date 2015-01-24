@@ -7,18 +7,8 @@
         <script src="{% static 'scripts/vendor/analytics.js' %}"></script>
         <script src="{% static 'scripts/vendor/jquery.min.js' %}"></script>
         <script src="{% static 'scripts/nav.js' %}"></script>
-        {% if script %}
-            <script src="{% static 'scripts/'|add:script %}"></script>
-        {% endif %}
-        {% if title == "Database" %}
-            <script src="{% static 'scripts/vendor/select2.min.js' %}"></script>
-            <script src="{% static 'scripts/vendor/jquery.tablesorter.min.js' %}"></script>
-            <link rel="stylesheet" type="text/css" href="{% static 'style/vendor/select2.css' %}" />
-        {% endif %}
         <link rel="stylesheet" type="text/css" href="{% static 'style/base.css' %}" />
-        {% if style %}
-            <link rel="stylesheet" type="text/css" href="{% static 'style/'|add:style %}" />
-        {% endif %}
+        {% block head %}{% endblock %}
     </head>
     <body>
         <div id="wrapper">
@@ -36,9 +26,9 @@
                     </tr>
                     <tr>
                         <td><a href={% url 'home' %} id="nav-home">Home</a></td>
-                        <td><a href={% url 'database:index' %} id="nav-database">Database</a></td>
+                        <td><a href={% url 'database' %} id="nav-database">Database</a></td>
                         <td><a href={% url 'about' %} id="nav-about">About</a></td>
-                        <td><a href={% url 'contact:index' %} id="nav-contact">Contact</a></td>
+                        <td><a href={% url 'contact' %} id="nav-contact">Contact</a></td>
                         <td style="padding:0 .5em;">
                             <img src="{% static 'icons/search.png' %}" id="search">
                             <form action="{% url 'search' %}" method="GET">
