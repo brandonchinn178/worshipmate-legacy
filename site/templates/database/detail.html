@@ -2,8 +2,6 @@
 {% load staticfiles custom_filters %}
 
 {% block content %}
-{% static "songs/pdf/"|add:song.title|add:".pdf" as pdf_url %}
-{% static "songs/doc/"|add:song.title|add:".doc" as doc_url %}
 <p><a href="{% url 'database:index' %}">&larr; Back to Database</a></p>
 
 <h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
@@ -13,27 +11,27 @@
 <h2>Speed</h2>
 <p>{{ song.speed|convert_speed }}</p>
 
-<object type="application/pdf" data="{{ pdf_url }}" id="songpdf">
+<object type="application/pdf" data="{{ song.pdf.url }}" id="songpdf">
     <p>Your browser does not support embedded PDF files. To download or view the song, click one of the buttons below.</p>
 </object>
 
 <div id="buttons-container">
     <div class="download">
-        <a href="{{ doc_url }}" download>
+        <a href="{{ song.doc.url }}" download>
             <button type="submit">Get .doc file</button>
         </a>
-        <a href="{{ pdf_url }}" download>
+        <a href="{{ song.pdf.url }}" download>
             <button type="submit">Get .pdf file</button>
         </a>
     </div>
     <div class="navigation">
         {% if navigate.before %}
-            <a href="{% url 'database:detail' navigate.before.0.title %}">
+            <a href="{{ navigate.before.0.get_absolute_url }}">
                 &larr; {{ navigate.before.0 }}
             </a>
         {% endif %}
         {% if navigate.after %}
-            <a href="{% url 'database:detail' navigate.after.0.title %}">
+            <a href="{{ navigate.after.0.get_absolute_url }}">
                 {{ navigate.after.0 }} &rarr;
             </a>
         {% endif %}

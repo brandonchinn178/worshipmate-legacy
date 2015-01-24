@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
                 ('themes', models.TextField(null=True)),
                 ('speed', models.CharField(max_length=10, null=True, choices=[(b'S', b'Slow'), (b'FS', b'Fast/Slow'), (b'F', b'Fast')])),
                 ('lyrics', models.TextField(null=True)),
-                ('doc', models.FileField(null=True, upload_to=b'doc')),
-                ('pdf', models.FileField(null=True, upload_to=b'pdf')),
+                ('doc', models.FileField(default=b'', upload_to=b'doc')),
+                ('pdf', models.FileField(default=b'', upload_to=b'pdf')),
             ],
             options={
             },
