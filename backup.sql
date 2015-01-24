@@ -211,7 +211,7 @@ CREATE TABLE `database_song` (
   FULLTEXT KEY `artist` (`artist`),
   FULLTEXT KEY `themes` (`themes`),
   FULLTEXT KEY `lyrics` (`lyrics`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
