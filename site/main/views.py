@@ -72,10 +72,10 @@ class SearchView(TitledTemplateView):
         for page, link in {
                 ('Home', 'home'),
                 ('About', 'about'),
-                ('Database', 'database:index'),
-                ('Contact', 'contact:index'),
-                ('Transpose', 'transpose:index'),
-                ('Transposition', 'transpose:index')
+                ('Database', 'database'),
+                ('Contact', 'contact'),
+                ('Transpose', 'transpose'),
+                ('Transposition', 'transpose')
             }:
             if page.lower() in query:
                 pages.append((page, reverse(link)))

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 class Song(models.Model):
     SPEEDS = {
@@ -7,18 +8,22 @@ class Song(models.Model):
         'FS': 'Fast/Slow',
     }
 
-    title = models.CharField(max_length=50, primary_key=True)
+    title = models.CharField(max_length=50, primary_key=True, default=None)
     title_slug = models.SlugField(default='')
-    artist = models.CharField(max_length=50, null=True)
-    themes = models.TextField(null=True)
-    speed = models.CharField(max_length=10, choices=SPEEDS.items(), null=True)
-    lyrics = models.TextField(null=True)
+    artist = models.CharField(max_length=50, default='')
+    themes = models.TextField(default='')
+    speed = models.CharField(max_length=10, choices=SPEEDS.items(), default='')
+    lyrics = models.TextField(default='')
     doc = models.FileField(upload_to='doc', default='')
     pdf = models.FileField(upload_to='pdf', default='')
 
     def __unicode__(self):
-        return self.title + " | " + self.artist
+        return "%s | %s" % (self.title, self.artist)
 
     @models.permalink
     def get_absolute_url(self):
+        if not self.title_slug:
+            # set title_slug if not already set
+            self.title_slug = slugify(unicode(self.title))
+
         return ('song', (), {'title': self.title_slug})
