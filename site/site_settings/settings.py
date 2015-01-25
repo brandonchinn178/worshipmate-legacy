@@ -157,4 +157,4 @@ if ON_OPENSHIFT:
 
 if ON_CI:
     # don't KeyError out on MAILGUN api key
-    os.environ.set('MAILGUN_KEY', '')
+    os.environ.update({'MAILGUN_KEY': ''})
