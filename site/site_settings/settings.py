@@ -56,7 +56,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'main',
     'database',
-    'contact',
     'storages'
 )
 
@@ -155,3 +154,7 @@ DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
 
 if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
+
+if ON_CI:
+    # don't KeyError out on MAILGUN api key
+    os.environ.set('MAILGUN_KEY', '')
