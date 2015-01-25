@@ -1,10 +1,13 @@
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.contrib import messages
 
-import os, string
+import os, string, requests
 from database.models import Song
+from main.forms import ContactForm
 
 def add_title_mixin(view_class):
     """
@@ -41,6 +44,34 @@ class TransposeView(TitledTemplateView):
     template_name = 'site/transpose.html'
     title = 'Transpose'
 
+class ContactView(add_title_mixin(FormView)):
+    template_name = 'site/contact.html'
+    form_class = ContactForm
+    title = 'Contact'
+
+    def get(self, request, *args, **kwargs):
+        response = super(ContactView, self).get(request, *args, **kwargs)
+        response.context_data.update({'title': self.title})
+        return response
+
+    def form_valid(self, form):
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        body = form.cleaned_data['message']
+        message = "Dear Brandon,\n\n%s\n\nSincerely,\n%s" % (body, name)
+        self.send_simple_message(name, email, message)
+        messages.success(self.request, 'Thank you! I will respond to your message as soon as I can.')
+        return redirect(self.request.path)
+
+    def send_simple_message(self, name, email, message):
+        return requests.post(
+            "https://api.mailgun.net/v2/worshipdatabase.info/messages",
+            auth=("api", os.environ['MAILGUN_KEY']),
+            data={"from": name + " <" + email + ">",
+                  "to": "Brandon Chinn <brandonchinn178@gmail.com>",
+                  "subject": "[Worship Song Database] Contact Form",
+                  "text": message})
+
 class SearchView(TitledTemplateView):
     template_name = 'site/search.html'
     title = 'Search'
@@ -72,10 +103,10 @@ class SearchView(TitledTemplateView):
         for page, link in {
                 ('Home', 'home'),
                 ('About', 'about'),
-                ('Database', 'database:index'),
-                ('Contact', 'contact:index'),
-                ('Transpose', 'transpose:index'),
-                ('Transposition', 'transpose:index')
+                ('Database', 'database'),
+                ('Contact', 'contact'),
+                ('Transpose', 'transpose'),
+                ('Transposition', 'transpose')
             }:
             if page.lower() in query:
                 pages.append((page, reverse(link)))

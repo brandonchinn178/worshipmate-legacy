@@ -12,9 +12,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os, sys
 import imp
 
-ON_OPENSHIFT = False
-if os.environ.has_key('OPENSHIFT_REPO_DIR'):
-     ON_OPENSHIFT = True
+ON_CI = bool(os.environ.get('CIRCLECI'))
+ON_OPENSHIFT = bool(os.environ.get('OPENSHIFT_REPO_DIR'))
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -57,7 +56,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'main',
     'database',
-    'contact',
     'storages'
 )
 
@@ -120,6 +118,11 @@ else:
         }
     }
 
+if ON_CI:
+    DATABASES["default"]["NAME"] = "circle_test"
+    DATABASES["default"]["USER"] = "ubuntu"
+    DATABASES["default"]["PASSWORD"] = ""
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -136,7 +139,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_PRELOAD_METADATA = True
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
@@ -151,3 +154,7 @@ DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
 
 if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
+
+if ON_CI:
+    # don't KeyError out on MAILGUN api key
+    os.environ.update({'MAILGUN_KEY': ''})
