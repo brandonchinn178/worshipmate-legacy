@@ -5,6 +5,9 @@ const chords = ['F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'C', 'C#/Db', 'D', 'D#
 var middle = 6;
 
 $(document).ready(function() {
+    $("#chordchart")
+        .append("<div id='scale'>")
+        .append("<div id='chords'>");
     setScale();
     setupTranspose();
 });

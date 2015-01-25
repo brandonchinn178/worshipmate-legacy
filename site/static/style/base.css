@@ -85,7 +85,8 @@ input {
   background: #FFF;
   color: #655643;
 }
-button {
+button,
+.button {
   font: small-caps bold 24px "Webly";
   background: #655643;
   color: #FFF;
@@ -151,7 +152,9 @@ nav .icon {
   font: italic 24px "WeblyLight";
 }
 #content {
-  padding: 25px 100px 80px;
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 80px;
 }
 footer {
   position: absolute;
