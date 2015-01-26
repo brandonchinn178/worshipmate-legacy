@@ -180,7 +180,7 @@ footer {
   height: 50px;
   background: #e9eff2;
 }
-@media (max-width: 500px) {
+@media (max-width: 555px) {
   img.icon {
     display: none;
   }
