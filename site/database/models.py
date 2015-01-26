@@ -11,9 +11,9 @@ class Song(models.Model):
     title = models.CharField(max_length=50, primary_key=True, default=None)
     title_slug = models.SlugField(default='')
     artist = models.CharField(max_length=50, default='')
-    themes = models.TextField(default='')
+    themes = models.TextField()
     speed = models.CharField(max_length=10, choices=SPEEDS.items(), default='')
-    lyrics = models.TextField(default='')
+    lyrics = models.TextField()
     doc = models.FileField(upload_to='doc', default='')
     pdf = models.FileField(upload_to='pdf', default='')
 
