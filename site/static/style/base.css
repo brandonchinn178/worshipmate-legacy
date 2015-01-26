@@ -93,59 +93,67 @@ button,
   border-color: #bf4d28;
   cursor: pointer;
 }
+header {
+  background: #655643;
+  margin-bottom: 25px;
+}
 header h1 {
-  position: absolute;
-  top: -15px;
-  right: 50px;
+  text-align: right;
+  padding-right: 50px;
   font: italic small-caps bold 48px "Webly";
   color: #e6bf65;
   cursor: default;
-  white-space: nowrap;
+  margin: 0;
 }
-#wrapper {
-  position: relative;
-  min-height: 100%;
-}
-nav {
+header nav {
   padding: 15px 20px .5em;
-  background: #655643;
 }
-nav td {
-  padding: 0 1.5em;
-  text-align: center;
+header nav [class^=nav] {
+  display: inline-block;
+  width: 125px;
+  min-height: 50px;
 }
-nav tr:first-child td {
-  height: 65px;
-}
-nav a {
+header nav [class^=nav] a {
   padding: .2em;
   font: small-caps bold 28.8px "Webly";
   color: #FFF;
+  display: block;
+  text-align: center;
 }
-nav a:hover {
+header nav [class^=nav] a:hover {
   text-decoration: underline;
 }
-nav #search {
+header nav .nav-search {
+  width: initial;
+  min-height: initial;
+  vertical-align: sub;
+}
+header nav .nav-search #search {
   width: 40px;
   vertical-align: bottom;
   cursor: pointer;
 }
-nav #search:hover {
+header nav .nav-search #search:hover {
   background: rgba(255, 255, 255, 0.15);
 }
-nav #search:active {
+header nav .nav-search #search:active {
   background: rgba(201, 201, 201, 0.2);
 }
-nav #search + form {
+header nav .nav-search #search + form {
   display: inline;
 }
-nav #searchbox {
+header nav .nav-search #search + form #searchbox {
   padding-left: .2em;
   background: #f8f4d3;
   border: 3px inset #655643;
+  vertical-align: bottom;
 }
-nav .icon {
+header nav .icon {
   position: relative;
+}
+#wrapper {
+  position: relative;
+  min-height: 100%;
 }
 #quote {
   text-align: center;

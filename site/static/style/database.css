@@ -3,6 +3,15 @@ body {
   padding: 0;
   height: 100%;
 }
+header,
+footer,
+#content {
+  min-width: 555.55555556px;
+}
+#content {
+  box-sizing: border-box;
+  padding: 0 30px 80px;
+}
 .select2-container-multi {
   font: 20.8px "Webly";
   margin: 5px;
@@ -19,6 +28,7 @@ body {
 }
 #song-table {
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
   font: 19.2px "WeblyLight";
   color: #655643;

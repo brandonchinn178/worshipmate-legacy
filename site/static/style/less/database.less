@@ -1,5 +1,14 @@
 @import (reference) "base";
 
+header, footer, #content {
+    min-width: 500px / .9;
+}
+
+#content {
+    box-sizing: border-box;
+    padding: 0 30px 80px;
+}
+
 .select2-container-multi {
     font: (@font-size * 1.3) "Webly";
     margin: 5px;
@@ -18,6 +27,7 @@
 
 #song-table {
     width: 100%;
+    min-width: 500px;
     border-collapse: collapse;
     font: (@font-size * 1.2) "WeblyLight";
     color: @brown;

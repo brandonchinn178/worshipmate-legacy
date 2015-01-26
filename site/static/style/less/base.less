@@ -64,70 +64,72 @@ button, .button {
     cursor: pointer;
 }
 
-header h1 {
-    position: absolute;
-    top: -15px;
-    right: 50px;
-    font: italic small-caps bold (@font-size * 3) "Webly";
-    color: @orange;
-    cursor: default;
-    white-space: nowrap;
+header {
+    background: @brown;
+    margin-bottom: 25px;
+    h1 {
+        text-align: right;
+        padding-right: 50px;
+        font: italic small-caps bold (@font-size * 3) "Webly";
+        color: @orange;
+        cursor: default;
+        margin: 0;
+    }
+    nav {
+        padding: 15px 20px .5em;
+
+        [class^=nav] {
+            display: inline-block;
+            width: 125px;
+            min-height: 50px;
+            a {
+                padding: .2em;
+                font: small-caps bold (@font-size * 1.8) "Webly";
+                color: #FFF;
+                display: block;
+                text-align: center;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        .nav-search{
+            width: initial;
+            min-height: initial;
+            vertical-align: sub;
+            #search {
+                width: 40px;
+                vertical-align: bottom;
+                cursor: pointer;
+
+                &:hover {
+                    background: fade(#FFF, 15%);
+                }
+
+                &:active {
+                    background: fade(darken(#FFF, 21%), 20%);
+                }
+
+                & + form {
+                    display: inline;
+                    #searchbox {
+                        padding-left: .2em;
+                        background: @background;
+                        border: 3px inset @brown;
+                        vertical-align: bottom;
+                    }
+                }
+            }
+        }
+        .icon {
+            position: relative;
+        }
+    }
 }
 
 #wrapper {
     position: relative;
     min-height: 100%;
-}
-
-nav {
-    padding: 15px 20px .5em;
-    background: @brown;
-
-    td {
-        padding: 0 1.5em;
-        text-align: center;
-    }
-
-    tr:first-child td {
-        height: 65px;
-    }
-
-    a {
-        padding: .2em;
-        font: small-caps bold (@font-size * 1.8) "Webly";
-        color: #FFF;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    #search {
-        width: 40px;
-        vertical-align: bottom;
-        cursor: pointer;
-
-        &:hover {
-            background: fade(#FFF, 15%);
-        }
-
-        &:active {
-            background: fade(darken(#FFF, 21%), 20%);
-        }
-
-        &+form {
-            display: inline;
-        }
-    }
-
-    #searchbox {
-        padding-left: .2em;
-        background: @background;
-        border: 3px inset @brown;
-    }
-
-    .icon {
-        position: relative;
-    }
 }
 
 #quote {
