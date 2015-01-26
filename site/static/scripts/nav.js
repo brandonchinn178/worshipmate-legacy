@@ -1,25 +1,13 @@
 $(document).ready(function() {
     var nav = ["home", "database", "about", "contact"];
-    for (i = 0; i < nav.length; i++) {
-        var button = "#nav-" + nav[i];
-        var icon = "#" + nav[i] + "-icon";
-        $(icon).hide();
-
-        if (!('ontouchstart' in window)) {
-            var enterFunction = function(id) {
-                return function() {
-                    $(id).drop();
-                };
-            }(icon);
-            var exitFunction = function(id) {
-                return function() {
-                    $(id).fadeOut();
-                };
-            }(icon);
-            $(button).hover(enterFunction, exitFunction);
-        }
-    }
-
+    nav.forEach(function(name) {
+        var div = $(".nav-" + name);
+        div.children("a").hover(function() {
+            $(this).prev(".icon").addClass("active");
+        }, function() {
+            $(this).prev(".icon").removeClass("active");
+        });
+    });
     $("#searchbox").hide();
     $("#search").click(function(){
         if (!$("#searchbox").is(":visible")) {
@@ -33,12 +21,3 @@ $(document).ready(function() {
         }
     });
 });
-
-(function($) {
-    $.fn.drop = function() {
-        this.css('top', '-100px');
-        this.show();
-        this.animate({ top: "0px" });
-        return this;
-    };
-}( jQuery ));

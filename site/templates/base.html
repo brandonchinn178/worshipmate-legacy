@@ -15,16 +15,20 @@
             <header>
                 <h1>Worship Song Database</h1>
                 <nav>
-                    <div class="nav-home" data-icon="{% static 'icons/home.png' %}">
+                    <div class="nav-home">
+                        <img class="icon home" src="{% static 'icons/home.png' %}">
                         <a href="{% url 'home' %}">Home</a>
                     </div>
-                    <div class="nav-database" data-icon="{% static 'icons/database.png' }%">
+                    <div class="nav-database">
+                        <img class="icon database" src="{% static 'icons/database.png' %}">
                         <a href="{% url 'database' %}">Database</a>
                     </div>
-                    <div class="nav-about" data-icon="{% static 'icons/about.png' %}">
+                    <div class="nav-about">
+                        <img class="icon about" src="{% static 'icons/about.png' %}">
                         <a href="{% url 'about' %}">About</a>
                     </div>
-                    <div class="nav-contact" data-icon="{% static 'icons.contact.png' %}">
+                    <div class="nav-contact">
+                        <img class="icon contact" src="{% static 'icons/contact.png' %}">
                         <a href="{% url 'contact' %}">Contact</a>
                     </div>
                     <div class="nav-search">
