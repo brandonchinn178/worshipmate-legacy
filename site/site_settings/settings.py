@@ -145,14 +145,15 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
+
+MEDIAFILES_LOCATION = 'songs'
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
 if ON_OPENSHIFT:
     STATICFILES_LOCATION = 'static'
     STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-
-MEDIAFILES_LOCATION = 'songs'
-MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
 
 if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
