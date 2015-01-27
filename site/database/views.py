@@ -26,4 +26,5 @@ class SongView(DetailView):
             context['before'] = less[0]
         if greater.count() != 0:
             context['after'] = greater[0]
+        context['title'] = self.object.title
         return context
