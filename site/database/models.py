@@ -11,9 +11,9 @@ class Song(models.Model):
     title = models.CharField(max_length=50, primary_key=True, default=None)
     title_slug = models.SlugField(default='')
     artist = models.CharField(max_length=50, default='')
-    themes = models.TextField()
+    themes = models.ManyToManyField('Theme')
     speed = models.CharField(max_length=10, choices=SPEEDS.items(), default='')
-    lyrics = models.TextField()
+    lyrics = models.TextField(null=True, blank=True)
     doc = models.FileField(upload_to='doc', default='')
     pdf = models.FileField(upload_to='pdf', default='')
 
@@ -27,3 +27,9 @@ class Song(models.Model):
             self.title_slug = slugify(unicode(self.title))
 
         return ('song', (), {'title': self.title_slug})
+
+class Theme(models.Model):
+    name = models.CharField(max_length=50, primary_key=True)
+
+    def __unicode__(self):
+        return self.name

@@ -32,7 +32,7 @@
         <tr class="song {% cycle 'even' 'odd' %}">
             <td><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></td>
             <td>{{ song.artist }}</td>
-            <td>{{ song.themes }}</td>
+            <td>{{ song.themes.all|join:", " }}</td>
             <td>{{ song.speed|convert_speed }}</td>
         </tr>
     {% endfor %}
