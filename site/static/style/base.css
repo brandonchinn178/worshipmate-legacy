@@ -96,17 +96,18 @@ button,
 header {
   background: #655643;
   margin-bottom: 25px;
+  padding: 25px 0 10px;
+  text-align: center;
 }
 header h1 {
-  float: right;
-  padding-right: 50px;
+  display: inline-block;
+  margin: 0 25px;
   font: italic small-caps bold 48px "Webly";
   color: #e6bf65;
   cursor: default;
-  margin: 0;
 }
 header nav {
-  padding: 15px 20px .5em;
+  display: inline-block;
 }
 header nav div[class^=nav] {
   display: inline-block;
@@ -180,7 +181,7 @@ footer {
   height: 50px;
   background: #e9eff2;
 }
-@media (max-width: 555px) {
+@media (max-width: 515px) {
   img.icon {
     display: none;
   }

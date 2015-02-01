@@ -67,17 +67,17 @@ button, .button {
 header {
     background: @brown;
     margin-bottom: 25px;
+    padding: 25px 0 10px;
+    text-align: center;
     h1 {
-        float: right;
-        padding-right: 50px;
+        display: inline-block;
+        margin: 0 25px;
         font: italic small-caps bold (@font-size * 3) "Webly";
         color: @orange;
         cursor: default;
-        margin: 0;
     }
     nav {
-        padding: 15px 20px .5em;
-
+        display: inline-block;
         div[class^=nav] {
             display: inline-block;
             width: 125px;
@@ -160,7 +160,7 @@ footer {
     background: @footer-bg;
 }
 
-@media (max-width: 555px) {
+@media (max-width: 515px) {
     img.icon {
         display: none;
     }
