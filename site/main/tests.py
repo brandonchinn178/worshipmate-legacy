@@ -47,11 +47,10 @@ class SearchTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         c = connection.cursor()
-        c.execute("ALTER TABLE database_song ENGINE=MyISAM")
         c.execute("ALTER TABLE database_song ADD FULLTEXT (title)")
         c.execute("ALTER TABLE database_song ADD FULLTEXT (artist)")
-        c.execute("ALTER TABLE database_song ADD FULLTEXT (themes)")
         c.execute("ALTER TABLE database_song ADD FULLTEXT (lyrics)")
+        c.execute("ALTER TABLE database_theme ADD FULLTEXT (name)")
 
     def test_search(self):
         view = SearchView()

@@ -16,9 +16,8 @@ class SongTest(TestCase):
         self.assertEqual(song.title, 'test')
         self.assertEqual(song.artist, '')
         self.assertEqual(song.title_slug, '')
-        self.assertEqual(song.themes, '')
         self.assertEqual(song.speed, '')
-        self.assertEqual(song.lyrics, '')
+        self.assertEqual(song.lyrics, None)
         self.assertEqual(song.doc, '')
         self.assertEqual(song.pdf, '')
 
