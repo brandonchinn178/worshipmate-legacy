@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.shortcuts import render
 
 from main.views import *
 from database.views import *
@@ -20,3 +21,7 @@ urlpatterns = patterns('',
     url(r'^contact/$', ContactView.as_view(), name='contact'),
     url(r'^transpose/', TransposeView.as_view(), name='transpose'),
 )
+
+# just need to pass in context
+handler404 = lambda request: render(request, '404.html', {'title': 'Page Not Found'})
+handler500 = lambda request: render(request, '500.html', {'title': 'Server Error'})

@@ -41,9 +41,9 @@ else:
 TEMPLATE_DEBUG = DEBUG
 
 if DEBUG:
-     ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['*']
 else:
-     ALLOWED_HOSTS = ['.rhcloud.com', '.worshipdatabase.info']
+    ALLOWED_HOSTS = ['.rhcloud.com', '.worshipdatabase.info']
 
 # Application definition
 
