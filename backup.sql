@@ -209,7 +209,6 @@ CREATE TABLE `database_song` (
   KEY `database_song_2dbcba41` (`title_slug`),
   FULLTEXT KEY `title` (`title`),
   FULLTEXT KEY `artist` (`artist`),
-  FULLTEXT KEY `themes` (`themes`),
   FULLTEXT KEY `lyrics` (`lyrics`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
