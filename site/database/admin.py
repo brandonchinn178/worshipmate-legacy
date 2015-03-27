@@ -34,6 +34,20 @@ class ArtistFilter(admin.SimpleListFilter):
 
 @admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            'all': (
+                'style/vendor/select2.css',
+                'style/vendor/select2-spinner.gif',
+                'style/vendor/select2.png',
+            )
+        }
+        js = (
+            'scripts/vendor/jquery.min.js',
+            'scripts/vendor/select2.min.js',
+            'scripts/admin_song.js',
+        )
+
     list_display = ('title', 'artist', 'get_themes', 'speed')
     list_filter = [SongFilter, ArtistFilter]
     list_per_page = 50
