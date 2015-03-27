@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Song
+from database.models import Song, Theme
 import string
 
 class SongFilter(admin.SimpleListFilter):
@@ -34,8 +34,32 @@ class ArtistFilter(admin.SimpleListFilter):
 
 @admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
-    list_display = ('title', 'artist', 'themes', 'speed')
+    class Media:
+        css = {
+            'all': (
+                'style/vendor/select2.css',
+                'style/vendor/select2-spinner.gif',
+                'style/vendor/select2.png',
+            )
+        }
+        js = (
+            'scripts/vendor/jquery.min.js',
+            'scripts/vendor/select2.min.js',
+            'scripts/admin_song.js',
+        )
+
+    list_display = ('title', 'artist', 'get_themes', 'speed')
     list_filter = [SongFilter, ArtistFilter]
     list_per_page = 50
     ordering = ['title']
     prepopulated_fields = {'title_slug': ('title',)}
+
+    def get_themes(self, obj):
+        return ", ".join([theme.name for theme in obj.themes.all()])
+    get_themes.short_description = 'Themes'
+
+@admin.register(Theme)
+class ThemeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_per_page = 50
+    ordering = ['name']

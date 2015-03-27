@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.contrib import messages
 
 import os, string, requests
-from database.models import Song
+from database.models import Song, Theme
 from main.forms import ContactForm
 
 def add_title_mixin(view_class):
@@ -115,9 +115,15 @@ class SearchView(TitledTemplateView):
         songs = Song.objects.filter(
             Q(title__search=query) |
             Q(artist__search=query) |
-            Q(themes__search=query) |
             Q(lyrics__search=query)
         )
+
+        # search themes
+        themes = Theme.objects.filter(name__search=query)
+        for theme in themes:
+            for song in theme.song_set:
+                if song not in songs:
+                    songs.append(song)
 
         return {
             'pages': pages,

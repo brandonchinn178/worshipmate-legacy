@@ -7,7 +7,7 @@
 <h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
 
 <h2>Themes</h2>
-<p>{{ song.themes }} <a href="{% url 'contact' %}" id="feedback">Comments or Suggestions?</a></p>
+<p>{{ song.themes.all|join:", " }} <a href="{% url 'contact' %}" id="feedback">Comments or Suggestions?</a></p>
 <h2>Speed</h2>
 <p>{{ song.speed|convert_speed }}</p>
 
