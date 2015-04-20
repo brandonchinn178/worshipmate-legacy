@@ -80,11 +80,7 @@ class SearchView(TitledTemplateView):
         context = super(SearchView, self).get_context_data(**kwargs)
         query = kwargs['query']
         result = self.search(query)
-        context.update({
-            'query': query,
-            'pages': result['pages'],
-            'songs': result['songs']
-        })
+        context.update(result, query=query)
         return context
 
     def get(self, request, *args, **kwargs):
@@ -99,33 +95,24 @@ class SearchView(TitledTemplateView):
         Searches website pages and database songs for the given query
         """
         # search pages
-        pages = []
-        for page, link in {
-                ('Home', 'home'),
-                ('About', 'about'),
-                ('Database', 'database'),
-                ('Contact', 'contact'),
-                ('Transpose', 'transpose'),
-                ('Transposition', 'transpose')
-            }:
-            if page.lower() in query:
-                pages.append((page, reverse(link)))
+        pages = [
+            page for page in (
+                'Home', 'About', 'Database', 'Contact', 'Transpose', 'Transposition'
+            )
+            if page.lower() in query
+        ]
 
-        # search songs
-        songs = Song.objects.filter(
-            Q(title__search=query) |
-            Q(artist__search=query) |
-            Q(lyrics__search=query)
+        titles = Song.objects.filter(title__search=query)
+        artists = Song.objects.filter(artist__search=query).exclude(title__in=titles)
+        lyrics = Song.objects.filter(lyrics__search=query).exclude(
+            Q(title__in=titles) | Q(artist__in=artists)
         )
-
-        # search themes
-        themes = Theme.objects.filter(name__search=query)
-        for theme in themes:
-            for song in theme.song_set:
-                if song not in songs:
-                    songs.append(song)
+        themes = Song.objects.filter(themes__name__search=query)
 
         return {
             'pages': pages,
-            'songs': songs
+            'titles': titles,
+            'artists': artists,
+            'lyrics': lyrics,
+            'themes': themes
         }

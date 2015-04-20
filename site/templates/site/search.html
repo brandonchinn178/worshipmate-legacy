@@ -14,21 +14,52 @@ Therefore I will praise you, Lord, among the nations; I will sing the praises of
     <input name="query" id="searchbox" value="{{ query }}"></input>
 </form>
 
-{% if not pages and not songs %}
+{% if not pages and not titles and not artists and not lyrics and not themes %}
     <h2>No results found.</h2>
 {% endif %}
 
 {% if pages %}
     <h2>Pages Found</h2>
-    {% for page, link in pages %}
-    <p><a href="{{ link }}">{{ page }}</a></p>
+    {% for page in pages %}
+        <p><a href="{% url page|lower %}">{{ page }}</a></p>
     {% endfor %}
 {% endif %}
 
-{% if songs %}
+{% if titles or artists or lyrics or themes %}
     <h2>Songs Found</h2>
-    {% for song in songs %}
-    <p><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></p>
-    {% endfor %}
+    <div class="song-container">
+        {% if titles %}
+            <div class="column">
+                <h3>'{{ query }}' in title</h3>
+                {% for song in titles %}
+                    <p><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if artists %}
+            <div class="column">
+                <h3>'{{ query }}' in artist</h3>
+                {% for song in artists %}
+                    <p><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if lyrics %}
+            <div class="column">
+                <h3>'{{ query }}' in lyrics</h3>
+                {% for song in lyrics %}
+                    <p><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if themes %}
+            <div class="column">
+                <h3>'{{ query }}' in themes</h3>
+                {% for song in themes %}
+                    <p><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endif %}
 {% endblock %}

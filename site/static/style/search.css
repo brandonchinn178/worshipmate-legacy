@@ -3,3 +3,16 @@
   width: 500px;
   margin-bottom: 1.5em;
 }
+#content .song-container {
+  white-space: nowrap;
+  overflow: scroll;
+}
+#content .song-container .column {
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  padding: 0 10px;
+}
+#content .song-container .column p {
+  white-space: normal;
+}

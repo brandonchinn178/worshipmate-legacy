@@ -55,16 +55,27 @@ body {
 body {
   background: #f8f4d3;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font: small-caps bold 48px "Webly";
+}
 h1 {
   margin-bottom: .2em;
   color: #bf4d28;
-  font: italic small-caps bold 48px "Webly";
+  font-style: italic;
 }
 h2 {
-  margin: 0;
-  margin-bottom: 0;
-  font: small-caps bold 32px "Webly";
+  font-size: 32px;
   color: #847057;
+}
+h3 {
+  font-size: 24px;
+  color: #937d62;
 }
 p {
   margin-top: 0;
