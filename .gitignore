@@ -11,5 +11,5 @@ venv/
 virtenv/
 dist/
 build/
-songs/
+**/style/*.css
 **/sync
