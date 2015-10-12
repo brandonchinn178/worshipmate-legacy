@@ -21,7 +21,8 @@ def post_to_facebook(sender, instance, created, **kwargs):
         try:
             graph.put_object('me', 'feed', message=message)
         except Exception as e:
-            print e
-            print graph
-            print access_token
-            print message
+            import logging
+            logging.error(e)
+            logging.error(graph)
+            logging.error(access_token)
+            logging.error(message)
