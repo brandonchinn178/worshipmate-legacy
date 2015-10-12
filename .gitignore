@@ -13,3 +13,6 @@ dist/
 build/
 **/style/*.css
 **/sync
+.env
+doc/
+pdf/
