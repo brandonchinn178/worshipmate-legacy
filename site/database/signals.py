@@ -18,4 +18,10 @@ def post_to_facebook(sender, instance, created, **kwargs):
         context = Context({'song': instance})
         message = get_template('facebook_post.txt').render(context)
         graph = facebook.GraphAPI(access_token=access_token)
-        graph.put_object('me', 'feed', message=message)
+        try:
+            graph.put_object('me', 'feed', message=message)
+        except Exception as e:
+            print e
+            print graph
+            print access_token
+            print message
