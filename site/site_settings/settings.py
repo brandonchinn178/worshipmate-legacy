@@ -33,12 +33,7 @@ if ON_OPENSHIFT:
 SECRET_KEY = use_keys['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ON_OPENSHIFT:
-     DEBUG = False
-else:
-     DEBUG = True
-
-TEMPLATE_DEBUG = DEBUG
+DEBUG = not ON_OPENSHIFT
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -90,9 +85,25 @@ ROOT_URLCONF = 'site_settings.urls'
 
 WSGI_APPLICATION = 'site_settings.wsgi.application'
 
-TEMPLATE_DIRS = (
-     os.path.join(BASE_DIR, '..', 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, '..', 'templates')],
+        'OPTIONS': {
+            'context_processors': (
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ),
+            'debug': DEBUG
+        }
+    }
+]
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -110,8 +121,8 @@ if ON_OPENSHIFT:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'worshipdb',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'worshipdb.db',
             'USER': 'brandon',
             'PASSWORD': 'admin',
             'HOST': 'localhost',

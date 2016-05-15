@@ -1,18 +1,8 @@
-*.py[co]
-*.sw[po]
-*.bak
-*.orig
-*~
-*.log
-*.egg-info
-.project
-.pydevproject
+*.pyc
 venv/
-virtenv/
-dist/
-build/
-**/style/*.css
-**/sync
 .env
-doc/
-pdf/
+*.db
+
+# style files
+sync
+**/style/*.css

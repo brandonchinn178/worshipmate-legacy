@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.shortcuts import render
 
@@ -7,11 +7,7 @@ from database.views import *
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'worshipdatabase.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
+urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about/$', AboutView.as_view(), name='about'),
@@ -19,8 +15,8 @@ urlpatterns = patterns('',
     url(r'^database/$', DatabaseView.as_view(), name='database'),
     url(r'^database/(?P<title>[\w\W]+)/$', SongView.as_view(), name='song'),
     url(r'^contact/$', ContactView.as_view(), name='contact'),
-    url(r'^transpose/', TransposeView.as_view(), name='transpose'),
-)
+    url(r'^transpose/$', TransposeView.as_view(), name='transpose'),
+]
 
 # just need to pass in context
 handler404 = lambda request: render(request, '404.html', {'title': 'Page Not Found'})
