@@ -122,10 +122,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'worshipdb.db',
-            'USER': 'brandon',
-            'PASSWORD': 'admin',
-            'HOST': 'localhost',
+            'NAME': os.path.join(BASE_DIR, 'worshipdb.db'),
         }
     }
 

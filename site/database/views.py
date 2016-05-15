@@ -1,13 +1,15 @@
-from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 
 from database.models import Song
 
-class DatabaseView(ListView):
+class DatabaseView(TemplateView):
     template_name = 'site/database.html'
-    model = Song
-    queryset = Song.objects.order_by('title')
-    context_object_name = 'songs'
+
+    def get_context_data(self, **kwargs):
+        context = super(DatabaseView, self).get_context_data(**kwargs)
+        context['songs'] = Song.objects.order_by('title')
+        return context
 
 class SongView(DetailView):
     template_name = 'site/song.html'

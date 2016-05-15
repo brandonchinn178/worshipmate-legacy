@@ -1,166 +1,29 @@
 @import "colors";
+@import "mixins";
 
-$font-size: 16px;
-
-html, body {
+html, body, div, span, h1, h2, h3, h4, h5, h6,
+p, a, ul, li, label, form, input, textarea,
+header, footer {
     margin: 0;
     padding: 0;
-    height: 100%;
+    color: $black;
+    font-family: "Rubik", Helvetica, Arial, sans-serif;
+    box-sizing: border-box; // padding included in width
 }
 
-body {
-    background: $background;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-    font: small-caps bold ($font-size * 3) "Webly";
-}
-
-h1 {
-    margin-bottom: .2em;
-    color: $red;
-    font-style: italic;
-}
-
-h2 {
-    font-size: $font-size * 2;
-    color: lighten($brown, 10%);
-}
-
-h3 {
-    font-size: $font-size * 1.5;
-    color: lighten($brown, 15%);
-}
-
-p {
-    margin-top: 0;
-    margin-bottom: .5em;
-    color: $brown;
-    font: ($font-size * 1.5) "WeblyLight";
-}
-
-a {
-    text-decoration: none;
-    color: $teal;
-    &:hover {
-        color: $orange;
-    }
-}
-
-input {
-    margin: 0;
-    font: ($font-size * 1.5) "WeblyLight";
-    background: #FFF;
-    color: $brown;
-}
-
-button, .button {
-    font: small-caps bold ($font-size * 1.5) "Webly";
-    background: $brown;
-    color: #FFF;
-    border-color: $red;
-    cursor: pointer;
+html, body {
+    background: $light-gray;
 }
 
 header {
-    background: $brown;
-    margin-bottom: 25px;
-    padding: 25px 0 10px;
-    text-align: center;
+    background: $dark-gray;
     h1 {
-        display: inline-block;
-        margin: 0 25px;
-        font: italic small-caps bold ($font-size * 3) "Webly";
-        color: $orange;
-        cursor: default;
-    }
-    nav {
-        display: inline-block;
-        div[class^=nav] {
-            display: inline-block;
-            width: 125px;
-            min-height: 50px;
-            text-align: center;
-            img.icon {
-                position: relative;
-                top: -100px;
-                opacity: 0;
-                -webkit-transition: 0.5s;
-                transition: 0.5s;
-                &.active {
-                    top: 0;
-                    opacity: 1;
-                }
-            }
-            a {
-                padding: .2em;
-                font: small-caps bold ($font-size * 1.8) "Webly";
-                color: #FFF;
-                display: block;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-        div.nav-search{
-            width: initial;
-            min-height: initial;
-            text-align: left;
-            vertical-align: sub;
-            #search {
-                width: 40px;
-                vertical-align: bottom;
-                cursor: pointer;
-
-                &:hover {
-                    background: fade(#FFF, 15%);
-                }
-
-                &:active {
-                    background: fade(darken(#FFF, 21%), 20%);
-                }
-
-                & + form {
-                    display: inline;
-                    #searchbox {
-                        padding-left: .2em;
-                        background: $background;
-                        border: 3px inset $brown;
-                        vertical-align: bottom;
-                    }
-                }
-            }
-        }
+        color: $light-gray;
+        font-family: sans-serif("Anton");
     }
 }
 
-#wrapper {
-    position: relative;
-    min-height: 100%;
-}
-
-#quote {
-    text-align: center;
-    font: italic ($font-size * 1.5) "WeblyLight";
-}
-
-#content {
-    width: 90%;
-    margin: 0 auto;
-    padding-bottom: 80px;
-}
-
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 50px;
-    background: $footer-bg;
-}
-
-@media (max-width: 515px) {
-    img.icon {
-        display: none;
-    }
+.content {
+    padding: 20px;
+    font-size: 16px;
 }

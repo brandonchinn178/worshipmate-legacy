@@ -17,11 +17,12 @@
         <header>
             <h1>Worship Song Database</h1>
             <nav>
-                <a href="{% url 'database' %}">Database</a>
+                <a href="{% url 'home' %}">Database</a>
                 <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'contact' %}">Contact</a>
             </nav>
         </header>
-        <div id="content">
+        <div class="content">
             {% block content %}{% endblock %}
         </div>
     </body>
