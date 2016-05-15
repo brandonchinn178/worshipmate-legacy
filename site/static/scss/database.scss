@@ -1,4 +1,4 @@
-@import (reference) "base";
+@import "colors";
 
 header, footer, #content {
     min-width: 500px / .9;
@@ -10,29 +10,29 @@ header, footer, #content {
 }
 
 .select2-container-multi {
-    font: (@font-size * 1.3) "Webly";
+    // font: ($font-size * 1.3) "Webly";
     margin: 5px;
     width: 50%;
     .select2-choices .select2-search-choice {
-        font: (@font-size * 1.2) "Webly";
+        // font: ($font-size * 1.2) "Webly";
         line-height: 1em;
-        color: @red;
+        color: $red;
     }
 }
 
 .select2-results {
-    font: (@font-size * 1.3) "Webly";
-    color: @red;
+    // font: ($font-size * 1.3) "Webly";
+    color: $red;
 }
 
 #song-table {
     width: 100%;
     min-width: 500px;
     border-collapse: collapse;
-    font: (@font-size * 1.2) "WeblyLight";
-    color: @brown;
+    // font: ($font-size * 1.2) "WeblyLight";
+    color: $brown;
     th {
-        background-color: @brown;
+        background-color: $brown;
         background-image: url(vendor/tablesorter-unsorted.gif);
         background-position: 95% 50%;
         background-repeat: no-repeat;
@@ -54,11 +54,11 @@ header, footer, #content {
         }
     }
     tr.odd {
-        background: @lightblue;
+        background: $lightblue;
     }
     td, th {
         padding: .2em .5em;
-        border: 1px solid @brown;
+        border: 1px solid $brown;
         text-align: center;
     }
     td {
@@ -80,8 +80,8 @@ header, footer, #content {
             cursor: pointer;
             border: 0;
             background: fade(darken(#FFF, 21%), 50%);
-            color: @red;
-            font: (@font-size * 1.2) "WeblyLight";
+            color: $red;
+            // font: ($font-size * 1.2) "WeblyLight";
             padding: 0;
             margin: 2px;
             :hover {
@@ -95,9 +95,9 @@ header, footer, #content {
     h1 {
         margin-top: 0;
         span#artist {
-            font: small-caps (@font-size * 2) "Webly";
+            // font: small-caps ($font-size * 2) "Webly";
             margin-left: .5em;  
-            color: lighten(@brown, 14%);
+            color: lighten($brown, 14%);
             &:before {
                 content: "/ ";
             }
@@ -105,11 +105,11 @@ header, footer, #content {
     }
 
     a#feedback {
-        font: small-caps italic (@font-size * 1.2) "Webly";
-        color: @red;
+        // font: small-caps italic ($font-size * 1.2) "Webly";
+        color: $red;
         margin-left: 30px;
         &:hover {
-            color: @orange;
+            color: $orange;
         }
         &:before {
             content: "// ";
@@ -133,7 +133,7 @@ header, footer, #content {
         }
     }
     .navigation {
-        font: (@font-size * 1.5) "WeblyLight";
+        // font: ($font-size * 1.5) "WeblyLight";
         margin-top: 1em;
         overflow: hidden;
         .before {

@@ -2,7 +2,8 @@
 venv/
 .env
 *.db
-
-# style files
-sync
-**/style/*.css
+*.log
+node_modules/
+.sass-cache
+**/css/*.css
+*.css.map
