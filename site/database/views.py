@@ -2,13 +2,11 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
 from database.models import Song
-from main.views import add_title_mixin
 
-class DatabaseView(add_title_mixin(ListView)):
+class DatabaseView(ListView):
     template_name = 'site/database.html'
     model = Song
     queryset = Song.objects.order_by('title')
-    title = 'Database'
     context_object_name = 'songs'
 
 class SongView(DetailView):

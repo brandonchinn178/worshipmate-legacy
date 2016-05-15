@@ -9,50 +9,15 @@ import os, string, requests
 from database.models import Song, Theme
 from main.forms import ContactForm
 
-def add_title_mixin(view_class):
-    """
-    Generates a class that extends the given class to include a class variable 'title'
-    that will be in the context data
-    """
-    class TitledView(view_class):
-        title = ''
-
-        def get_context_data(self, **kwargs):
-            context = super(TitledView, self).get_context_data(**kwargs)
-            context['title'] = self.title
-            return context
-
-        def get(self, request, *args, **kwargs):
-            """ In case the parent view (i.e. FormView) doesn't use get_context_data """
-            response = super(TitledView, self).get(request, *args, **kwargs)
-            response.context_data.update({'title': self.title})
-            return response
-
-    return TitledView
-
-TitledTemplateView = add_title_mixin(TemplateView)
-
-class HomeView(TitledTemplateView):
-    template_name = 'site/index.html'
-    title = 'Home'
-
-class AboutView(TitledTemplateView):
+class AboutView(TemplateView):
     template_name = 'site/about.html'
-    title = 'About'
 
-class TransposeView(TitledTemplateView):
+class TransposeView(TemplateView):
     template_name = 'site/transpose.html'
-    title = 'Transpose'
 
-class ContactView(add_title_mixin(FormView)):
+class ContactView(FormView):
     template_name = 'site/contact.html'
     form_class = ContactForm
-    title = 'Contact'
-
-    def get(self, request, *args, **kwargs):
-        response = super(ContactView, self).get(request, *args, **kwargs)
-        response.context_data.update({'title': self.title})
-        return response
 
     def form_valid(self, form):
         name = form.cleaned_data['name']
@@ -72,9 +37,8 @@ class ContactView(add_title_mixin(FormView)):
                   "subject": "[Worship Song Database] Contact Form",
                   "text": message})
 
-class SearchView(TitledTemplateView):
+class SearchView(TemplateView):
     template_name = 'site/search.html'
-    title = 'Search'
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
