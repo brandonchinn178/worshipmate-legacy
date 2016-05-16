@@ -4,10 +4,18 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.contrib import messages
+from django.shortcuts import render
 
 import os, string, requests
 from database.models import Song, Theme
 from main.forms import ContactForm
+
+def get_handler(error_code):
+    error_templates = {
+        404: '404.html',
+        500: '500.html',
+    }
+    return lambda request: render(request, error_templates[error_code])
 
 class AboutView(TemplateView):
     template_name = 'site/about.html'

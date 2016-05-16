@@ -1,5 +1,10 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block body %}
+{% block title %}
+    Page Not Found | Worship Song Database
+{% endblock %}
+
+{% block content %}
+    <h1>Page Not Found</h1>
     <p>The page you are trying to reach is not available. Please <a href="{% url 'contact' %}">contact</a> me if you feel this page is in error. Otherwise, please return to the <a href="{% url 'home' %}">main site</a>.</p>
 {% endblock %}
