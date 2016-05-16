@@ -14,6 +14,11 @@ header, footer {
 
 html, body {
     background: $light-gray;
+    height: 100%;
+}
+
+li {
+    list-style: none;
 }
 
 header {
@@ -52,7 +57,7 @@ header {
 
 .content {
     padding: 30px 50px;
-    font-size: 16px;
+    font-size: 18px;
     h1 {
         margin-bottom: 10px;
     }

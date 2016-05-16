@@ -1,44 +1,26 @@
-{% extends "site/database.html" %}
-{% load custom_filters %}
+{% extends "base.html" %}
+{% load staticfiles utils %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/song.css' %}">
+{% endblock %}
 
 {% block content %}
-<p><a href="{% url 'database' %}">&larr; Back to Database</a></p>
-
-<h1>{{ song.title }} <span id="artist">{{ song.artist }}</span></h1>
-
-<h2>Themes</h2>
-<p>{{ song.themes.all|join:", " }} <a href="{% url 'contact' %}" id="feedback">Comments or Suggestions?</a></p>
-<h2>Speed</h2>
-<p>{{ song.speed|convert_speed }}</p>
-
-<object type="application/pdf" data="{{ song.pdf.url }}" id="songpdf">
-    <p>Your browser does not support embedded PDF files. To download or view the song, click one of the buttons below.</p>
-</object>
-
-<div id="buttons-container">
-    <div class="download">
-        <a href="{{ song.doc.url }}" download>
-            <button type="submit">Get .doc file</button>
-        </a>
-        <a href="{{ song.pdf.url }}" download>
-            <button type="submit">Get .pdf file</button>
-        </a>
+    <div class="info">
+        <h1>{{ song.title }}</h1>
+        <h2>{{ song.artist }}</h2>
+        <h3>Themes</h3>
+        <p>{{ song.themes.all|join:", " }}</p>
+        <h3>Speed</h3>
+        <p>{{ song.get_speed_display }}</p>
+        <h3>Downloads</h3>
+        <ul>
+            <li><a href="{{ song.doc.url }}">{{ song.doc.url|filename }}</a></li>
+            <li><a href="{{ song.pdf.url }}">{{ song.pdf.url|filename }}</a></li>
+        </ul>
     </div>
-    <div class="navigation">
-        <div class="before">
-            {% if before %}
-                <a href="{{ before.get_absolute_url }}">
-                    &larr; {{ before }}
-                </a>
-            {% endif %}
-        </div>
-        <div class="after">
-            {% if after %}
-                <a href="{{ after.get_absolute_url }}">
-                    {{ after }} &rarr;
-                </a>
-            {% endif %}
-        </div>
-    </div>
-</div>
+
+    <object type="application/pdf" data="{{ song.pdf.url }}" id="songpdf">
+        <p>Your browser does not support embedded PDF files. To download or view the song, click one of the buttons below.</p>
+    </object>
 {% endblock %}

@@ -27,7 +27,6 @@
     .filters-list {
         display: inline-block;
         li {
-            list-style: none;
             display: inline-block;
             margin-right: 5px;
             &:after {
@@ -48,7 +47,6 @@
 
 .songs-table {
     width: 100%;
-    font-size: 18px;
     text-align: center;
     border-collapse: collapse;
     td, th {

@@ -28,14 +28,3 @@ class SongView(DetailView):
     slug_field = 'title_slug'
     slug_url_kwarg = 'title'
     context_object_name = 'song'
-
-    def get_context_data(self, **kwargs):
-        context = super(SongView, self).get_context_data(**kwargs)
-        less = Song.objects.filter(title__lt=self.object.title).order_by('title').reverse()
-        greater = Song.objects.filter(title__gt=self.object.title).order_by('title')
-        if less.count() != 0:
-            context['before'] = less[0]
-        if greater.count() != 0:
-            context['after'] = greater[0]
-        context['title'] = self.object.title
-        return context

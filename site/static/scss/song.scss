@@ -1,0 +1,29 @@
+@import "vars";
+
+.content {
+    height: calc(100% - #{$header-height});
+    .info {
+        display: inline-block;
+        width: 50%;
+        vertical-align: top;
+        h1 {
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 1.8em;
+        }
+        h2 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        h3 {
+            font-weight: 400;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+    }
+    object {
+        width: 50%;
+        height: 100%;
+    }
+}
