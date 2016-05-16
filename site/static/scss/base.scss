@@ -8,6 +8,7 @@ header, footer {
     padding: 0;
     color: $black;
     font-family: "Rubik", Helvetica, Arial, sans-serif;
+    font-weight: 300;
     box-sizing: border-box; // padding included in width
 }
 
@@ -16,10 +17,35 @@ html, body {
 }
 
 header {
+    position: relative;
     background: $dark-gray;
-    h1 {
+    height: 150px;
+    font-size: 22px;
+    a {
+        text-decoration: none;
         color: $light-gray;
-        font-family: sans-serif("Anton");
+    }
+    h1 {
+        position: absolute;
+        left: 20px;
+        bottom: 5px;
+        font-size: 3em;
+        a {
+            font-family: sans-serif("Anton");
+            font-weight: normal;
+        }
+    }
+    nav {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        a {
+            display: block;
+            margin-bottom: 5px;
+            &:hover {
+                color: darken($light-gray, 10);
+            }
+        }
     }
 }
 
