@@ -11,6 +11,23 @@
     }
     td {
         border: 2px solid $light-gray;
+        &.title a {
+            &:hover {
+                color: lighten($black, 10);
+            }
+        }
+        &.themes a,
+        &.speed a {
+            color: $blue;
+            font-weight: 400;
+            text-decoration: none;
+            &:hover {
+                color: lighten($blue, 10);
+            }
+        }
+        &.speed {
+            width: 125px;
+        }
     }
     th {
         background: $dark-gray;
@@ -20,5 +37,30 @@
     }
     tr:nth-child(even) td {
         background: $table-gray-dark;
+    }
+}
+
+.dataTables_wrapper {
+    th {
+        position: relative;
+        cursor: pointer;
+        outline: 0;
+        &.sorting_disabled {
+            cursor: default;
+        }
+        &:after {
+            position: absolute;
+            right: 10px;
+        }
+        &.sorting:after {
+            content: url(vendor/tablesorter-unsorted.gif);
+        }
+        &.sorting_asc:after {
+            content: url(vendor/tablesorter-asc.gif);
+            top: 5px;
+        }
+        &.sorting_desc:after {
+            content: url(vendor/tablesorter-desc.gif);
+        }
     }
 }

@@ -41,6 +41,7 @@ header {
         bottom: 20px;
         a {
             display: block;
+            text-align: right;
             margin-bottom: 5px;
             &:hover {
                 color: darken($light-gray, 10);

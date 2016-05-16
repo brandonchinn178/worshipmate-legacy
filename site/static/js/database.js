@@ -1,129 +1,137 @@
 $(document).ready(function() {
-    $('#song-table')
-        .tablesorter({
-            headers: {
-                2: { sorter: false },
-                3: { sorter: false }
+    var options = {
+        dom: "t",
+        paging: false,
+        order: [],
+        columnDefs: [
+            {
+                targets: 2,
+                orderable: false,
             }
-        })
-        .bind('sortEnd', reColor);
-
-    setUpTags();
+        ],
+    };
+    $(".songs-table").dataTable(options);
 });
 
-function setUpTags() {
-    function setClick(tag) {
-        return function() {
-            var tags = $(".filter").select2("val");
-            if (tags.indexOf(tag) == -1) {
-                tags.push(tag);
-                $(".filter").select2("val", tags).trigger("addTag", [tag]);
-            } else {
-                tags.splice(tags.indexOf(tag), 1);
-                $(".filter").select2("val", tags).trigger("removeTag", [tag])
-            }
-        };
-    };
+// $(document).ready(function() {
+//     $('#song-table')
+//         .tablesorter({
+//             headers: {
+//                 2: { sorter: false },
+//                 3: { sorter: false }
+//             }
+//         })
+//         .bind('sortEnd', reColor);
 
-    var tags = ["Fast", "Slow", "Fast/Slow"];
+//     setUpTags();
+// });
 
-    $(".song").each(function(index) {
-        var themeColumn = $("td:eq(2)", this);
-        var themes = themeColumn.text().split(", ");
-        themeColumn.text("");
+// function setUpTags() {
+//     function setClick(tag) {
+//         return function() {
+//             var tags = $(".filter").select2("val");
+//             if (tags.indexOf(tag) == -1) {
+//                 tags.push(tag);
+//                 $(".filter").select2("val", tags).trigger("addTag", [tag]);
+//             } else {
+//                 tags.splice(tags.indexOf(tag), 1);
+//                 $(".filter").select2("val", tags).trigger("removeTag", [tag])
+//             }
+//         };
+//     };
 
-        themes.forEach(function(theme) {
-            $("<button>" + theme + "</button>")
-                .click(setClick(theme))
-                .appendTo(themeColumn);
+//     var tags = ["Fast", "Slow", "Fast/Slow"];
 
-            if (tags.indexOf(theme) == -1) {
-                tags.push(theme);
-            }
-        });
+//     $(".song").each(function(index) {
+//         var themeColumn = $("td:eq(2)", this);
+//         var themes = themeColumn.text().split(", ");
+//         themeColumn.text("");
 
-        var speedColumn = $("td:eq(3)", this);
-        var speed = speedColumn.text();
-        speedColumn.text("");
-        $("<button>" + speed + "</button>")
-            .click(setClick(speed))
-            .appendTo(speedColumn);
-    });
+//         themes.forEach(function(theme) {
+//             $("<button>" + theme + "</button>")
+//                 .click(setClick(theme))
+//                 .appendTo(themeColumn);
 
-    tags.sort().forEach(function(tag) {
-        $("<option>" + tag + "</option>").appendTo(".filter");
-    });
+//             if (tags.indexOf(theme) == -1) {
+//                 tags.push(theme);
+//             }
+//         });
 
-    $(".filter")
-        .select2({
-            placeholder: "Filter by...",
-            formatNoMatches: "No tags found"
-        })
-        .change(function(evt, params) {
-            if (evt.added) {
-                $(".filter").trigger("addTag", [evt.added.text]);
-            } else {
-                $(".filter").trigger("removeTag", [evt.removed.text]);
-            }
-        })
-        .on("addTag", function(evt, params) {
-            filter(params);
-        })
-        .on("removeTag", function(evt, params) {
-            unfilter(params);
-        });
-}
+//         var speedColumn = $("td:eq(3)", this);
+//         var speed = speedColumn.text();
+//         speedColumn.text("");
+//         $("<button>" + speed + "</button>")
+//             .click(setClick(speed))
+//             .appendTo(speedColumn);
+//     });
 
-function filter(tag) {
-    function isFiltered(buttons) {
-        for (var i = 0; i < buttons.length; i++) {
-            if (buttons[i].textContent == tag) {
-                return false;
-            }
-        }
-        return true;
-    }
+//     tags.sort().forEach(function(tag) {
+//         $("<option>" + tag + "</option>").appendTo(".filter");
+//     });
 
-    $(".song").not(":hidden").each(function(index) {
-        if (isFiltered($("button", this))) {
-            this.style.display = "none";
-        }
-    })
+//     $(".filter")
+//         .select2({
+//             placeholder: "Filter by...",
+//             formatNoMatches: "No tags found"
+//         })
+//         .change(function(evt, params) {
+//             if (evt.added) {
+//                 $(".filter").trigger("addTag", [evt.added.text]);
+//             } else {
+//                 $(".filter").trigger("removeTag", [evt.removed.text]);
+//             }
+//         })
+//         .on("addTag", function(evt, params) {
+//             filter(params);
+//         })
+//         .on("removeTag", function(evt, params) {
+//             unfilter(params);
+//         });
+// }
 
-    reColor();
-}
+// function filter(tag) {
+//     function isFiltered(buttons) {
+//         for (var i = 0; i < buttons.length; i++) {
+//             if (buttons[i].textContent == tag) {
+//                 return false;
+//             }
+//         }
+//         return true;
+//     }
 
-function unfilter(tag) {
-    var tags = $(".filter option:selected").toArray().map(function(option) {
-        return option.textContent;
-    });
+//     $(".song").not(":hidden").each(function(index) {
+//         if (isFiltered($("button", this))) {
+//             this.style.display = "none";
+//         }
+//     })
 
-    function isShowable(buttons) {
-        var label = [];
-        for (var i = 0; i < buttons.length; i++) {
-            label.push(buttons[i].textContent);
-        }
+//     reColor();
+// }
 
-        for (var i = 0; i < tags.length; i++) {
-            if (label.indexOf(tags[i]) == -1) {
-                return false;
-            }
-        }
-        return true;
-    }
+// function unfilter(tag) {
+//     var tags = $(".filter option:selected").toArray().map(function(option) {
+//         return option.textContent;
+//     });
 
-    $(".song:hidden").each(function(index) {
-        if (isShowable($("button", this))) {
-            this.style.display = "";
-        }
-    })
+//     function isShowable(buttons) {
+//         var label = [];
+//         for (var i = 0; i < buttons.length; i++) {
+//             label.push(buttons[i].textContent);
+//         }
 
-    reColor();
-}
+//         for (var i = 0; i < tags.length; i++) {
+//             if (label.indexOf(tags[i]) == -1) {
+//                 return false;
+//             }
+//         }
+//         return true;
+//     }
 
-function reColor() { 
-    // odd rows that aren't hidden should have the "odd" class
-    $(".song:not(:hidden)").filter(":odd").removeClass("even").addClass("odd");
-    // even rows that aren't hidden should have the "even" class
-    $(".song:not(:hidden)").filter(":even").removeClass("odd").addClass("even");
-}
+//     $(".song:hidden").each(function(index) {
+//         if (isShowable($("button", this))) {
+//             this.style.display = "";
+//         }
+//     })
+
+//     reColor();
+// }
