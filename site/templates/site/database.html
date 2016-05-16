@@ -2,10 +2,7 @@
 {% load staticfiles %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/select2.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/database.css' %}" />
-    <script src="{% static 'js/vendor/select2.min.js' %}"></script>
-    <script src="{% static 'js/vendor/jquery.tablesorter.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/database.css' %}">
     <script src="{% static 'js/database.js' %}"></script>
 {% endblock %}
 
@@ -13,7 +10,7 @@
     <table class="songs-table">
         <thead>
             <tr>
-                <th>Song Title</th>
+                <th>Title</th>
                 <th>Artist</th>
                 <th>Themes</th>
                 <th>Speed</th>
