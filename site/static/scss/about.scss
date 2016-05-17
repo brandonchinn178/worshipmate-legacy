@@ -1,8 +1,7 @@
-$content-width: 1000px;
+@import "mixins";
 
 .content {
-    width: $content-width;
-    margin: 0 auto;
+    @include info-content;
     h2 {
         margin-bottom: 0;
     }
@@ -20,8 +19,5 @@ $content-width: 1000px;
             display: inline-block;
             margin-right: 10px;
         }
-    }
-    @media (max-width: $content-width) {
-        width: 100%;
     }
 }

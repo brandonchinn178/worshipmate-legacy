@@ -77,4 +77,21 @@ header {
     a:hover {
         color: lighten($black, 10);
     }
+    button {
+        $primary-color: $black;
+        $secondary-color: $light-gray;
+        font-size: 20px;
+        font-family: sans-serif("Rubik");
+        padding: 7px 30px 5px;
+        background: $primary-color;
+        color: $secondary-color;
+        border: 3px solid $primary-color;
+        cursor: pointer;
+        transition: background 0.1s ease-in, color 0.1s ease-in;
+        outline: 0;
+        &:hover {
+            background: $secondary-color;
+            color: $primary-color;
+        }
+    }
 }

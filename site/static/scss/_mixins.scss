@@ -6,3 +6,16 @@
 @function sans-serif($font-families...) {
     @return $font-families, Helvetica, Arial, sans-serif;
 }
+
+/**
+ * For informational pages, make the content container narrower and
+ * centered in the page.
+ */
+@mixin info-content {
+    $content-width: 1000px;
+    width: $content-width;
+    margin: 0 auto;
+    @media (max-width: $content-width) {
+        width: 100%;
+    }
+}

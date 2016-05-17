@@ -162,10 +162,17 @@ if ON_OPENSHIFT:
     STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
     DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
-
-if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
 
 if ON_CI:
     # don't KeyError out on MAILGUN api key
     os.environ.update({'MAILGUN_KEY': ''})
+else:
+    # # email settings
+    # EMAIL_HOST = 'api.mailgun.net'
+    # EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+    # EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+    # EMAIL_PORT = 587
+    # EMAIL_USE_TLS = True
+    # EMAIL_SUBJECT_PREFIX = '[Members Only] '
+    # DEFAULT_FROM_EMAIL = 'calband-compcomm@lists.berkeley.edu'

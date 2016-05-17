@@ -34,23 +34,31 @@ class ContactView(FormView):
     template_name = 'site/contact.html'
     form_class = ContactForm
 
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context['success'] = 'success' in self.request.GET
+        return context
+
     def form_valid(self, form):
         name = form.cleaned_data['name']
         email = form.cleaned_data['email']
         body = form.cleaned_data['message']
         message = "Dear Brandon,\n\n%s\n\nSincerely,\n%s" % (body, name)
         self.send_simple_message(name, email, message)
-        messages.success(self.request, 'Thank you! I will respond to your message as soon as I can.')
-        return redirect(self.request.path)
+        return redirect('%s?success' % self.request.path)
 
     def send_simple_message(self, name, email, message):
-        return requests.post(
+        data = {
+            'from': '%s <%s>' % (name, email),
+            'to': 'Brandon Chinn <brandonchinn178@gmail.com>',
+            'subject': '[Worship Song Database] Contact Form',
+            'text': message
+        }
+        requests.post(
             "https://api.mailgun.net/v2/worshipdatabase.info/messages",
             auth=("api", os.environ['MAILGUN_KEY']),
-            data={"from": name + " <" + email + ">",
-                  "to": "Brandon Chinn <brandonchinn178@gmail.com>",
-                  "subject": "[Worship Song Database] Contact Form",
-                  "text": message})
+            data=data
+        )
 
 class SearchView(TemplateView):
     template_name = 'site/search.html'
