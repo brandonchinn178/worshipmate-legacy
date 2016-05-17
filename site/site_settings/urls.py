@@ -13,7 +13,6 @@ urlpatterns = [
     url(r'^search/$', SearchView.as_view(), name='search'),
     url(r'^database/(?P<title>[\w\W]+)/$', SongView.as_view(), name='song'),
     url(r'^contact/$', ContactView.as_view(), name='contact'),
-    url(r'^transpose/$', TransposeView.as_view(), name='transpose'),
 ]
 
 # just need to pass in context

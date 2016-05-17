@@ -56,11 +56,23 @@ header {
     }
 }
 
+@mixin make-header($size) {
+    font-size: $size;
+    margin: 10px 0;
+}
+
 .content {
     padding: 30px 50px;
     font-size: 18px;
     h1 {
-        margin-bottom: 10px;
+        @include make-header(1.8em);
+        font-weight: 400;
+    }
+    h2 {
+        @include make-header(1.3em);
+    }
+    p {
+        margin-bottom: 5px;
     }
     a:hover {
         color: lighten($black, 10);

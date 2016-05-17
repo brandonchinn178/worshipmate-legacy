@@ -20,8 +20,15 @@ def get_handler(error_code):
 class AboutView(TemplateView):
     template_name = 'site/about.html'
 
-class TransposeView(TemplateView):
-    template_name = 'site/transpose.html'
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+        context['links'] = [
+            ('Dropbox', '#'),
+            ('Facebook', 'http://facebook.com/WorshipSongDatabase'),
+            ('My SoundCloud', 'http://soundcloud.com/brandonchinn178'),
+            ('My Website', 'http://brandonchinn178.github.io'),
+        ]
+        return context
 
 class ContactView(FormView):
     template_name = 'site/contact.html'
