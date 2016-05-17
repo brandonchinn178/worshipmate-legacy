@@ -11,8 +11,8 @@
 
 .filter-bar {
     display: none;
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: $header-height;
     left: 0;
     width: 100%;
     background: $orange;
@@ -20,9 +20,9 @@
     font-size: 18px;
     box-shadow: 0 2px 5px lighten(#000, 40);
     z-index: 100;
-    &.fixed {
-        position: absolute;
-        top: $header-height;
+    &.sticky {
+        position: fixed;
+        top: 0;
     }
     .filters-list {
         display: inline-block;
@@ -55,12 +55,19 @@
     }
     td {
         border: 2px solid $light-gray;
+        &.speed {
+            width: 125px;
+        }
         &.themes a,
         &.speed a {
             @include blue-link;
         }
-        &.speed {
-            width: 125px;
+        // flush sides of table
+        &:first-child {
+            border-left: 0;
+        }
+        &:last-child {
+            border-right: 0;
         }
     }
     th {
