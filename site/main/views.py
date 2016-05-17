@@ -5,8 +5,9 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import render
+from django.core.mail import send_mail
 
-import os, string, requests
+import os, string
 from database.models import Song, Theme
 from main.forms import ContactForm
 
@@ -48,16 +49,11 @@ class ContactView(FormView):
         return redirect('%s?success' % self.request.path)
 
     def send_simple_message(self, name, email, message):
-        data = {
-            'from': '%s <%s>' % (name, email),
-            'to': 'Brandon Chinn <brandonchinn178@gmail.com>',
-            'subject': '[Worship Song Database] Contact Form',
-            'text': message
-        }
-        requests.post(
-            "https://api.mailgun.net/v2/worshipdatabase.info/messages",
-            auth=("api", os.environ['MAILGUN_KEY']),
-            data=data
+        send_mail(
+            '[Worship Song Database] Contact Form',
+            message,
+            '%s <%s>' % (name, email),
+            ['Brandon Chinn <brandonchinn178@gmail.com>'],
         )
 
 class SearchView(TemplateView):

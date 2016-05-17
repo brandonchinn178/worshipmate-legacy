@@ -168,11 +168,9 @@ if ON_CI:
     # don't KeyError out on MAILGUN api key
     os.environ.update({'MAILGUN_KEY': ''})
 else:
-    # # email settings
-    # EMAIL_HOST = 'api.mailgun.net'
-    # EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-    # EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
-    # EMAIL_PORT = 587
-    # EMAIL_USE_TLS = True
-    # EMAIL_SUBJECT_PREFIX = '[Members Only] '
-    # DEFAULT_FROM_EMAIL = 'calband-compcomm@lists.berkeley.edu'
+    # email settings
+    EMAIL_HOST = 'smtp.mailgun.org'
+    EMAIL_HOST_USER = 'postmaster@worshipdatabase.info'
+    EMAIL_HOST_PASSWORD = os.environ['MAILGUN_PASSWORD']
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
