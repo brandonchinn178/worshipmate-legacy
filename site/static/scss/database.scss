@@ -55,11 +55,6 @@
     }
     td {
         border: 2px solid $light-gray;
-        &.title a {
-            &:hover {
-                color: lighten($black, 10);
-            }
-        }
         &.themes a,
         &.speed a {
             @include blue-link;

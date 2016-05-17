@@ -15,6 +15,7 @@ header, footer {
 html, body {
     background: $light-gray;
     height: 100%;
+    min-width: 900px;
 }
 
 li {
@@ -60,5 +61,8 @@ header {
     font-size: 18px;
     h1 {
         margin-bottom: 10px;
+    }
+    a:hover {
+        color: lighten($black, 10);
     }
 }
