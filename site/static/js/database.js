@@ -1,5 +1,5 @@
 var HEADER_HEIGHT, FILTER_BAR_HEIGHT, table;
-var filters = [];
+window.filters = [];
 
 $(document).ready(function() {
     var options = {
@@ -46,25 +46,10 @@ $(document).ready(function() {
 });
 
 var addFilter = function(tag) {
-    if ($.inArray(tag, filters) !== -1) {
-        return;
+    // if tag already being filtered, remove instead
+    if (window.filters.indexOf(tag) !== -1) {
+        return removeFilter(tag);
     }
-
-    // do filter
-    $(".songs-table tbody tr")
-        .hide()
-        .each(function() {
-            var themes = $(this)
-                .find(".themes")
-                .text()
-                .split(", ");
-            var passesFilter = filters.every(function(tag) {
-                return $.inArray(tag, themes);
-            });
-            if (passesFilter) {
-                $(this).show();
-            }
-        });
 
     // add to filters list
     var item = $("<li>");
@@ -77,10 +62,12 @@ var addFilter = function(tag) {
             return false;
         });
 
-    filters.push(tag);
+    window.filters.push(tag);
     $(".filters-list").append(item);
 
-    if (filters.length === 1) {
+    doFilter();
+
+    if (window.filters.length === 1) {
         $(".filter-bar").show();
         $(".content").css("margin-top", FILTER_BAR_HEIGHT);
     }
@@ -89,19 +76,41 @@ var addFilter = function(tag) {
 };
 
 var removeFilter = function(tag) {
-    filters.splice(filters.indexOf(tag), 1);
+    var index = window.filters.indexOf(tag);
+    window.filters.splice(index, 1);
     $(".filters-list a").each(function() {
         if ($(this).text() === tag) {
             $(this).parent().remove();
         }
     });
 
-    if (filters.length === 0) {
+    doFilter();
+
+    if (window.filters.length === 0) {
         $(".filter-bar").hide();
         $(".content").css("margin-top", "");
     }
 
     updateState();
+};
+
+var doFilter = function() {
+    $(".songs-table tbody tr")
+        .hide()
+        .each(function() {
+            var tags = $(this)
+                .find(".themes")
+                .text()
+                .split(", ");
+            tags.push($(this).find(".speed").text());
+
+            for (var i = 0; i < window.filters.length; i++) {
+                if (tags.indexOf(window.filters[i]) === -1) {
+                    return;
+                }
+            }
+            $(this).show();
+        });
 };
 
 /**
