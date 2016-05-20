@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load staticfiles utils %}
 
+{% block title %}
+    {{ song.title }} | Worship Song Database
+{% endblock %}
+
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/song.css' %}">
 {% endblock %}

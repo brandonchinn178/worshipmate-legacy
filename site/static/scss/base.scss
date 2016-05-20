@@ -77,6 +77,10 @@ header {
     a:hover {
         color: lighten($black, 10);
     }
+    input, textarea {
+        font-size: 18px;
+        padding: 4px;
+    }
     button {
         $primary-color: $black;
         $secondary-color: $light-gray;

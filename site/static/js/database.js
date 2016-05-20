@@ -1,5 +1,8 @@
 var HEADER_HEIGHT, FILTER_BAR_HEIGHT, table;
-window.filters = [];
+window.state = {
+    filters: [],
+    search: "",
+};
 
 $(document).ready(function() {
     var options = {
@@ -31,6 +34,7 @@ $(document).ready(function() {
         // trigger to initialize
         .scroll();
 
+    // add filter interactions
     $(".songs-table")
         .find(".themes a, .speed a")
         .click(function() {
@@ -38,16 +42,20 @@ $(document).ready(function() {
             return false;
         });
 
-    if (history.state !== null) {
-        $.each(history.state, function(i, val) {
-            addFilter(val);
-        });
+    // set up search bar
+    $(".search-bar input").keyup(function() {
+        doSearch($(this).val());
+    });
+
+    // update state
+    if (window.history.state !== null) {
+        applyState(window.history.state);
     }
 });
 
 var addFilter = function(tag) {
     // if tag already being filtered, remove instead
-    if (window.filters.indexOf(tag) !== -1) {
+    if (window.state.filters.indexOf(tag) !== -1) {
         return removeFilter(tag);
     }
 
@@ -62,12 +70,12 @@ var addFilter = function(tag) {
             return false;
         });
 
-    window.filters.push(tag);
+    window.state.filters.push(tag);
     $(".filters-list").append(item);
 
     doFilter();
 
-    if (window.filters.length === 1) {
+    if (window.state.filters.length === 1) {
         $(".filter-bar").show();
         $(".content").css("margin-top", FILTER_BAR_HEIGHT);
     }
@@ -76,8 +84,8 @@ var addFilter = function(tag) {
 };
 
 var removeFilter = function(tag) {
-    var index = window.filters.indexOf(tag);
-    window.filters.splice(index, 1);
+    var index = window.state.filters.indexOf(tag);
+    window.state.filters.splice(index, 1);
     $(".filters-list a").each(function() {
         if ($(this).text() === tag) {
             $(this).parent().remove();
@@ -86,7 +94,7 @@ var removeFilter = function(tag) {
 
     doFilter();
 
-    if (window.filters.length === 0) {
+    if (window.state.filters.length === 0) {
         $(".filter-bar").hide();
         $(".content").css("margin-top", "");
     }
@@ -94,6 +102,9 @@ var removeFilter = function(tag) {
     updateState();
 };
 
+/**
+ * Do our own filter algorithm, instead of the DataTables search function
+ */
 var doFilter = function() {
     $(".songs-table tbody tr")
         .hide()
@@ -102,10 +113,16 @@ var doFilter = function() {
                 .find(".themes")
                 .text()
                 .split(", ");
-            tags.push($(this).find(".speed").text());
+            var speed = $(this).find(".speed").text();
+            // Fast/Slow also acts as both Fast and Slow
+            if (speed === "Fast/Slow") {
+                tags.push("Fast");
+                tags.push("Slow");
+            }
+            tags.push(speed);
 
-            for (var i = 0; i < window.filters.length; i++) {
-                if (tags.indexOf(window.filters[i]) === -1) {
+            for (var i = 0; i < window.state.filters.length; i++) {
+                if (tags.indexOf(window.state.filters[i]) === -1) {
                     return;
                 }
             }
@@ -113,13 +130,66 @@ var doFilter = function() {
         });
 };
 
+var doSearch = function(query) {
+    table.search(query).draw();
+
+    // no matches
+    if ($(".songs-table tbody tr:visible").length === 0) {
+        var emptyText = "No songs found for: " + query;
+        var empty = $(".songs-table .dataTables_empty");
+        // all rows with search hidden by filter
+        if (empty.length === 0) {
+            var cell = $("<td>")
+                .text(emptyText)
+                .attr("colspan", "100");
+            $("<tr>")
+                .addClass("empty-row")
+                .append(cell)
+                .appendTo(".songs-table tbody");
+        } else {
+            empty.text(emptyText);
+        }
+    } else {
+        $(".songs-table tbody .empty-row").remove();
+    }
+
+    window.state.search = query;
+    updateState();
+};
+
 /**
  * When filtering, always save state so user can navigate back to same state
  */
 var updateState = function() {
     if (window.location.hash === "") {
-        window.history.pushState(filters, "", "#filter");
+        window.history.pushState(window.state, "", "#filter");
     } else {
-        window.history.replaceState(filters, "");
+        window.history.replaceState(window.state, "");
+    }
+};
+
+/**
+ * Load previously saved state
+ */
+var applyState = function(state) {
+    $.each(state.filters, function(i, val) {
+        addFilter(val);
+    });
+
+    var query = state.search;
+    $(".search-bar input").val(query);
+    doSearch(query);
+};
+
+/**
+ * Going from / to #filter or vice versa
+ */
+window.onpopstate = function() {
+    var state = window.history.state;
+    // #filter to /
+    if (state === null) {
+        window.location = "";
+    } else {
+        applyState(state);
     }
 };
