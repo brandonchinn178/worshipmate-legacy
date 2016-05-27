@@ -104,8 +104,11 @@ var removeFilter = function(tag) {
 
 /**
  * Do our own filter algorithm, instead of the DataTables search function
+ *
+ * TODO: fix re-coloring issue
  */
 var doFilter = function() {
+    var filters = window.state.filters;
     $(".songs-table tbody tr")
         .hide()
         .each(function() {
@@ -121,8 +124,8 @@ var doFilter = function() {
             }
             tags.push(speed);
 
-            for (var i = 0; i < window.state.filters.length; i++) {
-                if (tags.indexOf(window.state.filters[i]) === -1) {
+            for (var i = 0; i < filters.length; i++) {
+                if (tags.indexOf(filters[i]) === -1) {
                     return;
                 }
             }
@@ -130,6 +133,7 @@ var doFilter = function() {
         });
 };
 
+// TODO: add to filter list
 var doSearch = function(query) {
     table.search(query).draw();
 
