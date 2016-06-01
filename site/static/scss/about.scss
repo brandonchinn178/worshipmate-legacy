@@ -1,4 +1,4 @@
-@import "mixins";
+@import "vars", "mixins";
 
 .content {
     @include info-content;
@@ -11,7 +11,7 @@
         li {
             display: inline-block;
             margin: 0 15px;
-            font-weight: 400;
+            font-weight: $weight-bold;
         }
     }
     .links {
