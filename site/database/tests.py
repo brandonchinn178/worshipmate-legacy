@@ -11,16 +11,6 @@ class SongTest(TestCase):
             Song.objects.create
         )
 
-    def test_default(self):
-        song = Song.objects.create(title='test')
-        self.assertEqual(song.title, 'test')
-        self.assertEqual(song.artist, '')
-        self.assertEqual(song.title_slug, '')
-        self.assertEqual(song.speed, '')
-        self.assertEqual(song.lyrics, None)
-        self.assertEqual(song.doc, '')
-        self.assertEqual(song.pdf, '')
-
     def test_slug(self):
         song = Song.objects.create(title='Test Title')
         self.assertEqual(song.title_slug, '')
