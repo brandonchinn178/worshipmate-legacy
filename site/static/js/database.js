@@ -15,6 +15,9 @@ $(document).ready(function() {
                 orderable: false,
             }
         ],
+        language: {
+            zeroRecords: "No songs found",
+        },
     };
 
     table = $(".songs-table").DataTable(options);
@@ -44,22 +47,55 @@ $(document).ready(function() {
 
     // set up search bar
     $(".search-bar input").keyup(function() {
-        doSearch($(this).val());
+        updateSearch($(this).val());
     });
 
     // update state
     if (window.history.state !== null) {
-        applyState(window.history.state);
+        applyState();
     }
 });
 
+/** 
+ * Custom filtering function which filters rows based on the selected tags
+ * after searching for text
+ *
+ * Ex. https://datatables.net/examples/plug-ins/range_filtering.html
+ */
+$.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+    var tags = data[2].split(", ");
+    var speed = data[3];
+    tags.push(speed);
+
+    // Fast/Slow also acts as both Fast and Slow
+    if (speed === "Fast/Slow") {
+        tags.push("Fast");
+        tags.push("Slow");
+    }
+
+    var filters = window.state.filters;
+    for (var i = 0; i < filters.length; i++) {
+        if (tags.indexOf(filters[i]) === -1) {
+            return false;
+        }
+    }
+    return true;
+});
+
+/**
+ * Adds filter to the state and the filter bar
+ */
 var addFilter = function(tag) {
     // if tag already being filtered, remove instead
     if (window.state.filters.indexOf(tag) !== -1) {
-        return removeFilter(tag);
+        removeFilter(tag);
+        return;
     }
 
-    // add to filters list
+    // update filter list
+    window.state.filters.push(tag);
+
+    // update filter bar
     var item = $("<li>");
     $("<a>")
         .text(tag)
@@ -69,102 +105,60 @@ var addFilter = function(tag) {
             removeFilter($(this).text());
             return false;
         });
-
-    window.state.filters.push(tag);
     $(".filters-list").append(item);
-
-    doFilter();
 
     if (window.state.filters.length === 1) {
         $(".filter-bar").show();
         $(".content").css("margin-top", FILTER_BAR_HEIGHT);
     }
 
-    updateState();
+    doFilter();
 };
 
+/**
+ * Removes filter from state and the filter bar
+ */
 var removeFilter = function(tag) {
+    // update filter list
     var index = window.state.filters.indexOf(tag);
     window.state.filters.splice(index, 1);
-    $(".filters-list a").each(function() {
-        if ($(this).text() === tag) {
-            $(this).parent().remove();
-        }
-    });
 
-    doFilter();
+    // update filter bar
+    $(".filters-list a")
+        .filter(function() {
+            return $(this).text() === tag;
+        })
+        .parent().remove();
 
     if (window.state.filters.length === 0) {
         $(".filter-bar").hide();
         $(".content").css("margin-top", "");
     }
 
-    updateState();
+    doFilter();
 };
 
 /**
- * Do our own filter algorithm, instead of the DataTables search function
- *
- * TODO: fix re-coloring issue
+ * Updates search query in state and filter bar
+ */
+var updateSearch = function(query) {
+    window.state.search = query;
+
+    // TODO: add to filter bar
+
+    doFilter();
+};
+
+/**
+ * Do the tag filter and search query, redraw the table, and do any post-filter
+ * actions
  */
 var doFilter = function() {
-    var filters = window.state.filters;
-    $(".songs-table tbody tr")
-        .hide()
-        .each(function() {
-            var tags = $(this)
-                .find(".themes")
-                .text()
-                .split(", ");
-            var speed = $(this).find(".speed").text();
-            // Fast/Slow also acts as both Fast and Slow
-            if (speed === "Fast/Slow") {
-                tags.push("Fast");
-                tags.push("Slow");
-            }
-            tags.push(speed);
+    table.search(window.state.search).draw();
 
-            for (var i = 0; i < filters.length; i++) {
-                if (tags.indexOf(filters[i]) === -1) {
-                    return;
-                }
-            }
-            $(this).show();
-        });
-};
+    // TODO: show/hide filter bar
 
-// TODO: add to filter list
-var doSearch = function(query) {
-    table.search(query).draw();
-
-    // no matches
-    if ($(".songs-table tbody tr:visible").length === 0) {
-        var emptyText = "No songs found for: " + query;
-        var empty = $(".songs-table .dataTables_empty");
-        // all rows with search hidden by filter
-        if (empty.length === 0) {
-            var cell = $("<td>")
-                .text(emptyText)
-                .attr("colspan", "100");
-            $("<tr>")
-                .addClass("empty-row")
-                .append(cell)
-                .appendTo(".songs-table tbody");
-        } else {
-            empty.text(emptyText);
-        }
-    } else {
-        $(".songs-table tbody .empty-row").remove();
-    }
-
-    window.state.search = query;
-    updateState();
-};
-
-/**
- * When filtering, always save state so user can navigate back to same state
- */
-var updateState = function() {
+    // always save state so user can navigate back to same state
     if (window.location.hash === "") {
         window.history.pushState(window.state, "", "#filter");
     } else {
@@ -175,25 +169,28 @@ var updateState = function() {
 /**
  * Load previously saved state
  */
-var applyState = function(state) {
+var applyState = function() {
+    // clear filters bar
+    $(".filters-list").empty();
+
+    var state = window.history.state;
     $.each(state.filters, function(i, val) {
         addFilter(val);
     });
 
     var query = state.search;
     $(".search-bar input").val(query);
-    doSearch(query);
+    doFilter(query);
 };
 
 /**
  * Going from / to #filter or vice versa
  */
 window.onpopstate = function() {
-    var state = window.history.state;
     // #filter to /
-    if (state === null) {
+    if (window.history.state === null) {
         window.location = "";
     } else {
-        applyState(state);
+        applyState();
     }
 };
