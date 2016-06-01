@@ -43,15 +43,15 @@ else:
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'admin',
     'main',
     'database',
-    'storages'
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -174,3 +174,5 @@ else:
     EMAIL_HOST_PASSWORD = os.environ['MAILGUN_PASSWORD']
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
+
+LOGIN_URL = 'admin:login'
