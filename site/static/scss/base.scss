@@ -1,5 +1,4 @@
-@import "vars";
-@import "mixins";
+@import "vars", "mixins";
 
 html, body, div, span, h1, h2, h3, h4, h5, h6,
 p, a, ul, li, label, form, input, textarea,
@@ -7,8 +6,8 @@ header, footer {
     margin: 0;
     padding: 0;
     color: $black;
-    font-family: "Rubik", Helvetica, Arial, sans-serif;
-    font-weight: 300;
+    font-family: sans-serif("Rubik");
+    font-weight: $weight-normal;
     box-sizing: border-box; // padding included in width
 }
 
@@ -66,7 +65,7 @@ header {
     font-size: 18px;
     h1 {
         @include make-header(1.8em);
-        font-weight: 400;
+        font-weight: $weight-bold;
     }
     h2 {
         @include make-header(1.3em);

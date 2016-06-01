@@ -19,3 +19,12 @@
         width: 100%;
     }
 }
+
+@mixin blue-link {
+    color: $blue;
+    font-weight: 400;
+    text-decoration: none;
+    &:hover {
+        color: lighten($blue, 10);
+    }
+}

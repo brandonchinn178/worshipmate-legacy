@@ -8,8 +8,15 @@
 {% endblock %}
 
 {% block content %}
-    <div class="filter-bar">
-        Filtering by: <ul class="filters-list"></ul>
+    <div class="status-bar">
+        <div class="search-text">
+            <span class="status-label">Searching by:</span>
+            <span class="search-query"></span>
+        </div>
+        <div class="filter-text">
+            <span class="status-label">Filtering by:</span>
+            <ul class="filter-list"></ul>
+        </div>
     </div>
     <div class="search-bar">
         <label for="search">Search:</label>

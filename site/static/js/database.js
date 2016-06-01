@@ -22,16 +22,16 @@ $(document).ready(function() {
 
     table = $(".songs-table").DataTable(options);
     HEADER_HEIGHT = $("header").outerHeight();
-    FILTER_BAR_HEIGHT = $(".filter-bar").outerHeight();
+    FILTER_BAR_HEIGHT = $(".status-bar").outerHeight();
 
     // set up scroll
     $(window)
         .scroll(function() {
             // header is showing
             if ($(this).scrollTop() < HEADER_HEIGHT) {
-                $(".filter-bar").removeClass("sticky");
+                $(".status-bar").removeClass("sticky");
             } else {
-                $(".filter-bar").addClass("sticky");
+                $(".status-bar").addClass("sticky");
             }
         })
         // trigger to initialize
@@ -41,7 +41,12 @@ $(document).ready(function() {
     $(".songs-table")
         .find(".themes a, .speed a")
         .click(function() {
-            addFilter($(this).text());
+            var tag = $(this).text();
+            if (isFilter(tag)) {
+                removeFilter(tag);
+            } else {
+                addFilter(tag);
+            }
             return false;
         });
 
@@ -83,19 +88,24 @@ $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
 });
 
 /**
- * Adds filter to the state and the filter bar
+ * Returns true if the given tag is already being filtered on
+ */
+var isFilter = function(tag) {
+    return window.state.filters.indexOf(tag) !== -1;
+};
+
+/**
+ * Adds filter to the state and the status bar and redraws table
  */
 var addFilter = function(tag) {
-    // if tag already being filtered, remove instead
-    if (window.state.filters.indexOf(tag) !== -1) {
-        removeFilter(tag);
+    if (isFilter(tag)) {
         return;
     }
 
     // update filter list
     window.state.filters.push(tag);
 
-    // update filter bar
+    // update status bar
     var item = $("<li>");
     $("<a>")
         .text(tag)
@@ -105,46 +115,35 @@ var addFilter = function(tag) {
             removeFilter($(this).text());
             return false;
         });
-    $(".filters-list").append(item);
-
-    if (window.state.filters.length === 1) {
-        $(".filter-bar").show();
-        $(".content").css("margin-top", FILTER_BAR_HEIGHT);
-    }
+    $(".filter-list").append(item);
 
     doFilter();
 };
 
 /**
- * Removes filter from state and the filter bar
+ * Removes filter from state and the status bar and redraws table
  */
 var removeFilter = function(tag) {
     // update filter list
     var index = window.state.filters.indexOf(tag);
     window.state.filters.splice(index, 1);
 
-    // update filter bar
-    $(".filters-list a")
+    // update status bar
+    $(".filter-list a")
         .filter(function() {
             return $(this).text() === tag;
         })
         .parent().remove();
 
-    if (window.state.filters.length === 0) {
-        $(".filter-bar").hide();
-        $(".content").css("margin-top", "");
-    }
-
     doFilter();
 };
 
 /**
- * Updates search query in state and filter bar
+ * Updates search query in state and status bar and redraws table
  */
 var updateSearch = function(query) {
     window.state.search = query;
-
-    // TODO: add to filter bar
+    $(".search-query").text(query);
 
     doFilter();
 };
@@ -154,9 +153,32 @@ var updateSearch = function(query) {
  * actions
  */
 var doFilter = function() {
-    table.search(window.state.search).draw();
+    var filters = window.state.filters;
+    var query = window.state.search;
 
-    // TODO: show/hide filter bar
+    table.search(query).draw();
+
+    if (filters.length === 0 && query.length === 0) {
+        $(".status-bar").hide();
+        $(".content").css("margin-top", "");
+    } else {
+        $(".status-bar").show();
+        $(".content").css("margin-top", FILTER_BAR_HEIGHT);
+
+        // show/hide filters section
+        if (filters.length === 0) {
+            $(".filter-text").hide();
+        } else {
+            $(".filter-text").show();
+        }
+
+        // show/hide search section
+        if (query.length === 0) {
+            $(".search-text").hide();
+        } else {
+            $(".search-text").show();
+        }
+    }
 
     // always save state so user can navigate back to same state
     if (window.location.hash === "") {
@@ -171,7 +193,7 @@ var doFilter = function() {
  */
 var applyState = function() {
     // clear filters bar
-    $(".filters-list").empty();
+    $(".filter-list").empty();
 
     var state = window.history.state;
     $.each(state.filters, function(i, val) {
@@ -180,7 +202,8 @@ var applyState = function() {
 
     var query = state.search;
     $(".search-bar input").val(query);
-    doFilter(query);
+    updateSearch(query);
+    doFilter();
 };
 
 /**

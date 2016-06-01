@@ -1,15 +1,6 @@
-@import "vars";
+@import "vars", "mixins";
 
-@mixin blue-link {
-    color: $blue;
-    font-weight: 400;
-    text-decoration: none;
-    &:hover {
-        color: lighten($blue, 10);
-    }
-}
-
-.filter-bar {
+.status-bar {
     display: none;
     position: absolute;
     top: $header-height;
@@ -20,11 +11,22 @@
     font-size: 18px;
     box-shadow: 0 2px 5px lighten(#000, 40);
     z-index: 100;
+    overflow-x: auto;
+    white-space: nowrap;
     &.sticky {
         position: fixed;
         top: 0;
     }
-    .filters-list {
+    div {
+        display: inline-block;
+        &.search-text {
+            margin-right: 100px;
+        }
+    }
+    .status-label {
+        margin-right: 5px;
+    }
+    .filter-list {
         display: inline-block;
         li {
             display: inline-block;
@@ -42,6 +44,9 @@
                 @include blue-link;
             }
         }
+    }
+    .search-query {
+        font-weight: $weight-bold;
     }
 }
 
@@ -83,7 +88,7 @@
     th {
         background: $dark-gray;
         color: $light-gray;
-        font-weight: 300;
+        font-weight: $weight-normal;
         font-size: 1.2em;
     }
     tr:nth-child(even) td {
