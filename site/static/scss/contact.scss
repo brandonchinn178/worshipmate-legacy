@@ -5,16 +5,6 @@
     p {
         text-align: center;
     }
-    .feedback {
-        margin: 20px 0;
-        p {
-            font-weight: $weight-bold;
-            color: $blue;
-            &.error {
-                color: red;
-            }
-        }
-    }
     form {
         width: 500px;
         margin: 0 auto;

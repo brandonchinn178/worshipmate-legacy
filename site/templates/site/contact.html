@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load partials %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/contact.css' %}" />
+    {% add_style 'contact.css' %}
 {% endblock %}
 
 {% block content %}
@@ -14,14 +14,7 @@
             <p class="error">Please fill in all required fields</p>
         {% endif %}
     </div>
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="field">
-                {{ field.label_tag }}
-                {{ field }}
-            </div>
-        {% endfor %}
+    {% create_form form %}
         <button>Submit</button>
-    </form>
+    {% end_create_form %}
 {% endblock %}

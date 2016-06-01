@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load partials %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/database.css' %}">
-    <script src="{% static 'js/vendor/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'js/database.js' %}"></script>
+    {% add_style 'database.css' %}
+    {% add_script 'vendor/jquery.dataTables.min.js' 'database.js' %}
 {% endblock %}
 
 {% block content %}
