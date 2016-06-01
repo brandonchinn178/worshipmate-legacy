@@ -2,22 +2,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Worship Song Database{% endblock %}</title>
+    <title>Admin | Worship Song Database</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400" rel="stylesheet" type="text/css">
-    {% add_script 'vendor/analytics.js' 'vendor/jquery.min.js' %}
+    {% add_script 'vendor/jquery.min.js' %}
     {% add_style 'base.css' %}
     {% block head %}{% endblock %}
 </head>
 {% spaceless %}
     <body>
         <header>
-            <h1><a href="{% url 'home' %}">Worship Song Database</a></h1>
+            <h1><a href="{% url 'admin:index' %}">Worship Song Database &mdash; Admin</a></h1>
             <nav>
                 <a href="{% url 'home' %}">Database</a>
-                <a href="{% url 'about' %}">About</a>
-                <a href="{% url 'contact' %}">Contact</a>
+                <a href="{% url 'admin:add_song' %}">Add Song</a>
+                <a href="{% url 'admin:account' %}">Account</a>
             </nav>
         </header>
         <div class="content">
