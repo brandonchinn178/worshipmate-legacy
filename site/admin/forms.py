@@ -52,8 +52,20 @@ class AddSongForm(SongObjectForm):
 
     def save(self, commit=True):
         instance = super(AddSongForm, self).save(commit=commit)
-        instance.title_slug = slugify(self.cleaned_data['title'])
+        
+        # create a unique slug
+        slug = slugify(instance.title)
+
+        if Song.objects.filter(title_slug=slug).exists():
+            # first try adding the artist to the slug
+            slug = '%s-%s' % (slug, slugify(instance.artist))
+            if Song.objects.filter(title_slug=slug).exists():
+                # then add the primary key which is guaranteed to be unique
+                slug = '%s-%d' % (slug, instance.pk)
+
+        instance.title_slug = slug
         instance.save()
+        
         return instance
 
 class EditSongForm(SongObjectForm):

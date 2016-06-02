@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 import os
 
-def validate_file(filename, ext):
+def validate_file(value, ext):
     """
     Validates the extension of a file
     """
@@ -13,11 +13,11 @@ def validate_file(filename, ext):
         print extension, ext
         raise ValidationError('Invalid file extension: %s' % filename, code='invalid_ext')
 
-def doc_file_validator(filename):
-    return validate_file(filename, '.doc')
+def doc_file_validator(value):
+    return validate_file(value, '.doc')
 
-def pdf_file_validator(filename):
-    return validate_file(filename, '.pdf')
+def pdf_file_validator(value):
+    return validate_file(value, '.pdf')
 
 class Song(models.Model):
     SPEEDS = (

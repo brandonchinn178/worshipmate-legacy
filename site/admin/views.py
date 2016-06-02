@@ -27,6 +27,7 @@ class AddSongView(LoginRequiredMixin, CreateView):
 class EditSongView(LoginRequiredMixin, UpdateView):
     template_name = 'admin/song_object.html'
     model = Song
+    slug_field = 'title_slug'
     form_class = EditSongForm
 
     def post(self, request, *args, **kwargs):
