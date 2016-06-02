@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load partials %}
+
+{% block head %}
+    {% add_style 'admin/song_object.css' %}
+    {% add_script 'admin/song_object.js' %}
+{% endblock %}
+
+{% block content %}
+    {% get_feedback form %}
+    {% create_form form %}
+        <button>Save</button>
+    {% end_create_form %}
+{% endblock %}

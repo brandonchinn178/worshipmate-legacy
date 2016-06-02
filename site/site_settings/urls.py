@@ -5,7 +5,7 @@ from database.views import *
 
 urlpatterns = [
     url(r'^$', DatabaseView.as_view(), name='home'),
-    url(r'^song/(?P<title>[\w\W]+)/$', SongView.as_view(), name='song'),
+    url(r'^song/(?P<slug>.+)/$', SongView.as_view(), name='song'),
     url(r'^about/$', AboutView.as_view(), name='about'),
     url(r'^contact/$', ContactView.as_view(), name='contact'),
     url(r'^admin/', include('admin.urls', namespace='admin')),

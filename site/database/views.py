@@ -26,5 +26,4 @@ class SongView(DetailView):
     template_name = 'site/song.html'
     model = Song
     slug_field = 'title_slug'
-    slug_url_kwarg = 'title'
     context_object_name = 'song'

@@ -1,7 +1,11 @@
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.shortcuts import redirect
 
-from database.models import Song, Theme
+from admin.forms import *
+from database.models import Song
 
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/index.html'
@@ -11,8 +15,14 @@ class MainView(LoginRequiredMixin, TemplateView):
         context['songs'] = Song.objects.order_by('title')
         return context
 
-class AddSongView(LoginRequiredMixin, TemplateView):
-    pass
+class AddSongView(LoginRequiredMixin, CreateView):
+    template_name = 'admin/song_object.html'
+    form_class = AddSongForm
+
+    def form_valid(self, form):
+        song = form.save()
+        messages.success(self.request, 'Song "%s" successfully created' % song.title)
+        return redirect('admin:index')
 
 class EditSongView(LoginRequiredMixin, TemplateView):
     pass

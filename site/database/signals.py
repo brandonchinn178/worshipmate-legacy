@@ -12,7 +12,7 @@ def post_to_facebook(sender, instance, created, **kwargs):
     """
     When a Song is added to the database, post to Facebook automatically.
     """
-    if created and not settings.ON_CI:
+    if created and settings.ON_OPENSHIFT:
         access_token = os.environ.get('FACEBOOK_ACCESS_TOKEN')
         context = {
             'song': instance

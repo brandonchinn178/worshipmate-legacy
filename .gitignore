@@ -7,3 +7,6 @@ node_modules/
 .sass-cache
 **/css/*.css
 *.css.map
+# media files for development
+doc/
+pdf/

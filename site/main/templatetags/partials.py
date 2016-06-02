@@ -52,7 +52,7 @@ def get_feedback(context, *forms):
     {% get_feedback form1 form2 %}
 
     to:
-    <ul class="messages">
+    <ul class="feedback">
         # for every message
             <li class="{{ message.level_tag }}">{{ message }}</li>
         # for every error in non_field_errors and field.errors
@@ -79,7 +79,7 @@ def get_feedback(context, *forms):
             '<li class="{}">{}</li>',
             messages
         )
-        return format_html('<ul class="messages">{}</ul>', mark_safe(message_list))
+        return format_html('<ul class="feedback">{}</ul>', mark_safe(message_list))
 
 @register.simple_tag
 def create_field(*fields):
