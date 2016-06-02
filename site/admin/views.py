@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -24,8 +24,13 @@ class AddSongView(LoginRequiredMixin, CreateView):
         messages.success(self.request, 'Song "%s" successfully created' % song.title)
         return redirect('admin:index')
 
-class EditSongView(LoginRequiredMixin, TemplateView):
-    pass
+class EditSongView(LoginRequiredMixin, UpdateView):
+    template_name = 'admin/song_object.html'
+    model = Song
+    form_class = EditSongForm
+
+    def post(self, request, *args, **kwargs):
+        return super(EditSongView, self).post(request, *args, **kwargs)
 
 class AccountView(LoginRequiredMixin, TemplateView):
     pass

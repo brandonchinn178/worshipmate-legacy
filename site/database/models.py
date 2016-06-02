@@ -3,36 +3,37 @@ from django.core.exceptions import ValidationError
 
 import os
 
-def get_file_validator(ext):
+def validate_file(filename, ext):
     """
     Validates the extension of a file
     """
-    def file_validator(value):
-        filename = value.name
-        extension = os.path.splitext(filename)[1]
-        if extension != ext:
-            print extension, ext
-            raise ValidationError('Invalid file extension: %s' % filename, code='invalid_ext')
-    return file_validator
+    filename = value.name
+    extension = os.path.splitext(filename)[1]
+    if extension != ext:
+        print extension, ext
+        raise ValidationError('Invalid file extension: %s' % filename, code='invalid_ext')
 
-doc_file_validator = get_file_validator('.doc')
-pdf_file_validator = get_file_validator('.pdf')
+def doc_file_validator(filename):
+    return validate_file(filename, '.doc')
+
+def pdf_file_validator(filename):
+    return validate_file(filename, '.pdf')
 
 class Song(models.Model):
-    SPEEDS = {
-        'F': 'Fast',
-        'S': 'Slow',
-        'FS': 'Fast/Slow',
-    }
+    SPEEDS = (
+        ('F', 'Fast'),
+        ('S', 'Slow'),
+        ('FS', 'Fast/Slow'),
+    )
 
-    title = models.CharField(max_length=50, primary_key=True, default=None)
-    title_slug = models.SlugField(default='')
-    artist = models.CharField(max_length=50, default='')
+    title = models.CharField(max_length=100)
+    title_slug = models.SlugField()
+    artist = models.CharField(max_length=50)
     themes = models.ManyToManyField('Theme')
-    speed = models.CharField(max_length=10, choices=SPEEDS.items(), default='')
-    lyrics = models.TextField(null=True, blank=True)
-    doc = models.FileField(upload_to='doc', default='', validators=[doc_file_validator])
-    pdf = models.FileField(upload_to='pdf', default='', validators=[pdf_file_validator])
+    speed = models.CharField(max_length=2, choices=SPEEDS)
+    lyrics = models.TextField()
+    doc = models.FileField(upload_to='doc', validators=[doc_file_validator])
+    pdf = models.FileField(upload_to='pdf', validators=[pdf_file_validator])
 
     def __unicode__(self):
         return "%s | %s" % (self.title, self.artist)
@@ -42,7 +43,7 @@ class Song(models.Model):
         return ('song', (), {'slug': self.title_slug})
 
 class Theme(models.Model):
-    name = models.CharField(max_length=50, primary_key=True)
+    name = models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.name

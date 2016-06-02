@@ -39,8 +39,6 @@ class SongObjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SongObjectForm, self).__init__(*args, **kwargs)
 
-        self.fields['lyrics'].required = True
-
         # remove label suffix
         for field in ['lyrics', 'themes', 'doc', 'pdf']:
             self.fields[field].label_suffix = ''
