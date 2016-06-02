@@ -36,7 +36,22 @@ class EditSongView(LoginRequiredMixin, UpdateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        return super(EditSongView, self).post(request, *args, **kwargs)
+        action = request.POST.get('action')
+        if action == 'delete':
+            return self.delete_song()
+        else:
+            return super(EditSongView, self).post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        song = form.save()
+        messages.success(self.request, 'Song "%s" successfully saved' % song.title)
+        return redirect('admin:index')
+
+    def delete_song(self):
+        song = self.get_object()
+        song.delete()
+        messages.success(self.request, 'Song "%s" successfully deleted' % song.title)
+        return redirect('admin:index')
 
 class AccountView(LoginRequiredMixin, TemplateView):
     pass

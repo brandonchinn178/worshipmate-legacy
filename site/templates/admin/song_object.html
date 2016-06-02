@@ -4,11 +4,14 @@
 {% block head %}
     {% add_style 'admin/song_object.css' %}
     {% add_script 'admin/song_object.js' %}
+    {% if is_edit %}
+        {% add_script 'admin/edit_song.js' %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     {% get_feedback form %}
-    <form method="post" enctype="multipart/form-data">
+    <form class="song-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% create_field form.title form.artist form.lyrics form.themes form.speed %}
         <!-- manually because don't want extra file input stuff on edit song -->
@@ -20,6 +23,31 @@
             {{ form.pdf.label_tag }}
             <input id="id_pdf" name="pdf" type="file">
         </div>
-        <button>Save</button>
+        <div class="buttons">
+            {% if is_edit %}
+                <button>Save</button>
+                <button class="delete">Delete</button>
+                <a class="cancel" href="{% url 'admin:index' %}">Cancel</a>
+            {% else %}
+                <button>Submit</button>
+                <a class="cancel" href="{% url 'admin:index' %}">Cancel</a>
+            {% endif %}
+        </div>
     </form>
+    {% if is_edit %}
+        <div class="delete-popup">
+            <div class="delete-box">
+                <h1>Delete Song</h1>
+                <p>Are you sure you want to delete the song "{{ song.title }}"?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete">
+                    <div class="buttons">
+                        <button class="delete">Delete</button>
+                        <button class="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
