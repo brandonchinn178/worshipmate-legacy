@@ -41,15 +41,22 @@
             select {
                 width: 100%;
             }
+            .add-theme {
+                // TODO: add theme icon
+            }
         }
         &.speed {
             margin: 10px 0;
+            select {
+                width: 100px;
+            }
         }
         &.doc, &.pdf {
             margin: 10px 0;
             label {
                 @include display-button($blue);
                 width: initial;
+                font-size: 1em;
             }
             input {
                 display: none;

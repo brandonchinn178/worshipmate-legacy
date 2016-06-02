@@ -17,7 +17,7 @@ def upload_file(song, filename, ext):
     Songs saved as <subdir>/<slug>.<ext>
     """
     return '%s/%s.%s' % (
-        ext, song.title_slug, ext
+        ext, song.slug, ext
     )
 
 def doc_file_validator(value):
@@ -41,7 +41,7 @@ class Song(models.Model):
     )
 
     title = models.CharField(max_length=100)
-    title_slug = models.SlugField()
+    slug = models.SlugField()
     artist = models.CharField(max_length=50)
     themes = models.ManyToManyField('Theme')
     speed = models.CharField(max_length=2, choices=SPEEDS)
@@ -54,7 +54,7 @@ class Song(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('song', (), {'slug': self.title_slug})
+        return ('song', (), {'slug': self.slug})
 
 class Theme(models.Model):
     name = models.CharField(max_length=50)

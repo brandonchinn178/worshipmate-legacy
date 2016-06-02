@@ -40,15 +40,14 @@ header {
             font-weight: normal;
         }
     }
-    nav {
+    ul {
         position: absolute;
         right: 20px;
         bottom: 20px;
-        a {
-            display: block;
+        li {
             text-align: right;
             margin-bottom: 5px;
-            &:hover {
+            a:hover {
                 color: darken($light-gray, 10);
             }
         }

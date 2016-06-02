@@ -49,6 +49,11 @@ class Migration(migrations.Migration):
             name='title_slug',
             field=models.SlugField(),
         ),
+        migrations.RenameField(
+            model_name='song',
+            old_name='title_slug',
+            new_name='slug',
+        ),
         migrations.AlterField(
             model_name='theme',
             name='name',

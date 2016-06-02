@@ -5,9 +5,9 @@ $(document).ready(function() {
         order: [],
         columnDefs: [
             {
-                targets: [2,3],
+                targets: [2],
                 orderable: false,
-            }
+            },
         ],
         language: {
             zeroRecords: "No songs found",

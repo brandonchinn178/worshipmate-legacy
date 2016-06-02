@@ -18,6 +18,8 @@ $(document).ready(function() {
             updateFileText(this, filename);
         }
     });
+
+    // TODO: add theme popup
 });
 
 var onFileChange = function() {

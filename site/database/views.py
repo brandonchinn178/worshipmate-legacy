@@ -25,5 +25,4 @@ class DatabaseView(TemplateView):
 class SongView(DetailView):
     template_name = 'site/song.html'
     model = Song
-    slug_field = 'title_slug'
     context_object_name = 'song'

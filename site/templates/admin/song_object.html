@@ -13,7 +13,12 @@
     {% get_feedback form %}
     <form class="song-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {% create_field form.title form.artist form.lyrics form.themes form.speed %}
+        {% create_field form.title form.artist form.lyrics %}
+        <div class="field themes">
+            <label>{{ form.themes.label }} <a class="add-theme" href="#"></a></label>
+            {{ form.themes }}
+        </div>
+        {% create_field form.speed %}
         <!-- manually because don't want extra file input stuff on edit song -->
         <div class="field doc" data-filename="{{ song.doc.name|filename }}">
             {{ form.doc.label_tag }}
@@ -34,6 +39,7 @@
             {% endif %}
         </div>
     </form>
+    <!-- TODO: add theme popup -->
     {% if is_edit %}
         <div class="delete-popup">
             <div class="delete-box">

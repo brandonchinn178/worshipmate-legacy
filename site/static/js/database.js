@@ -143,6 +143,7 @@ var removeFilter = function(tag) {
  */
 var updateSearch = function(query) {
     window.state.search = query;
+    // TODO: add search for lyrics
     $(".search-query").text(query);
 
     doFilter();

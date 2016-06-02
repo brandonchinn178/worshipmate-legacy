@@ -27,7 +27,6 @@ class AddSongView(LoginRequiredMixin, CreateView):
 class EditSongView(LoginRequiredMixin, UpdateView):
     template_name = 'admin/song_object.html'
     model = Song
-    slug_field = 'title_slug'
     form_class = EditSongForm
 
     def get_context_data(self, **kwargs):
@@ -39,6 +38,8 @@ class EditSongView(LoginRequiredMixin, UpdateView):
         action = request.POST.get('action')
         if action == 'delete':
             return self.delete_song()
+        elif action == 'add-theme':
+            return self.add_theme()
         else:
             return super(EditSongView, self).post(request, *args, **kwargs)
 
@@ -52,6 +53,14 @@ class EditSongView(LoginRequiredMixin, UpdateView):
         song.delete()
         messages.success(self.request, 'Song "%s" successfully deleted' % song.title)
         return redirect('admin:index')
+
+    def add_theme(self):
+        # TODO: add theme here
+        pass
+
+class ThemesView(LoginRequiredMixin, TemplateView):
+    # TODO: add/edit themes here
+    pass
 
 class AccountView(LoginRequiredMixin, TemplateView):
     pass

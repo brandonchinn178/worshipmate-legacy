@@ -59,14 +59,14 @@ class AddSongForm(SongObjectForm):
         # create a unique slug
         slug = slugify(instance.title)
 
-        if Song.objects.filter(title_slug=slug).exists():
+        if Song.objects.filter(slug=slug).exists():
             # first try adding the artist to the slug
             slug = '%s-%s' % (slug, slugify(instance.artist))
-            if Song.objects.filter(title_slug=slug).exists():
+            if Song.objects.filter(slug=slug).exists():
                 # then add the primary key which is guaranteed to be unique
                 slug = '%s-%d' % (slug, instance.pk)
 
-        instance.title_slug = slug
+        instance.slug = slug
         instance.save()
         self.save_m2m()
         

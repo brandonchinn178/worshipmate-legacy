@@ -14,11 +14,11 @@
     <body>
         <header>
             <h1><a href="{% url 'home' %}">Worship Song Database</a></h1>
-            <nav>
-                <a href="{% url 'home' %}">Database</a>
-                <a href="{% url 'about' %}">About</a>
-                <a href="{% url 'contact' %}">Contact</a>
-            </nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Database</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
         </header>
         <div class="content">
             {% block content %}{% endblock %}

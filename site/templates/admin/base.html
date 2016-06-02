@@ -14,11 +14,11 @@
     <body>
         <header>
             <h1><a href="{% url 'admin:index' %}">Worship Song Database &mdash; Admin</a></h1>
-            <nav>
-                <a href="{% url 'home' %}">Back to Database</a>
-                <a href="{% url 'admin:add_song' %}">Add Song</a>
-                <a href="{% url 'admin:account' %}">Account</a>
-            </nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Back to Database</a></li>
+                <li><a href="{% url 'admin:add_song' %}">Add Song</a></li>
+                <li><a href="{% url 'admin:account' %}">Account</a></li>
+            </ul>
         </header>
         <div class="content">
             {% block content %}{% endblock %}
