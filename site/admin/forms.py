@@ -28,6 +28,9 @@ class SongObjectForm(forms.ModelForm):
             'themes': {
                 'required': 'Please provide the themes for the song',
             },
+            'speed': {
+                'required': 'Please select the speed of the song',
+            },
             'doc': {
                 'required': 'No .doc file submitted',
             },
@@ -50,8 +53,8 @@ class AddSongForm(SongObjectForm):
             'pdf': 'Upload .pdf file',
         }
 
-    def save(self, commit=True):
-        instance = super(AddSongForm, self).save(commit=commit)
+    def save(self):
+        instance = super(AddSongForm, self).save(commit=False)
         
         # create a unique slug
         slug = slugify(instance.title)
@@ -65,10 +68,17 @@ class AddSongForm(SongObjectForm):
 
         instance.title_slug = slug
         instance.save()
+        self.save_m2m()
         
         return instance
 
 class EditSongForm(SongObjectForm):
+    class Meta(SongObjectForm.Meta):
+        labels = {
+            'doc': 'Change .doc file',
+            'pdf': 'Change .pdf file',
+        }
+
     def __init__(self, *args, **kwargs):
         super(EditSongForm, self).__init__(*args, **kwargs)
 

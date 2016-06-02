@@ -30,6 +30,11 @@ class EditSongView(LoginRequiredMixin, UpdateView):
     slug_field = 'title_slug'
     form_class = EditSongForm
 
+    def get_context_data(self, **kwargs):
+        context = super(EditSongView, self).get_context_data(**kwargs)
+        context['is_edit'] = True
+        return context
+
     def post(self, request, *args, **kwargs):
         return super(EditSongView, self).post(request, *args, **kwargs)
 

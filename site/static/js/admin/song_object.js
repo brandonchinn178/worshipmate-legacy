@@ -3,12 +3,21 @@ $(document).ready(function() {
         placeholder_text_multiple: "Start typing...",
     });
     $(".speed select").chosen({
+        placeholder_text_single: " ",
         disable_search: true,
     });
     $("input[type=file]")
         .change(onFileChange)
         // initialize file text
         .change();
+
+    // can also initialize file text with data-filename attr
+    $("input[type=file]").each(function() {
+        var filename = $(this).parent().data("filename");
+        if (filename.length !== 0) {
+            updateFileText(this, filename);
+        }
+    });
 });
 
 var onFileChange = function() {

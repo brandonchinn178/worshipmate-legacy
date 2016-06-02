@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-{% load partials %}
+{% load partials utils %}
 
 {% block head %}
     {% add_style 'admin/song_object.css' %}
@@ -8,7 +8,18 @@
 
 {% block content %}
     {% get_feedback form %}
-    {% create_form form %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% create_field form.title form.artist form.lyrics form.themes form.speed %}
+        <!-- manually because don't want extra file input stuff on edit song -->
+        <div class="field doc" data-filename="{{ song.doc.name|filename }}">
+            {{ form.doc.label_tag }}
+            <input id="id_doc" name="doc" type="file">
+        </div>
+        <div class="field pdf" data-filename="{{ song.pdf.name|filename }}">
+            {{ form.pdf.label_tag }}
+            <input id="id_pdf" name="pdf" type="file">
+        </div>
         <button>Save</button>
-    {% end_create_form %}
+    </form>
 {% endblock %}

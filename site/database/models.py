@@ -10,17 +10,31 @@ def validate_file(value, ext):
     filename = value.name
     extension = os.path.splitext(filename)[1]
     if extension != ext:
-        print extension, ext
         raise ValidationError('Invalid file extension: %s' % filename, code='invalid_ext')
+
+def upload_file(song, filename, ext):
+    """
+    Songs saved as <subdir>/<slug>.<ext>
+    """
+    return '%s/%s.%s' % (
+        ext, song.title_slug, ext
+    )
 
 def doc_file_validator(value):
     return validate_file(value, '.doc')
 
+def doc_upload_file(song, filename):
+    return upload_file(song, filename, 'doc')
+
 def pdf_file_validator(value):
     return validate_file(value, '.pdf')
 
+def pdf_upload_file(song, filename):
+    return upload_file(song, filename, 'pdf')
+
 class Song(models.Model):
     SPEEDS = (
+        ('', ''),
         ('F', 'Fast'),
         ('S', 'Slow'),
         ('FS', 'Fast/Slow'),
@@ -32,8 +46,8 @@ class Song(models.Model):
     themes = models.ManyToManyField('Theme')
     speed = models.CharField(max_length=2, choices=SPEEDS)
     lyrics = models.TextField()
-    doc = models.FileField(upload_to='doc', validators=[doc_file_validator])
-    pdf = models.FileField(upload_to='pdf', validators=[pdf_file_validator])
+    doc = models.FileField(upload_to=doc_upload_file, validators=[doc_file_validator])
+    pdf = models.FileField(upload_to=pdf_upload_file, validators=[pdf_file_validator])
 
     def __unicode__(self):
         return "%s | %s" % (self.title, self.artist)
