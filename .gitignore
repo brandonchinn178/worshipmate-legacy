@@ -5,7 +5,8 @@ venv/
 *.log
 node_modules/
 .sass-cache
-**/css/*.css
+**/css/**/*.css
+!**/css/vendor/*.css
 *.css.map
 # media files for development
 doc/
