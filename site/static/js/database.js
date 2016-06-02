@@ -5,6 +5,18 @@ window.state = {
 };
 
 $(document).ready(function() {
+    // add in lyrics column dynamically to avoid showing it in lack of Javascript
+    $("<th>")
+        .text("Lyrics")
+        .appendTo(".songs-table thead tr");
+
+    $(".songs-table tbody tr").each(function() {
+        var lyrics = $(this).data("lyrics");
+        $("<td>")
+            .text(lyrics)
+            .appendTo(this);
+    });
+
     var options = {
         dom: "t",
         paging: false,
@@ -13,7 +25,11 @@ $(document).ready(function() {
             {
                 targets: 2,
                 orderable: false,
-            }
+            },
+            {
+                targets: 4,
+                visible: false,
+            },
         ],
         language: {
             zeroRecords: "No songs found",
@@ -143,7 +159,6 @@ var removeFilter = function(tag) {
  */
 var updateSearch = function(query) {
     window.state.search = query;
-    // TODO: add search for lyrics
     $(".search-query").text(query);
 
     doFilter();
