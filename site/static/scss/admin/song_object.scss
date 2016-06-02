@@ -1,5 +1,9 @@
 @import "../vars", "../mixins";
 
+body.no-scroll {
+    overflow: hidden;
+}
+
 .content {
     text-align: center;
     form.song-form {
@@ -42,7 +46,12 @@
                 width: 100%;
             }
             .add-theme {
-                // TODO: add theme icon
+                margin-left: 5px;
+                font-weight: $weight-bold;
+                text-decoration: none;
+                &:before {
+                    content: "+";
+                }
             }
         }
         &.speed {
@@ -73,9 +82,9 @@
     .feedback {
         margin-top: 0;
     }
-    .delete-popup {
+    .popup {
         display: none;
-        position: absolute;
+        position: fixed;
         width: 100%;
         height: 100%;
         left: 0;
@@ -87,7 +96,7 @@
             height: 100%;
             vertical-align: middle;
         }
-        .delete-box {
+        .wrapper {
             background: $white;
             display: inline-block;
             vertical-align: middle;
@@ -95,12 +104,29 @@
         }
         .buttons {
             margin: 20px 0;
-            .delete {
-                @include display-button($red, $white);
+            button {
+                @include display-button($black, $white);
                 margin-right: 20px;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+        .feedback {
+            margin: 0;
+        }
+        &.theme-popup {
+            input {
+                margin: 10px 0;
+                width: 300px;
             }
             .cancel {
-                @include display-button($black, $white);
+                @include display-button($red, $white);
+            }
+        }
+        &.delete-popup {
+            .delete {
+                @include display-button($red, $white);
             }
         }
     }

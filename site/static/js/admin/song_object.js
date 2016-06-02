@@ -19,7 +19,18 @@ $(document).ready(function() {
         }
     });
 
-    // TODO: add theme popup
+    // init theme popup
+    $(".add-theme").click(function() {
+        $("body").addClass("no-scroll");
+        $(".theme-popup").show();
+        return false;
+    });
+    $(".theme-popup .submit").click(submitTheme);
+    $(".theme-popup .cancel").click(function() {
+        $("body").removeClass("no-scroll");
+        $(".theme-popup").hide();
+        return false;
+    });
 });
 
 var onFileChange = function() {
@@ -47,4 +58,44 @@ var updateFileText = function(input, text) {
         text = "No file selected";
     }
     textbox.text(text);
+};
+
+var submitTheme = function() {
+    var popup = $(this).parents(".theme-popup");
+    var name = popup.find("[name=name]").val();
+    if (name.length === 0) {
+        return false;
+    }
+    var data = {
+        csrfmiddlewaretoken: popup.find("input[name=csrfmiddlewaretoken]").val(),
+        action: "add-theme",
+        name: name,
+    };
+    $.ajax({
+        type: "POST",
+        url: "",
+        data: data,
+        dataType: "json",
+        success: function(data) {
+            // add theme to themes list
+            $("<option>")
+                .attr("value", data.id)
+                .text(data.name)
+                .appendTo("#id_themes");
+            $("#id_themes").trigger("chosen:updated");
+
+            $("<li>")
+                .text("Successfully added \"" + name + "\"")
+                .appendTo(".theme-popup .feedback");
+            $(".theme-popup [name=name]").val("");
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText);
+            $("<li>")
+                .addClass("error")
+                .text("There was an error saving")
+                .appendTo(".theme-popup .feedback");
+        },
+    });
+    return false;
 };

@@ -57,6 +57,9 @@ class Song(models.Model):
         return ('song', (), {'slug': self.slug})
 
 class Theme(models.Model):
+    class Meta:
+        ordering = ['name']
+
     name = models.CharField(max_length=50)
 
     def __unicode__(self):

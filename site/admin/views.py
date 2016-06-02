@@ -3,9 +3,10 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.http.response import JsonResponse
 
 from admin.forms import *
-from database.models import Song
+from database.models import Song, Theme
 
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/index.html'
@@ -55,8 +56,13 @@ class EditSongView(LoginRequiredMixin, UpdateView):
         return redirect('admin:index')
 
     def add_theme(self):
-        # TODO: add theme here
-        pass
+        name = self.request.POST['name']
+        theme = Theme.objects.create(name=name)
+        response = {
+            'id': theme.id,
+            'name': theme.name,
+        }
+        return JsonResponse(response)
 
 class ThemesView(LoginRequiredMixin, TemplateView):
     # TODO: add/edit themes here

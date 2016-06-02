@@ -59,6 +59,10 @@ class Migration(migrations.Migration):
             name='name',
             field=models.CharField(max_length=50),
         ),
+        migrations.AlterModelOptions(
+            name='theme',
+            options={'ordering': ['name']},
+        ),
         migrations.AddField(
             model_name='song',
             name='id',
