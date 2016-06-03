@@ -2,13 +2,14 @@
 {% load partials utils %}
 
 {% block head %}
-    {% add_style 'database.css' 'admin/index.css' %}
+    {% add_style 'admin/index.css' %}
     {% add_script 'vendor/jquery.dataTables.min.js' 'admin/index.js' %}
 {% endblock %}
 
 {% block content %}
     {% get_feedback %}
     <input class="search-bar" placeholder="Search">
+    <p><a href="{% url 'admin:add_song' %}">Add Song</a></p>
     <table class="songs-table">
         <thead>
             <tr>

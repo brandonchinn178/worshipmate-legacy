@@ -23,6 +23,7 @@ $(document).ready(function() {
     $(".add-theme").click(function() {
         $("body").addClass("no-scroll");
         $(".theme-popup").show();
+        $(".theme-popup [name=name]").focus();
         return false;
     });
     $(".theme-popup .submit").click(submitTheme);
@@ -61,6 +62,7 @@ var updateFileText = function(input, text) {
 };
 
 var submitTheme = function() {
+    $(".theme-popup .feedback").empty();
     var popup = $(this).parents(".theme-popup");
     var name = popup.find("[name=name]").val();
     if (name.length === 0) {
@@ -83,14 +85,14 @@ var submitTheme = function() {
                 .text(data.name)
                 .appendTo("#id_themes");
             $("#id_themes").trigger("chosen:updated");
+            // TODO: automatically select newly added theme
 
             $("<li>")
                 .text("Successfully added \"" + name + "\"")
                 .appendTo(".theme-popup .feedback");
             $(".theme-popup [name=name]").val("");
         },
-        error: function(xhr) {
-            console.log(xhr.responseText);
+        error: function() {
             $("<li>")
                 .addClass("error")
                 .text("There was an error saving")

@@ -60,63 +60,12 @@
     }
 }
 
-.songs-table {
-    width: 100%;
-    text-align: center;
-    border-collapse: collapse;
-    td, th {
-        background: $table-gray-light;
-        padding: 10px;
+.songs-table td {
+    &.speed {
+        width: 125px;
     }
-    td {
-        border: 2px solid $light-gray;
-        &.speed {
-            width: 125px;
-        }
-        &.themes a,
-        &.speed a {
-            @include blue-link;
-        }
-        // flush sides of table
-        &:first-child {
-            border-left: 0;
-        }
-        &:last-child {
-            border-right: 0;
-        }
-    }
-    th {
-        background: $dark-gray;
-        color: $light-gray;
-        font-weight: $weight-normal;
-        font-size: 1.2em;
-    }
-    tr:nth-child(even) td {
-        background: $table-gray-dark;
-    }
-}
-
-.dataTables_wrapper {
-    th {
-        position: relative;
-        cursor: pointer;
-        outline: 0;
-        &.sorting_disabled {
-            cursor: default;
-        }
-        &:after {
-            position: absolute;
-            right: 10px;
-        }
-        &.sorting:after {
-            content: url(vendor/tablesorter-unsorted.gif);
-        }
-        &.sorting_asc:after {
-            content: url(vendor/tablesorter-asc.gif);
-            top: 5px;
-        }
-        &.sorting_desc:after {
-            content: url(vendor/tablesorter-desc.gif);
-        }
+    &.themes a,
+    &.speed a {
+        @include blue-link;
     }
 }

@@ -43,7 +43,7 @@ class Song(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField()
     artist = models.CharField(max_length=50)
-    themes = models.ManyToManyField('Theme')
+    themes = models.ManyToManyField('Theme', related_name='songs')
     speed = models.CharField(max_length=2, choices=SPEEDS)
     lyrics = models.TextField()
     doc = models.FileField(upload_to=doc_upload_file, validators=[doc_file_validator])
@@ -60,7 +60,7 @@ class Theme(models.Model):
     class Meta:
         ordering = ['name']
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __unicode__(self):
         return self.name

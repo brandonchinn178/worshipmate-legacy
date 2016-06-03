@@ -1,0 +1,27 @@
+@import "../vars";
+
+.themes-table {
+    .actions {
+        width: 100px;
+        a {
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+            &:before {
+                font-family: "icomoon";
+            }
+            &.edit:before {
+                content: "\e905";
+            }
+            &.delete {
+                color: $red;
+                &:before {
+                    content: "\ea0f";
+                }
+                &:hover:before {
+                    color: lighten($red, 15);
+                }
+            }
+        }
+    }
+}

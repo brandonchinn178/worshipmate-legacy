@@ -49,6 +49,11 @@ class Migration(migrations.Migration):
             name='title_slug',
             field=models.SlugField(),
         ),
+        migrations.AlterField(
+            model_name='song',
+            name='themes',
+            field=models.ManyToManyField(related_name='songs', to='database.Theme'),
+        ),
         migrations.RenameField(
             model_name='song',
             old_name='title_slug',
@@ -57,7 +62,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='theme',
             name='name',
-            field=models.CharField(max_length=50),
+            field=models.CharField(max_length=50, unique=True),
         ),
         migrations.AlterModelOptions(
             name='theme',

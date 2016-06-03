@@ -65,8 +65,61 @@ class EditSongView(LoginRequiredMixin, UpdateView):
         return JsonResponse(response)
 
 class ThemesView(LoginRequiredMixin, TemplateView):
-    # TODO: add/edit themes here
-    pass
+    template_name = 'admin/themes.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ThemesView, self).get_context_data(**kwargs)
+        context['themes'] = [
+            (theme, theme.songs.count())
+            for theme in Theme.objects.all()
+        ]
+        return context
+
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get('action')
+        if action == 'add':
+            return self.add_theme()
+        elif action == 'edit':
+            return self.edit_theme()
+        elif action == 'delete':
+            return self.delete_theme()
+        else:
+            return super(ThemesView, self).post(request, *args, **kwargs)
+
+    def add_theme(self):
+        name = self.request.POST['name']
+        theme = Theme.objects.create(name=name)
+        response = {
+            'id': theme.id,
+            'name': theme.name,
+        }
+        return JsonResponse(response)
+
+    def edit_theme(self):
+        pk = self.request.POST['pk']
+        name = self.request.POST['name']
+
+        theme = Theme.objects.get(pk=pk)
+        theme.name = name
+        theme.save()
+
+        response = {
+            'id': theme.id,
+            'name': theme.name,
+            'songs': theme.songs.count(),
+        }
+        return JsonResponse(response)
+
+    def delete_theme(self):
+        pk = self.request.POST['pk']
+        theme = Theme.objects.get(pk=pk)
+        id = theme.id
+        theme.delete()
+        
+        response = {
+            'id': id,
+        }
+        return JsonResponse(response)
 
 class AccountView(LoginRequiredMixin, TemplateView):
     pass
