@@ -73,13 +73,13 @@ var submitTheme = function() {
             // add theme to themes list
             $("<option>")
                 .attr("value", data.id)
+                .prop("selected", true)
                 .text(data.name)
                 .appendTo("#id_themes");
             $("#id_themes").trigger("chosen:updated");
-            // TODO: automatically select newly added theme
 
             $("<li>")
-                .text("Successfully added \"" + name + "\"")
+                .text("Successfully added \"" + data.name + "\"")
                 .appendTo(".theme-popup .feedback");
             $(".theme-popup [name=name]").val("");
         },

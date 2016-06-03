@@ -16,6 +16,7 @@
                 <th class="title">Title</th>
                 <th class="artist">Artist</th>
                 <th class="slug">Slug</th>
+                <th class="themes">Themes</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                     <td class="title"><a href="{% url 'admin:edit_song' song.slug %}">{{ song.title }}</a></td>
                     <td class="artist">{{ song.artist }}</td>
                     <td class="slug">{{ song.slug }}</td>
+                    <td class="themes">{{ song.themes.count }}</td>
                 </tr>
             {% endfor %}
         </tbody>
