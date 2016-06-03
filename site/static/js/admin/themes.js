@@ -14,6 +14,7 @@ $(document).ready(function() {
             $(".edit-popup input[name=pk]").val(id);
             $(".edit-popup input[name=name]").val(name);
             $(".edit-popup").show();
+            $(".edit-popup input[name=name]").focus();
             return false;
         });;
     var deleteLink = $("<a>")
@@ -87,18 +88,13 @@ $(document).ready(function() {
 
 var addTheme = function() {
     var popup = $(this).parents(".popup");
-    popup.find(".feedback").empty();
 
     var data = {
-        csrfmiddlewaretoken: getVal(popup, "csrfmiddlewaretoken"),
         action: "add",
         name: getVal(popup, "name"),
     };
-    $.ajax({
-        type: "POST",
-        url: "",
+    postData(popup, {
         data: data,
-        dataType: "json",
         success: function(data) {
             $("<li>")
                 .text("Successfully added \"" + data.name + "\"")
@@ -115,31 +111,20 @@ var addTheme = function() {
                 })
                 .attr("id", data.id);
         },
-        error: function() {
-            $("<li>")
-                .addClass("error")
-                .text("There was an error saving")
-                .appendTo(".add-popup .feedback");
-        },
     });
     return false;
 };
 
 var editTheme = function() {
     var popup = $(this).parents(".popup");
-    popup.find(".feedback").empty();
 
     var data = {
-        csrfmiddlewaretoken: getVal(popup, "csrfmiddlewaretoken"),
         action: "edit",
         pk: getVal(popup, "pk"),
         name: getVal(popup, "name"),
     };
-    $.ajax({
-        type: "POST",
-        url: "",
+    postData(popup, {
         data: data,
-        dataType: "json",
         success: function(data) {
             table
                 .row("#" + data.id)
@@ -147,30 +132,19 @@ var editTheme = function() {
                 .draw();
             $(".edit-popup .cancel").click();
         },
-        error: function() {
-            $("<li>")
-                .addClass("error")
-                .text("There was an error saving")
-                .appendTo(".edit-popup .feedback");
-        },
     });
     return false;
 };
 
 var deleteTheme = function() {
     var popup = $(this).parents(".popup");
-    popup.find(".feedback").empty();
 
     var data = {
-        csrfmiddlewaretoken: getVal(popup, "csrfmiddlewaretoken"),
         action: "delete",
         pk: getVal(popup, "pk"),
     };
-    $.ajax({
-        type: "POST",
-        url: "",
+    postData(popup, {
         data: data,
-        dataType: "json",
         success: function(data) {
             table
                 .row("#" + data.id)
@@ -178,16 +152,6 @@ var deleteTheme = function() {
                 .draw();
             $(".delete-popup .cancel").click();
         },
-        error: function() {
-            $("<li>")
-                .addClass("error")
-                .text("There was an error deleting")
-                .appendTo(".delete-popup .feedback");
-        },
     });
     return false;
-};
-
-var getVal = function(popup, name) {
-    return popup.find("input[name=" + name + "]").val();
 };

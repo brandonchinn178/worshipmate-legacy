@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.core.exceptions import ValidationError
 
 import os
@@ -56,10 +56,37 @@ class Song(models.Model):
     def get_absolute_url(self):
         return ('song', (), {'slug': self.slug})
 
+class ThemeManager(models.Manager):
+    def create_from_post(self, data):
+        name = data['name']
+        if name == '':
+            raise ValidationError('No name provided')
+
+        try:
+            return self.create(name=name)
+        except IntegrityError:
+            raise ValidationError('Theme "%s" already exists' % name)
+
+    def update_from_post(self, data):
+        pk = data['pk']
+        name = data['name']
+        if name == '':
+            raise ValidationError('No name provided')
+
+        theme = Theme.objects.get(pk=pk)
+        theme.name = name
+        try:
+            theme.save()
+        except IntegrityError:
+            raise ValidationError('Theme "%s" already exists' % name)
+
+        return theme
+
 class Theme(models.Model):
     class Meta:
         ordering = ['name']
 
+    objects = ThemeManager()
     name = models.CharField(max_length=50, unique=True)
 
     def __unicode__(self):

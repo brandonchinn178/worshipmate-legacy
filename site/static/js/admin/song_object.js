@@ -62,22 +62,13 @@ var updateFileText = function(input, text) {
 };
 
 var submitTheme = function() {
-    $(".theme-popup .feedback").empty();
-    var popup = $(this).parents(".theme-popup");
-    var name = popup.find("[name=name]").val();
-    if (name.length === 0) {
-        return false;
-    }
+    var popup = $(this).parents(".popup");
     var data = {
-        csrfmiddlewaretoken: popup.find("input[name=csrfmiddlewaretoken]").val(),
         action: "add-theme",
-        name: name,
+        name: getVal(popup, "name"),
     };
-    $.ajax({
-        type: "POST",
-        url: "",
+    postData(popup, {
         data: data,
-        dataType: "json",
         success: function(data) {
             // add theme to themes list
             $("<option>")
@@ -91,12 +82,6 @@ var submitTheme = function() {
                 .text("Successfully added \"" + name + "\"")
                 .appendTo(".theme-popup .feedback");
             $(".theme-popup [name=name]").val("");
-        },
-        error: function() {
-            $("<li>")
-                .addClass("error")
-                .text("There was an error saving")
-                .appendTo(".theme-popup .feedback");
         },
     });
     return false;
