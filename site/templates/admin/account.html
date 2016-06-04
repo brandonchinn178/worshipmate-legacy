@@ -1,0 +1,5 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+    <p>Hello, {{ name }} (<a href="{% url 'admin:logout' %}">Logout</a>)</p>
+{% endblock %}

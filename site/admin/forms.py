@@ -84,3 +84,11 @@ class EditSongForm(SongObjectForm):
 
         self.fields['doc'].required = False
         self.fields['pdf'].required = False
+
+class AccountForm(forms.Form):
+    # username
+    # first name
+    # last name
+    # password1
+    # password2
+    pass

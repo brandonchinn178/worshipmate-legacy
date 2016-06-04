@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -125,5 +125,11 @@ class ThemesView(LoginRequiredMixin, ActionMixin, TemplateView):
             'id': id,
         }
 
-class AccountView(LoginRequiredMixin, TemplateView):
-    pass
+class AccountView(LoginRequiredMixin, FormView):
+    template_name = 'admin/account.html'
+    form_class = AccountForm
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountView, self).get_context_data(**kwargs)
+        context['name'] = self.request.user.get_full_name() or self.request.user.username
+        return context
