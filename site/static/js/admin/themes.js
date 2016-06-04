@@ -46,13 +46,11 @@ $(document).ready(function() {
             {
                 className: "name",
             },
-            null,
+            {
+                className: "songs",
+            },
             {
                 className: "actions",
-                render: function() {
-                    // will render in drawCallback
-                    return "";
-                },
             },
         ],
         drawCallback: function() {
