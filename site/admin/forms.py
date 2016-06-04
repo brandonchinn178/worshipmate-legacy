@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 from database.models import Song
 
@@ -85,10 +86,34 @@ class EditSongForm(SongObjectForm):
         self.fields['doc'].required = False
         self.fields['pdf'].required = False
 
-class AccountForm(forms.Form):
-    # username
-    # first name
-    # last name
-    # password1
-    # password2
-    pass
+class AccountForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+        ]
+
+    password1 = forms.CharField(label='New password', widget=forms.PasswordInput, required=False)
+    password2 = forms.CharField(label='New password confirmation', widget=forms.PasswordInput, required=False)
+
+    def clean(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 != password2:
+            raise forms.ValidationError(
+                "The two password fields didn't match",
+                code='password_mismatch',
+            )
+
+        self.set_password = password1 and password2
+
+    def save(self):
+        user = super(AccountForm, self).save(commit=False)
+        if self.set_password:
+            password = self.cleaned_data['password1']
+            user.set_password(password)
+        
+        user.save()
+        return user

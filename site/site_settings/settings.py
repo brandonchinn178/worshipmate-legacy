@@ -175,4 +175,5 @@ else:
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
 
+LOGIN_REDIRECT_URL = 'admin:index'
 LOGIN_URL = 'admin:login'

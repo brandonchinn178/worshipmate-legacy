@@ -129,7 +129,17 @@ class AccountView(LoginRequiredMixin, FormView):
     template_name = 'admin/account.html'
     form_class = AccountForm
 
+    def get_form_kwargs(self):
+        kwargs = super(AccountView, self).get_form_kwargs()
+        kwargs['instance'] = self.request.user
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super(AccountView, self).get_context_data(**kwargs)
         context['name'] = self.request.user.get_full_name() or self.request.user.username
         return context
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Successfully saved account information')
+        return redirect(self.request.path)

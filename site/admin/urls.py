@@ -8,7 +8,7 @@ login_kwargs = {
 }
 
 logout_kwargs = {
-    'next_page': 'login',
+    'next_page': 'admin:login',
 }
 
 urlpatterns = [
