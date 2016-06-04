@@ -1,7 +1,9 @@
 Worship Song Database
 =====================
 
-Rewriting my old website, found at [worshipdatabase.webs.com](http://worshipdatabase.webs.com). This new website will be powered through Django, and hosted on Openshift [here](http://worshipdatabase.info).
+A Django-powered website hosted on Openshift that centralizes a collection of worship songs, for use by worship leaders in choosing worship sets. This website allows users to easily filter songs by category, search songs by lyrics, and download song sheets.
+
+The website also features a custom administrative interface that allows admins to easily add songs and themes to the database. Everytime a song is added to the database, the Facebook page will also automatically write a post announcing the addition of the song.
 
 Installation
 ============
