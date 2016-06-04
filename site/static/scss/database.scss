@@ -61,11 +61,16 @@
 }
 
 .songs-table td {
-    &.speed {
-        width: 125px;
+    &.themes {
+        width: 40%;
+        a {
+            @include blue-link;
+        }
     }
-    &.themes a,
-    &.speed a {
-        @include blue-link;
+    &.speed {
+        width: 100px;
+        a {
+            @include blue-link;
+        }
     }
 }

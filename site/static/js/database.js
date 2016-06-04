@@ -5,6 +5,10 @@ window.state = {
 };
 
 $(document).ready(function() {
+    // set up constants
+    HEADER_HEIGHT = $("header").outerHeight();
+    FILTER_BAR_HEIGHT = $(".status-bar").outerHeight();
+
     // add in lyrics column dynamically to avoid showing it in lack of Javascript
     $("<th>")
         .text("Lyrics")
@@ -20,7 +24,7 @@ $(document).ready(function() {
     var options = {
         dom: "t",
         paging: false,
-        order: [],
+        order: [[0, 'asc']],
         columnDefs: [
             {
                 targets: 2,
@@ -37,8 +41,8 @@ $(document).ready(function() {
     };
 
     table = $(".songs-table").DataTable(options);
-    HEADER_HEIGHT = $("header").outerHeight();
-    FILTER_BAR_HEIGHT = $(".status-bar").outerHeight();
+    // allow dynamic resizing
+    $(".songs-table").css("width", "");
 
     // set up scroll
     $(window)
