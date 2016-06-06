@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ ! -f site/manage.py ]; then
+    echo "Please run this command in the root directory"
+    exit 1
+fi
+
+export COLLECT_STATIC=TRUE
+python site/manage.py collectstatic --noinput -i *.scss -i *.css.map
+unset COLLECT_STATIC

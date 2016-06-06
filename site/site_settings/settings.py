@@ -14,6 +14,7 @@ import imp
 
 ON_CI = bool(os.environ.get('CIRCLECI'))
 ON_OPENSHIFT = bool(os.environ.get('OPENSHIFT_REPO_DIR'))
+COLLECT_STATIC = bool(os.environ.get('COLLECT_STATIC'))
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -157,12 +158,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
 MEDIAFILES_LOCATION = 'songs'
 MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
-if ON_OPENSHIFT:
+if ON_OPENSHIFT or COLLECT_STATIC:
     STATICFILES_LOCATION = 'static'
     STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
     DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
-    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
+    STATIC_ROOT = os.path.join(os.environ.get('OPENSHIFT_REPO_DIR', ''), 'wsgi', 'static')
 
 if ON_CI:
     # don't KeyError out on MAILGUN api key
