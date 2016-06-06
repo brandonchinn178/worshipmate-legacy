@@ -31,10 +31,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            store_song_themes,
-            migrations.RunPython.noop,
-        ),
         migrations.AlterField(
             model_name='song',
             name='artist',
@@ -71,15 +67,19 @@ class Migration(migrations.Migration):
             name='title_slug',
             field=models.SlugField(),
         ),
-        migrations.AlterField(
-            model_name='song',
-            name='themes',
-            field=models.ManyToManyField(related_name='songs', to='database.Theme'),
-        ),
         migrations.RenameField(
             model_name='song',
             old_name='title_slug',
             new_name='slug',
+        ),
+        migrations.RunPython(
+            store_song_themes,
+            migrations.RunPython.noop,
+        ),
+        migrations.AlterField(
+            model_name='song',
+            name='themes',
+            field=models.ManyToManyField(related_name='songs', to='database.Theme'),
         ),
         migrations.AlterField(
             model_name='theme',
