@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load partials %}
+
+{% block head %}
+    {% add_style 'admin/login.css' %}
+{% endblock %}
+
+{% block content %}
+    {% create_form form %}
+        <button>Login</button>
+        {% if form.errors %}
+            <div class="feedback">
+                <p class="message error">Please enter a valid username and password.</p>
+            </div>
+        {% endif %}
+    {% end_create_form %}
+{% endblock %}

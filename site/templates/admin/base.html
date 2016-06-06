@@ -2,22 +2,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Worship Song Database{% endblock %}</title>
+    <title>Admin | Worship Song Database</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400" rel="stylesheet" type="text/css">
-    {% add_script 'vendor/analytics.js' 'vendor/jquery.min.js' %}
-    {% add_style 'base.css' %}
+    {% add_script 'vendor/jquery.min.js' 'vendor/chosen.jquery.min.js' 'admin/base.js' %}
+    {% add_style 'vendor/chosen.min.css' 'base.css' %}
     {% block head %}{% endblock %}
 </head>
 {% spaceless %}
     <body>
         <header>
-            <h1><a href="{% url 'home' %}">Worship Song Database</a></h1>
+            <h1><a href="{% url 'admin:index' %}">Worship Song Database &mdash; Admin</a></h1>
             <ul>
-                <li><a href="{% url 'home' %}">Database</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'admin:add_song' %}">Add Song</a></li>
+                <li><a href="{% url 'admin:themes' %}">Themes</a></li>
+                <li><a href="{% url 'admin:account' %}">Account</a></li>
             </ul>
         </header>
         <div class="content">

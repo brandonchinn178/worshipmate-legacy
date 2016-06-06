@@ -1,41 +1,44 @@
 {% extends "base.html" %}
-{% load staticfiles custom_filters %}
-{% load cycle from future %}
+{% load partials %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'style/vendor/select2.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'style/database.css' %}" />
-    <script src="{% static 'scripts/vendor/select2.min.js' %}"></script>
-    <script src="{% static 'scripts/vendor/jquery.tablesorter.min.js' %}"></script>
-    <script src="{% static 'scripts/database.js' %}"></script>
+    {% add_style 'database.css' %}
+    {% add_script 'vendor/jquery.dataTables.min.js' 'database.js' %}
 {% endblock %}
 
-{% block quote %}
-    Worship the Lord with gladness; come before him with joyful songs ~Psalm 100:2
-{% endblock %}
-
-{% block body %}
-<p>To get the Dropbox folder with all of the songs, click <a href="https://www.dropbox.com/sh/c6rryyatkpsnmm8/AADt5uOeBHgHqdvN-1b2ndbYa" target="_blank">here</a>. To sort by title or artist, click the column header to sort the songs ascending, and again to sort descending. To see songs only matching a certain theme or speed, click one of the buttons to filter, and click again to unfilter.</p>
-
-<select multiple class="filter"></select>
-<table id="song-table" class="tablesorter">
-    <thead>
-    <tr>
-        <th id="title">Song Title</th>
-        <th id="artist">Artist</th>
-        <th>Themes</th>
-        <th>Speed</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for song in songs %}
-        <tr class="song {% cycle 'even' 'odd' %}">
-            <td><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></td>
-            <td>{{ song.artist }}</td>
-            <td>{{ song.themes.all|join:", " }}</td>
-            <td>{{ song.speed|convert_speed }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% block content %}
+    <div class="status-bar">
+        <div class="search-text">
+            <span class="status-label">Searching by:</span>
+            <span class="search-query"></span>
+        </div>
+        <div class="filter-text">
+            <span class="status-label">Filtering by:</span>
+            <ul class="filter-list"></ul>
+        </div>
+    </div>
+    <div class="search-bar">
+        <label for="search">Search:</label>
+        <input id="searcH" type="text">
+    </div>
+    <table class="songs-table">
+        <thead>
+            <tr>
+                <th class="title">Title</th>
+                <th class="artist">Artist</th>
+                <th class="themes">Themes</th>
+                <th class="speed">Speed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song, themes in songs %}
+                <tr data-lyrics="{{ song.lyrics }}">
+                    <td class="title"><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></td>
+                    <td class="artist">{{ song.artist }}</td>
+                    <td class="themes">{{ themes }}</td>
+                    <td class="speed"><a href="#">{{ song.get_speed_display }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

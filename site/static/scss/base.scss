@@ -1,0 +1,193 @@
+@import "vars", "mixins", "fonts";
+
+html, body, div, span, h1, h2, h3, h4, h5, h6,
+p, a, ul, li, label, form, input, textarea,
+header, footer {
+    margin: 0;
+    padding: 0;
+    color: $black;
+    font-family: sans-serif("Rubik");
+    font-weight: $weight-normal;
+    box-sizing: border-box; // padding included in width
+}
+
+html, body {
+    background: $light-gray;
+    height: 100%;
+    min-width: 900px;
+    &.no-scroll {
+        overflow: hidden;
+    }
+}
+
+li {
+    list-style: none;
+}
+
+header {
+    position: relative;
+    background: $dark-gray;
+    height: $header-height;
+    font-size: 22px;
+    a {
+        text-decoration: none;
+        color: $light-gray;
+    }
+    h1 {
+        position: absolute;
+        left: 20px;
+        bottom: 5px;
+        font-size: 3em;
+        a {
+            font-family: sans-serif("Anton");
+            font-weight: normal;
+        }
+    }
+    ul {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        li {
+            text-align: right;
+            margin-bottom: 5px;
+            a:hover {
+                color: darken($light-gray, 10);
+            }
+        }
+    }
+}
+
+@mixin make-header($size) {
+    font-size: $size;
+    margin: 10px 0;
+}
+
+.content {
+    padding: 30px 50px;
+    font-size: 18px;
+    h1 {
+        @include make-header(1.8em);
+        font-weight: $weight-bold;
+    }
+    h2 {
+        @include make-header(1.3em);
+    }
+    p {
+        margin-bottom: 5px;
+    }
+    a:hover {
+        color: lighten($black, 10);
+    }
+    input, textarea {
+        font-size: 18px;
+        padding: 4px;
+        width: 300px;
+    }
+    button {
+        @include display-button;
+    }
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+        td, th {
+            background: $table-gray-light;
+            padding: 10px;
+        }
+        td {
+            border: 2px solid $light-gray;
+            // flush sides of table
+            &:first-child {
+                border-left: 0;
+            }
+            &:last-child {
+                border-right: 0;
+            }
+        }
+        th {
+            background: $dark-gray;
+            color: $light-gray;
+            font-weight: $weight-normal;
+            font-size: 1.2em;
+        }
+        tr:nth-child(even) td {
+            background: $table-gray-dark;
+        }
+    }
+}
+
+.feedback {
+    margin: 20px 0;
+    p, li {
+        font-weight: $weight-bold;
+        color: $blue;
+        &.error {
+            color: red;
+        }
+    }
+}
+
+.dataTables_wrapper {
+    th {
+        position: relative;
+        cursor: pointer;
+        outline: 0;
+        &.sorting_disabled {
+            cursor: default;
+        }
+        &:after {
+            position: absolute;
+            right: 10px;
+        }
+        &.sorting:after {
+            content: url(vendor/tablesorter-unsorted.gif);
+        }
+        &.sorting_asc:after {
+            content: url(vendor/tablesorter-asc.gif);
+            top: 5px;
+        }
+        &.sorting_desc:after {
+            content: url(vendor/tablesorter-desc.gif);
+        }
+    }
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(50,50,50,0.4);
+    text-align: center;
+    &:before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+    .wrapper {
+        background: $white;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 20px 50px;
+        min-width: 500px;
+    }
+    .buttons {
+        margin: 20px 0;
+        button {
+            @include display-button($black, $white);
+            margin-right: 20px;
+            &:last-child {
+                margin-right: 0;
+            }
+            &.cancel {
+                @include display-button($red, $white);
+            }
+        }
+    }
+    .feedback {
+        margin: 0;
+    }
+}

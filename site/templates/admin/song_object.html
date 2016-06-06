@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+{% load partials utils %}
+
+{% block head %}
+    {% add_style 'admin/song_object.css' %}
+    {% add_script 'admin/song_object.js' %}
+    {% if is_edit %}
+        {% add_script 'admin/edit_song.js' %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% get_feedback form %}
+    <form class="song-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% create_field form.title form.artist form.lyrics %}
+        <div class="field themes">
+            <label>{{ form.themes.label }} <a class="add-theme" href="#"></a></label>
+            {{ form.themes }}
+        </div>
+        {% create_field form.speed %}
+        <!-- manually because don't want extra file input stuff on edit song -->
+        <div class="field doc" data-filename="{{ song.doc.name|filename }}">
+            {{ form.doc.label_tag }}
+            <input id="id_doc" name="doc" type="file">
+        </div>
+        <div class="field pdf" data-filename="{{ song.pdf.name|filename }}">
+            {{ form.pdf.label_tag }}
+            <input id="id_pdf" name="pdf" type="file">
+        </div>
+        <div class="buttons">
+            {% if is_edit %}
+                <button>Save</button>
+                <button class="delete">Delete</button>
+                <a class="cancel" href="{% url 'admin:index' %}">Cancel</a>
+            {% else %}
+                <button>Submit</button>
+                <a class="cancel" href="{% url 'admin:index' %}">Cancel</a>
+            {% endif %}
+        </div>
+    </form>
+    <div class="popup theme-popup">
+        <div class="wrapper theme-box">
+            <h1>Add Theme</h1>
+            <p>Please provide the name of the theme you would like to add.</p>
+            <form method="post">
+                {% csrf_token %}
+                <input name="name">
+                <div class="buttons">
+                    <button class="submit">Submit</button>
+                    <button class="cancel">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if is_edit %}
+        <div class="popup delete-popup">
+            <div class="wrapper delete-box">
+                <h1>Delete Song</h1>
+                <p>Are you sure you want to delete the song "{{ song.title }}"?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete">
+                    <div class="buttons">
+                        <button class="delete">Delete</button>
+                        <button class="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

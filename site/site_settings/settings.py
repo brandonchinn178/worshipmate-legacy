@@ -33,12 +33,7 @@ if ON_OPENSHIFT:
 SECRET_KEY = use_keys['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ON_OPENSHIFT:
-     DEBUG = False
-else:
-     DEBUG = True
-
-TEMPLATE_DEBUG = DEBUG
+DEBUG = not ON_OPENSHIFT
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -48,15 +43,15 @@ else:
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'admin',
     'main',
     'database',
-    'storages'
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -90,9 +85,25 @@ ROOT_URLCONF = 'site_settings.urls'
 
 WSGI_APPLICATION = 'site_settings.wsgi.application'
 
-TEMPLATE_DIRS = (
-     os.path.join(BASE_DIR, '..', 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, '..', 'templates')],
+        'OPTIONS': {
+            'context_processors': (
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ),
+            'debug': DEBUG
+        }
+    }
+]
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -110,11 +121,8 @@ if ON_OPENSHIFT:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'worshipdb',
-            'USER': 'brandon',
-            'PASSWORD': 'admin',
-            'HOST': 'localhost',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, '..', '..', 'worshipdb.db'),
         }
     }
 
@@ -154,10 +162,18 @@ if ON_OPENSHIFT:
     STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
     DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
-
-if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
 
 if ON_CI:
     # don't KeyError out on MAILGUN api key
     os.environ.update({'MAILGUN_KEY': ''})
+else:
+    # email settings
+    EMAIL_HOST = 'smtp.mailgun.org'
+    EMAIL_HOST_USER = 'postmaster@worshipdatabase.info'
+    EMAIL_HOST_PASSWORD = os.environ['MAILGUN_PASSWORD']
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+
+LOGIN_REDIRECT_URL = 'admin:index'
+LOGIN_URL = 'admin:login'

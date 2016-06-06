@@ -1,5 +1,10 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block body %}
+{% block title %}
+    Server Error | Worship Song Database
+{% endblock %}
+
+{% block content %}
+    <h1>Server Error</h1>
     <p>The server reported an error. Please <a href="{% url 'contact' %}">let me know</a> what happened so I can get to work on fixing it. Thanks!</p>
 {% endblock %}

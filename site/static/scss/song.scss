@@ -1,0 +1,23 @@
+@import "vars";
+
+.content {
+    .info {
+        display: inline-block;
+        width: 40%;
+        padding-right: 20px;
+        vertical-align: top;
+        h1 {
+            margin-bottom: 0;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        h3 {
+            font-weight: $weight-bold;
+        }
+    }
+    object {
+        width: 60%;
+        height: 550px;
+    }
+}

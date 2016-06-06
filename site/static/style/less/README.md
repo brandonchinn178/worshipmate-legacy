@@ -1,1 +1,0 @@
-To compile .less files into .css files in the above directory, download [Less.js](http://lesscss.org/#download-options) and run those commands. If on a Mac, run the compile executable in this directory.

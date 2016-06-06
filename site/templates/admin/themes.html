@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+{% load partials %}
+
+{% block head %}
+    {% add_style 'admin/themes.css' %}
+    {% add_script 'vendor/jquery.dataTables.min.js' 'admin/themes.js' %}
+{% endblock %}
+
+{% block content %}
+    <p><a class="add-theme" href="#">Add Theme</a></p>
+    <table class="themes-table">
+        <thead>
+            <th class="name">Name</th>
+            <th class="songs">Songs</th>
+            <th class="actions">Actions</th>
+        </thead>
+        <tbody>
+            {% for theme, songs in themes %}
+                <tr id="{{ theme.pk }}">
+                    <td class="name">{{ theme.name }}</td>
+                    <td class="songs">{{ songs }}</td>
+                    <td class="actions"></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="popup add-popup">
+        <div class="wrapper add-box">
+            <h1>Add Theme</h1>
+            <p>Name of theme to add:</p>
+            <form method="post">
+                {% csrf_token %}
+                <input name="name">
+                <div class="buttons">
+                    <button class="submit">Add</button>
+                    <button class="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="popup edit-popup">
+        <div class="wrapper edit-box">
+            <h1>Edit Theme</h1>
+            <p>Update name of theme below:</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="pk">
+                <input name="name">
+                <div class="buttons">
+                    <button class="submit">Save</button>
+                    <button class="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="popup delete-popup">
+        <div class="wrapper delete-box">
+            <h1>Delete Theme</h1>
+            <p>Are you sure you want to delete "<span class="theme-name"></span>"?</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="pk">
+                <div class="buttons">
+                    <button class="delete">Delete</button>
+                    <button class="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

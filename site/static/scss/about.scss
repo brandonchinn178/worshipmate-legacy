@@ -1,0 +1,23 @@
+@import "vars", "mixins";
+
+.content {
+    @include info-content;
+    h2 {
+        margin-bottom: 0;
+    }
+    .chords {
+        width: 720px;
+        margin: 20px auto;
+        li {
+            display: inline-block;
+            margin: 0 15px;
+            font-weight: $weight-bold;
+        }
+    }
+    .links {
+        li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+}

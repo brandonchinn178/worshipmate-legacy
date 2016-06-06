@@ -1,0 +1,56 @@
+@import "vars";
+
+/**
+ * Add a series of sans-serif fonts as backups for the given font. Usage:
+ *      font-family: sans-serif("Rubik");
+ *    Outputs: font-family: "Rubik", Helvetica, Arial, sans-serif
+ */
+@function sans-serif($font-families...) {
+    @return $font-families, Helvetica, Arial, sans-serif;
+}
+
+/**
+ * For informational pages, make the content container narrower and
+ * centered in the page.
+ */
+@mixin info-content {
+    $content-width: 1000px;
+    width: $content-width;
+    margin: 0 auto;
+    @media (max-width: $content-width) {
+        width: 100%;
+    }
+}
+
+@mixin blue-link {
+    color: $blue;
+    font-weight: 400;
+    text-decoration: none;
+    &:hover {
+        color: lighten($blue, 10);
+    }
+}
+
+@mixin block-label {
+    display: block;
+    width: initial;
+    margin-bottom: 5px;
+}
+
+@mixin display-button($primary-color: $black, $secondary-color: $light-gray) {
+    font-size: 20px;
+    font-family: sans-serif("Rubik");
+    padding: 7px 30px 5px;
+    background: $primary-color;
+    color: $secondary-color;
+    border: 3px solid $primary-color;
+    cursor: pointer;
+    transition: background 0.1s ease-in, color 0.1s ease-in;
+    outline: 0;
+    text-decoration: none;
+    font-weight: $weight-normal;
+    &:hover {
+        background: $secondary-color;
+        color: $primary-color;
+    }
+}

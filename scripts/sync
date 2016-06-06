@@ -1,0 +1,4 @@
+#!/bin/bash
+
+AWS_BUCKET=brandonchinn178-worship/static
+aws s3 sync site/static/ s3://$AWS_BUCKET --exclude "*.DS_Store" --exclude "sync"

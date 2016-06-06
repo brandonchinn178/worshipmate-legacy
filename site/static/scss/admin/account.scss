@@ -1,0 +1,31 @@
+.content {
+    h2 {
+        margin-top: 20px;
+    }
+    form {
+        width: 550px;
+    }
+    .field {
+        margin: 10px 0;
+    }
+    .personal-info {
+        label {
+            display: inline-block;
+            width: 120px;
+        }
+    }
+    .change-password {
+        label {
+            display: inline-block;
+            width: 240px;
+        }
+    }
+    button {
+        display: block;
+        margin: 30px auto;
+        width: 125px;
+    }
+    .feedback {
+        text-align: center;
+    }
+}

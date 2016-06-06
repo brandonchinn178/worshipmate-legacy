@@ -1,5 +1,0 @@
-test:
-    pre:
-        - python site/manage.py migrate
-    override:
-        - cd site && python manage.py test

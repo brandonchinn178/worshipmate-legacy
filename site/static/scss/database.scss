@@ -1,0 +1,76 @@
+@import "vars", "mixins";
+
+.status-bar {
+    display: none;
+    position: absolute;
+    top: $header-height;
+    left: 0;
+    width: 100%;
+    background: $orange;
+    padding: 10px 10px;
+    font-size: 18px;
+    box-shadow: 0 2px 5px lighten(#000, 40);
+    z-index: 100;
+    overflow-x: auto;
+    white-space: nowrap;
+    &.sticky {
+        position: fixed;
+        top: 0;
+    }
+    div {
+        display: inline-block;
+        &.search-text {
+            margin-right: 100px;
+        }
+    }
+    .status-label {
+        margin-right: 5px;
+    }
+    .filter-list {
+        display: inline-block;
+        li {
+            display: inline-block;
+            margin-right: 5px;
+            &:after {
+                content: ",";
+            }
+            &:last-child {
+                margin-right: 0;
+                &:after {
+                    content: "";
+                }
+            }
+            a {
+                @include blue-link;
+            }
+        }
+    }
+    .search-query {
+        font-weight: $weight-bold;
+    }
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    label {
+        margin-right: 10px;
+    }
+    input {
+        width: 500px;
+    }
+}
+
+.songs-table td {
+    &.themes {
+        width: 40%;
+        a {
+            @include blue-link;
+        }
+    }
+    &.speed {
+        width: 100px;
+        a {
+            @include blue-link;
+        }
+    }
+}
