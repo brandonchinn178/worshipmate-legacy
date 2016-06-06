@@ -3,6 +3,7 @@ venv/
 .env
 *.db
 *.log
+*.sql
 node_modules/
 .sass-cache
 **/css/**/*.css

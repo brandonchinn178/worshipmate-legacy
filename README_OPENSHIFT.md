@@ -14,3 +14,9 @@ Also, to reset up domain hosting (if need be), use
 ```
 $ rhc alias add [app name] [sub-domain].[domain]
 ```
+
+To back up the MySQL database, use
+
+```
+mysqldump -h $OPENSHIFT_MYSQL_DB_HOST -P $OPENSHIFT_MYSQL_DB_PORT -u $OPENSHIFT_MYSQL_DB_USERNAME --password="$OPENSHIFT_MYSQL_DB_PASSWORD" --all-databases  > ~/app-deployments/backup.sql
+```
