@@ -5,6 +5,24 @@ from __future__ import unicode_literals
 import database.models
 from django.db import migrations, models
 
+songs = {}
+
+def store_song_themes(apps, schema_editor):
+    Song = apps.get_model('database', 'Song')
+
+    for song in Song.objects.all():
+        songs[song.pk] = song.themes.valueslist('name', flat=True)
+
+def restore_song_themes(apps, schema_editor):
+    Song = apps.get_model('database', 'Song')
+    Theme = apps.get_model('database', 'Theme')
+
+    for song in Song.objects.all():
+        themes = [
+            Theme.objects.get(name=name)
+            for name in songs[song.pk]
+        ]
+        song.themes.add(*themes)
 
 class Migration(migrations.Migration):
 
@@ -59,6 +77,15 @@ class Migration(migrations.Migration):
             old_name='title_slug',
             new_name='slug',
         ),
+        migrations.AddField(
+            model_name='song',
+            name='id',
+            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+        ),
+        migrations.RunPython(
+            store_song_themes,
+            migrations.RunPython.noop,
+        ),
         migrations.AlterField(
             model_name='theme',
             name='name',
@@ -69,13 +96,12 @@ class Migration(migrations.Migration):
             options={'ordering': ['name']},
         ),
         migrations.AddField(
-            model_name='song',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AddField(
             model_name='theme',
             name='id',
             field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+        ),
+        migrations.RunPython(
+            restore_song_themes,
+            migrations.RunPython.noop,
         ),
     ]
