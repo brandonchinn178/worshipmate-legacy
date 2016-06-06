@@ -81,11 +81,6 @@ class Migration(migrations.Migration):
             old_name='title_slug',
             new_name='slug',
         ),
-        migrations.AddField(
-            model_name='song',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
-        ),
         migrations.AlterField(
             model_name='theme',
             name='name',
@@ -94,6 +89,11 @@ class Migration(migrations.Migration):
         migrations.AlterModelOptions(
             name='theme',
             options={'ordering': ['name']},
+        ),
+        migrations.AddField(
+            model_name='song',
+            name='id',
+            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
         ),
         migrations.AddField(
             model_name='theme',
