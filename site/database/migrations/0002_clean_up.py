@@ -11,7 +11,7 @@ def store_song_themes(apps, schema_editor):
     Song = apps.get_model('database', 'Song')
 
     for song in Song.objects.all():
-        songs[song.pk] = song.themes.valueslist('name', flat=True)
+        songs[song.title] = song.themes.values_list('name', flat=True)
 
 def restore_song_themes(apps, schema_editor):
     Song = apps.get_model('database', 'Song')
@@ -20,7 +20,7 @@ def restore_song_themes(apps, schema_editor):
     for song in Song.objects.all():
         themes = [
             Theme.objects.get(name=name)
-            for name in songs[song.pk]
+            for name in songs[song.title]
         ]
         song.themes.add(*themes)
 
@@ -31,6 +31,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(
+            store_song_themes,
+            migrations.RunPython.noop,
+        ),
         migrations.AlterField(
             model_name='song',
             name='artist',
@@ -81,10 +85,6 @@ class Migration(migrations.Migration):
             model_name='song',
             name='id',
             field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.RunPython(
-            store_song_themes,
-            migrations.RunPython.noop,
         ),
         migrations.AlterField(
             model_name='theme',
