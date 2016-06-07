@@ -5,7 +5,7 @@ $(document).ready(function() {
         order: [],
         columnDefs: [
             {
-                targets: [2],
+                targets: [2,3,4],
                 orderable: false,
             },
         ],
