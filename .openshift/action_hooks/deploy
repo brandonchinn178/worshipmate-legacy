@@ -11,7 +11,8 @@ source $OPENSHIFT_HOMEDIR/python/virtenv/bin/activate
 echo "Executing 'python site/manage.py migrate --noinput'"
 python site/manage.py migrate --noinput
 
-echo "Executing 'python site/manage.py collectstatic --noinput -i *.css.map -i *.scss'"
-python site/manage.py collectstatic --noinput -i *.css.map -i *.scss
+# # done with the collectstatic script instead
+# echo "Executing 'python site/manage.py collectstatic --noinput -i *.css.map -i *.scss'"
+# python site/manage.py collectstatic --noinput -i *.css.map -i *.scss
 
 cd $HOME
