@@ -1,5 +1,11 @@
 var HEADER_HEIGHT, FILTER_BAR_HEIGHT, table;
 window.state = {
+    options: {
+        title: true,
+        artist: true,
+        tags: true,
+        lyrics: true,
+    },
     filters: [],
     search: "",
 };
@@ -73,6 +79,26 @@ $(document).ready(function() {
     // set up search bar
     $(".search-bar input").keyup(function() {
         updateSearch($(this).val());
+    });
+
+    // set up search options
+    $(".search-bar .search-options").click(function() {
+        var options = $(".search-bar .options");
+        if ($(this).hasClass("active")) {
+            options
+                .slideUp(400)
+                .removeClass("active");
+            $(this).removeClass("active");
+        } else {
+            options
+                .slideDown(400)
+                .addClass("active");
+            $(this).addClass("active");
+        }
+        return false;
+    });
+    $(".search-bar .options input[type=checkbox]").click(function() {
+        updateOptions(this);
     });
 
     // update state
@@ -169,14 +195,46 @@ var updateSearch = function(query) {
 };
 
 /**
+ * Update search options in state and redraws table
+ */
+var updateOptions = function(checkbox) {
+    var id = $(checkbox).attr("id").replace("search-", "");
+    window.state.options[id] = $(checkbox).prop("checked");
+
+    doFilter();
+};
+
+/**
+ * Return a list of jQuery selectors from the given options
+ */
+var getColumns = function(options) {
+    return $.map(options, function(value, key) {
+        if (!value) {
+            return [];
+        } else if (key === "tags") {
+            return [".themes", ".speed"];
+        } else {
+            return "." + key;
+        }
+    });
+};
+
+/**
  * Do the tag filter and search query, redraw the table, and do any post-filter
  * actions
  */
 var doFilter = function() {
     var filters = window.state.filters;
     var query = window.state.search;
+    var options = window.state.options;
 
-    table.search(query).draw();
+    var columns = getColumns(options);
+    // TODO: fix
+    console.log(columns);
+    table
+        .column(columns)
+        .search(query)
+        .draw();
 
     if (filters.length === 0 && query.length === 0) {
         $(".status-bar").hide();
