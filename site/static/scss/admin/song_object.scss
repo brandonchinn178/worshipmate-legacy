@@ -1,9 +1,10 @@
 @import "../vars", "../mixins";
 
+$form-width: 500px;
+
 .content {
     text-align: center;
     form.song-form {
-        width: 500px;
         margin: 0 auto;
         .buttons {
             margin-top: 20px;
@@ -27,7 +28,7 @@
                 @include block-label;
             }
             textarea {
-                width: 100%;
+                width: $form-width;
                 height: 10em;
             }
         }
@@ -36,7 +37,7 @@
                 @include block-label;
             }
             select {
-                width: 100%;
+                width: $form-width;
             }
             .add-theme {
                 margin-left: 5px;
@@ -55,7 +56,7 @@
         &.doc, &.pdf {
             label {
                 @include display-button($blue);
-                width: initial;
+                width: 200px;
                 font-size: 1em;
             }
             input {
@@ -64,11 +65,12 @@
             .file-text {
                 display: inline-block;
                 margin-right: 20px;
-                max-width: 270px;
+                max-width: 650px;
+                vertical-align: middle;
+                // ellipsis at the end
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                vertical-align: middle;
             }
         }
     }
