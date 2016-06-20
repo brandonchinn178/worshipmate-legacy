@@ -52,11 +52,42 @@
 
 .search-bar {
     margin-bottom: 20px;
+    & > * {
+        vertical-align: middle;
+    }
     label {
         margin-right: 10px;
     }
-    input {
+    input#search {
         width: 500px;
+    }
+    .search-options {
+        margin-left: 10px;
+        font-size: 0.9em;
+        &:after {
+            content: "\eaec";
+            font-family: "icomoon";
+            margin-left: 3px;
+            position: relative;
+            display: inline-block;
+            top: 2px;
+            transform: rotate(-90deg);
+            transition: transform 0.4s;
+        }
+        &.active:after {
+            transform: rotate(0);
+        }
+    }
+    div.options {
+        margin-top: 10px;
+        display: none;
+        label {
+            margin-left: 30px;
+            margin-right: 10px;
+        }
+        input {
+            width: initial;
+        }
     }
 }
 
