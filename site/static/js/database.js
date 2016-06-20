@@ -107,32 +107,6 @@ $(document).ready(function() {
     }
 });
 
-/** 
- * Custom filtering function which filters rows based on the selected tags
- * after searching for text
- *
- * Ex. https://datatables.net/examples/plug-ins/range_filtering.html
- */
-$.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-    var tags = data[2].split(", ");
-    var speed = data[3];
-    tags.push(speed);
-
-    // Fast/Slow also acts as both Fast and Slow
-    if (speed === "Fast/Slow") {
-        tags.push("Fast");
-        tags.push("Slow");
-    }
-
-    var filters = window.state.filters;
-    for (var i = 0; i < filters.length; i++) {
-        if (tags.indexOf(filters[i]) === -1) {
-            return false;
-        }
-    }
-    return true;
-});
-
 /**
  * Returns true if the given tag is already being filtered on
  */
@@ -201,22 +175,11 @@ var updateOptions = function(checkbox) {
     var id = $(checkbox).attr("id").replace("search-", "");
     window.state.options[id] = $(checkbox).prop("checked");
 
-    doFilter();
-};
+    // all checkboxes unchecked disables search
+    var allUnchecked = $(".search-bar .options input:checked").length === 0;
+    $(".search-bar input#search").prop("disabled", allUnchecked);
 
-/**
- * Return a list of jQuery selectors from the given options
- */
-var getColumns = function(options) {
-    return $.map(options, function(value, key) {
-        if (!value) {
-            return [];
-        } else if (key === "tags") {
-            return [".themes", ".speed"];
-        } else {
-            return "." + key;
-        }
-    });
+    doFilter();
 };
 
 /**
@@ -228,13 +191,8 @@ var doFilter = function() {
     var query = window.state.search;
     var options = window.state.options;
 
-    var columns = getColumns(options);
-    // TODO: fix
-    console.log(columns);
-    table
-        .column(columns)
-        .search(query)
-        .draw();
+    // search nothing just to trigger doSearch()
+    table.search("").draw();
 
     if (filters.length === 0 && query.length === 0) {
         $(".status-bar").hide();
@@ -267,6 +225,62 @@ var doFilter = function() {
 };
 
 /**
+ * Use a custom search function to handle tag filtering and search options
+ *
+ * Ex. https://datatables.net/examples/plug-ins/range_filtering.html
+ */
+var doSearch = function(settings, data, dataIndex) {
+    var themes = data[2].split(", ");
+    var speed = data[3];
+
+    var tags = $.merge([], themes, [speed]);
+    // Fast/Slow also acts as both Fast and Slow
+    if (speed === "Fast/Slow") {
+        tags.push("Fast");
+        tags.push("Slow");
+    }
+
+    // filter tags
+    var filters = window.state.filters;
+    for (var i = 0; i < filters.length; i++) {
+        if (tags.indexOf(filters[i]) === -1) {
+            return false;
+        }
+    }
+
+    // search columns manually to handle search options
+    var COLUMNS = {
+        title: 0,
+        artist: 1,
+        tags: [2, 3],
+        lyrics: 4,
+    }
+    // use DataTable's regex
+    var regex = $.fn.DataTable.ext.internal._fnFilterCreateSearch(
+        window.state.search, false, true, true
+    );
+    var tests = $.map(window.state.options, function(value, column) {
+        if (!value) {
+            return;
+        } else if (column === "tags") {
+            return $.map(COLUMNS.tags, function(col) {
+                return regex.test(data[col]);
+            });
+        } else {
+            var col = COLUMNS[column];
+            return regex.test(data[col]);
+        }
+    });
+
+    if (tests.length === 0) {
+        return true;
+    } else {
+        return tests.indexOf(true) !== -1;
+    }
+};
+$.fn.dataTable.ext.search.push(doSearch);
+
+/**
  * Load previously saved state
  */
 var applyState = function() {
@@ -276,6 +290,12 @@ var applyState = function() {
     var state = window.history.state;
     $.each(state.filters, function(i, val) {
         addFilter(val);
+    });
+
+    // update checkboxes
+    window.state.options = state.options;
+    $.each(state.options, function(val, key) {
+        $(".options input#search-" + key).prop("checked", val);
     });
 
     var query = state.search;
