@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block content %}
-    <p><a class="add-theme" href="#">Add Theme</a></p>
+    {% get_feedback %}
+    <p><a class="add-theme" href="{% url 'admin:add_theme' %}">Add Theme</a></p>
     <table class="themes-table">
         <thead>
             <th class="name">Name</th>
@@ -19,40 +20,14 @@
                 <tr id="{{ theme.pk }}">
                     <td class="name">{{ theme.name }}</td>
                     <td class="songs">{{ songs }}</td>
-                    <td class="actions"></td>
+                    <td class="actions">
+                        <a class="edit" href="{% url 'admin:edit_theme' theme.name %}"></a>
+                        <a class="delete" href="#"></a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div class="popup add-popup">
-        <div class="wrapper add-box">
-            <h1>Add Theme</h1>
-            <p>Name of theme to add:</p>
-            <form method="post">
-                {% csrf_token %}
-                <input name="name">
-                <div class="buttons">
-                    <button class="submit">Add</button>
-                    <button class="cancel">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="popup edit-popup">
-        <div class="wrapper edit-box">
-            <h1>Edit Theme</h1>
-            <p>Update name of theme below:</p>
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="pk">
-                <input name="name">
-                <div class="buttons">
-                    <button class="submit">Save</button>
-                    <button class="cancel">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
     <div class="popup delete-popup">
         <div class="wrapper delete-box">
             <h1>Delete Theme</h1>

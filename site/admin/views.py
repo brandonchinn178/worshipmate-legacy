@@ -87,8 +87,6 @@ class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
 class ThemesView(LoginRequiredMixin, ActionMixin, TemplateView):
     template_name = 'admin/themes.html'
     actions = {
-        'add': 'add_theme',
-        'edit': 'edit_theme',
         'delete': 'delete_theme',
     }
 
@@ -100,21 +98,6 @@ class ThemesView(LoginRequiredMixin, ActionMixin, TemplateView):
         ]
         return context
 
-    def add_theme(self):
-        theme = Theme.objects.create_from_post(self.request.POST)
-        return {
-            'id': theme.id,
-            'name': theme.name,
-        }
-
-    def edit_theme(self):
-        theme = Theme.objects.update_from_post(self.request.POST)
-        return {
-            'id': theme.id,
-            'name': theme.name,
-            'songs': theme.songs.count(),
-        }
-
     def delete_theme(self):
         pk = self.request.POST['pk']
         theme = Theme.objects.get(pk=pk)
@@ -124,6 +107,33 @@ class ThemesView(LoginRequiredMixin, ActionMixin, TemplateView):
         return {
             'id': id,
         }
+
+class AddThemeView(LoginRequiredMixin, CreateView):
+    template_name = 'admin/theme_object.html'
+    form_class = ThemeObjectForm
+
+    def form_valid(self, form):
+        theme = form.save()
+        messages.success(self.request, 'Theme "%s" successfully created' % theme.name)
+        return redirect('admin:themes')
+
+class EditThemeView(LoginRequiredMixin, UpdateView):
+    template_name = 'admin/theme_object.html'
+    form_class = ThemeObjectForm
+
+    def get_object(self):
+        name = self.kwargs['name']
+        return Theme.objects.get(name=name)
+
+    def get_context_data(self, **kwargs):
+        context = super(EditThemeView, self).get_context_data(**kwargs)
+        context['is_edit'] = True
+        return context
+
+    def form_valid(self, form):
+        theme = form.save()
+        messages.success(self.request, 'Theme "%s" successfully saved' % theme.name)
+        return redirect('admin:themes')
 
 class AccountView(LoginRequiredMixin, FormView):
     template_name = 'admin/account.html'

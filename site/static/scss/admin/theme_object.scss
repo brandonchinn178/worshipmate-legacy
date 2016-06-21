@@ -1,0 +1,51 @@
+@import "../vars", "../mixins";
+
+.content {
+    text-align: center;
+    .buttons {
+        margin-top: 30px;
+        button {
+            margin-right: 20px;
+        }
+        .cancel {
+            @include display-button($red);
+            margin-right: 0;
+        }
+    }
+    .field {
+        margin-bottom: 10px;
+        &.name {
+            label {
+                margin-right: 10px;
+            }
+            input {
+                width: 400px;
+            }
+        }
+        &.songs {
+            select {
+                width: 100%;
+            }
+            .chosen-container {
+                display: block;
+                margin: 5px auto;
+                .chosen-choices {
+                    padding: 2px 5px;
+                }
+            }
+        }
+    }
+    .theme-popup {
+        input {
+            margin: 10px 0;
+        }
+    }
+    .delete-popup button {
+        &.delete {
+            @include display-button($red, $white);
+        }
+        &.cancel {
+            @include display-button($black, $white);
+        }
+    }
+}

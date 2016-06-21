@@ -2,7 +2,7 @@ from django import forms
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 
-from database.models import Song
+from database.models import Song, Theme
 
 class SongObjectForm(forms.ModelForm):
     class Meta:
@@ -85,6 +85,33 @@ class EditSongForm(SongObjectForm):
 
         self.fields['doc'].required = False
         self.fields['pdf'].required = False
+
+class ThemeObjectForm(forms.ModelForm):
+    class Meta:
+        model = Theme
+        fields = ['name']
+        error_messages = {
+            'name': {
+                'required': 'Please provide the name of the theme'
+            }
+        }
+
+    songs = forms.ModelMultipleChoiceField(queryset=Song.objects.all(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs['instance']
+        if instance is not None:
+            kwargs['initial'] = {
+                'songs': instance.songs.all()
+            }
+
+        super(ThemeObjectForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        theme = super(ThemeObjectForm, self).save()
+        songs = self.cleaned_data['songs']
+        theme.songs.add(*songs)
+        return theme
 
 class AccountForm(forms.ModelForm):
     class Meta:
