@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^add-song/$', AddSongView.as_view(), name='add_song'),
     url(r'^edit-song/(?P<slug>.+)/$', EditSongView.as_view(), name='edit_song'),
     url(r'^themes/$', ThemesView.as_view(), name='themes'),
+    url(r'^add-theme/$', AddThemeView.as_view(), name='add_theme'),
+    url(r'^edit-theme/(?P<name>.+)/$', EditThemeView.as_view(), name='edit_theme'),
     url(r'^account/$', AccountView.as_view(), name='account'),
     # login urls
     url(r'^login/$', login, login_kwargs, name='login'),

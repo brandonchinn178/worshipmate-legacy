@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load partials %}
+
+{% block head %}
+    {% add_style 'admin/theme_object.css' %}
+    {% add_script 'admin/theme_object.js' %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ is_edit|yesno:"Edit,Add" }} Theme</h1>
+    {% create_form form %}
+        <div class="buttons">
+            <button>{{ is_edit|yesno:"Save,Submit" }}</button>
+            <a class="cancel" href="{% url 'admin:themes' %}">Cancel</a>
+        </div>
+    {% end_create_form %}
+    {% get_feedback form %}
+{% endblock %}
