@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    {% get_feedback form %}
+    <ul class="feedback"></ul>
     <form class="song-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% create_field form.title form.artist form.lyrics %}
@@ -19,7 +19,6 @@
             {{ form.themes }}
         </div>
         {% create_field form.speed %}
-        <!-- manually because don't want extra file input stuff on edit song -->
         <div class="field doc" data-filename="{{ song.doc.name|filename }}">
             {{ form.doc.label_tag }}
             <input id="id_doc" name="doc" type="file">
@@ -39,6 +38,9 @@
             {% endif %}
         </div>
     </form>
+    <div class="popup file-upload">
+        <h2>Drop doc or pdf files here</h2>
+    </div>
     <div class="popup theme-popup">
         <div class="wrapper theme-box">
             <h1>Add Theme</h1>

@@ -47,31 +47,27 @@ class SongObjectForm(forms.ModelForm):
         for field in ['lyrics', 'themes', 'doc', 'pdf']:
             self.fields[field].label_suffix = ''
 
-class AddSongForm(SongObjectForm):
-    class Meta(SongObjectForm.Meta):
-        labels = {
-            'doc': 'Upload .doc file',
-            'pdf': 'Upload .pdf file',
-        }
-
     def save(self):
-        instance = super(AddSongForm, self).save(commit=False)
+        instance = super(SongObjectForm, self).save(commit=False)
         
-        # create a unique slug
+        # create a unique slug, adding the artist if necessary
         slug = slugify(instance.title)
-
-        if Song.objects.filter(slug=slug).exists():
-            # first try adding the artist to the slug
+        existing_songs = Song.objects.filter(slug=slug).exclude(pk=instance.pk)
+        if existing_songs.exists():
             slug = '%s-%s' % (slug, slugify(instance.artist))
-            if Song.objects.filter(slug=slug).exists():
-                # then add the primary key which is guaranteed to be unique
-                slug = '%s-%d' % (slug, instance.pk)
 
         instance.slug = slug
         instance.save()
         self.save_m2m()
         
         return instance
+
+class AddSongForm(SongObjectForm):
+    class Meta(SongObjectForm.Meta):
+        labels = {
+            'doc': 'Upload .doc file',
+            'pdf': 'Upload .pdf file',
+        }
 
 class EditSongForm(SongObjectForm):
     class Meta(SongObjectForm.Meta):

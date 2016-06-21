@@ -4,9 +4,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http.response import HttpResponse, JsonResponse
+from django.core.urlresolvers import reverse
 
 from admin.forms import *
 from database.models import Song, Theme
+
+def json_error(data):
+    return JsonResponse(data, status=500)
 
 class ActionMixin(object):
     """
@@ -26,7 +30,7 @@ class ActionMixin(object):
                 response = {
                     'message': e.message,
                 }
-                return JsonResponse(response, status=500)
+                return json_error(response)
 
             if isinstance(response, HttpResponse):
                 return response
@@ -43,20 +47,44 @@ class MainView(LoginRequiredMixin, TemplateView):
         context['songs'] = Song.objects.order_by('title')
         return context
 
-class AddSongView(LoginRequiredMixin, CreateView):
+def _save_song(view):
+    form = view.get_form()
+    if form.is_valid():
+        view.form_valid(form)
+        return {
+            'redirect': reverse('admin:index'),
+        }
+    else:
+        data = {
+            'errors': [
+                message
+                for messages in form.errors.values()
+                for message in messages
+            ]
+        }
+        return json_error(data)
+
+class AddSongView(LoginRequiredMixin, ActionMixin, CreateView):
     template_name = 'admin/song_object.html'
     form_class = AddSongForm
+    actions = {
+        'save-song': 'save_song', # AJAX saving for file uploads
+    }
 
     def form_valid(self, form):
         song = form.save()
         messages.success(self.request, 'Song "%s" successfully created' % song.title)
         return redirect('admin:index')
 
+    def save_song(self):
+        return _save_song(self)
+
 class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
     template_name = 'admin/song_object.html'
     model = Song
     form_class = EditSongForm
     actions = {
+        'save-song': 'save_song', # AJAX saving for file uploads
         'delete': 'delete_song',
         'add-theme': 'add_theme',
     }
@@ -70,6 +98,10 @@ class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
         song = form.save()
         messages.success(self.request, 'Song "%s" successfully saved' % song.title)
         return redirect('admin:index')
+
+    def save_song(self):
+        self.object = self.get_object()
+        return _save_song(self)
 
     def delete_song(self):
         song = self.get_object()

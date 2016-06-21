@@ -90,4 +90,13 @@ $form-width: 500px;
             @include display-button($black, $white);
         }
     }
+    // drag-n-drop styles
+    .file-upload {
+        background: rgba(255,255,255,0.9);
+        outline: 3px dashed $blue;
+        outline-offset: -15px;
+        h2 {
+            display: inline-block;
+        }
+    }
 }

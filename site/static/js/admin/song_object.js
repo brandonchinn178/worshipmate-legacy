@@ -1,3 +1,11 @@
+// check if drag-n-drop is supported
+var isAdvancedUpload = function() {
+    var div = $("<div>")[0];
+    var hasDragNDrop = 'ondragstart' in div && 'ondrop' in div;
+    var hasDataTransfer = 'FormData' in window && 'FileReader' in window;
+    return hasDragNDrop && hasDataTransfer;
+}();
+
 $(document).ready(function() {
     $(".themes select").chosen({
         placeholder_text_multiple: "Start typing...",
@@ -9,15 +17,15 @@ $(document).ready(function() {
     $("input[type=file]")
         .change(onFileChange)
         // initialize file text
-        .change();
-
-    // can also initialize file text with data-filename attr
-    $("input[type=file]").each(function() {
-        var filename = $(this).parent().data("filename");
-        if (filename.length !== 0) {
-            updateFileText(this, filename);
-        }
-    });
+        .change()
+        // can also initialize file text with data-filename attr
+        .each(function() {
+            var filename = $(this).parent().data("filename");
+            if (filename.length !== 0) {
+                updateFileText(this, filename);
+            }
+        });
+    $(".song-form").submit(submitSongForm);
 
     // init theme popup
     $(".add-theme").click(function() {
@@ -32,13 +40,58 @@ $(document).ready(function() {
         $(".theme-popup").hide();
         return false;
     });
+
+    // drag-n-drop feature (https://css-tricks.com/drag-and-drop-file-uploading/)
+    window.doc = null;
+    window.pdf = null;
+    if (isAdvancedUpload) {
+        $(".content")
+            .on("drag dragstart dragend dragover dragenter dragleave drop", function(e) {
+                return false;
+            })
+            .on("dragenter dragstart", function() {
+                $("body").addClass("no-scroll");
+                $(".file-upload").show();
+            })
+        $(".file-upload")
+            .on("dragleave dragend drop", function() {
+                $("body").removeClass("no-scroll");
+                $(".file-upload").hide();
+            })
+            .on("drop", function(e) {
+                var droppedFiles = e.originalEvent.dataTransfer.files;
+                $.each(droppedFiles, function(i, file) {
+                    switch (file.type) {
+                        case "application/msword":
+                            window.doc = file;
+                            updateFileText($(".field.doc input"), file.name);
+                            break;
+                        case "application/pdf":
+                            window.pdf = file;
+                            updateFileText($(".field.pdf input"), file.name);
+                            break;
+                        default:
+                            // do nothing
+                    }
+                });
+            });;
+    }
 });
 
 var onFileChange = function() {
     if (this.files.length === 0) {
         updateFileText(this, "");
     } else {
-        var filename = this.files[0].name;
+        var file = this.files[0];
+        // reset drag-n-drop file
+        switch (file.type) {
+            case "application/msword":
+                window.doc = null; break;
+            case "application/pdf":
+                window.pdf = null; break;
+            default: // do nothing
+        }
+        var filename = file.name;
         updateFileText(this, filename);
     }
 };
@@ -59,6 +112,71 @@ var updateFileText = function(input, text) {
         text = "No file selected";
     }
     textbox.text(text);
+};
+
+/**
+ * Submit form via AJAX in case of drag-n-drop files, plus keeps selected files in place
+ */
+var submitSongForm = function() {
+    var messages = $("ul.feedback").empty();
+    var data = new FormData();
+
+    // populate with text data
+    $(this).find("input, textarea, .speed select").each(function() {
+        var name = $(this).attr("name");
+        if (name === undefined || name === "doc" || name === "pdf") {
+            return;
+        }
+        data.append(name, $(this).val());
+    });
+    // individually add each theme
+    var themes = $(this).find(".themes select").val() || [];
+    $.each(themes, function(i, theme) {
+        data.append("themes", theme);
+    });
+    // set file data
+    if (window.doc === null) {
+        data.append("doc", $(".field.doc input")[0].files[0]);
+    } else {
+        data.append("doc", window.doc);
+    }
+    if (window.pdf === null) {
+        data.append("pdf", $(".field.pdf input")[0].files[0]);
+    } else {
+        data.append("pdf", window.pdf);
+    }
+    data.append("action", "save-song");
+
+    $.ajax({
+        url: "",
+        method: "POST",
+        data: data,
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            window.location = data.redirect;
+        },
+        error: function(xhr) {
+            var errors = [xhr.responseText];
+            if (xhr.responseJSON !== undefined) {
+                var errors = xhr.responseJSON.errors;
+                if (errors === undefined) {
+                    errors = [xhr.responseJSON.message];
+                }
+            }
+            $.each(errors, function(i, error) {
+                $("<li>")
+                    .addClass("error")
+                    .text(error)
+                    .appendTo(messages);
+            });
+            $("body").scrollTop(0);
+        },
+    });
+
+    return false;
 };
 
 var submitTheme = function() {
