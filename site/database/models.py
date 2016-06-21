@@ -10,7 +10,7 @@ def validate_file(value, ext):
     filename = value.name
     extension = os.path.splitext(filename)[1]
     if extension != ext:
-        raise ValidationError('Invalid file extension: %s' % filename, code='invalid_ext')
+        raise ValidationError('Invalid file extension for %s: %s' % (ext, filename), code='invalid_ext')
 
 def upload_file(song, filename, ext):
     """

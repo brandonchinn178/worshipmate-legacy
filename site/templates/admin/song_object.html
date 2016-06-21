@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    {% get_feedback form %}
+    <ul class="feedback"></ul>
     <form class="song-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% create_field form.title form.artist form.lyrics %}

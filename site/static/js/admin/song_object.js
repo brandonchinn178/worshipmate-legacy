@@ -115,76 +115,69 @@ var updateFileText = function(input, text) {
     textbox.text(text);
 };
 
+/**
+ * Submit form via AJAX in case of drag-n-drop files, plus keeps selected files in place
+ */
 var submitSongForm = function() {
-    $("ul.feedback").empty();
+    var messages = $("ul.feedback").empty();
+    var data = new FormData();
 
-    // if there are drag-n-dropped files, use AJAX to submit form
-    var isDoc = window.doc !== null;
-    var isPdf = window.pdf !== null;
-    if (isAdvancedUpload && (isDoc || isPdf)) {
-        var data = new FormData();
-        // populate with text data
-        $(this).find("input, textarea, .speed select").each(function() {
-            var name = $(this).attr("name");
-            if (name === undefined || name === "doc" || name === "pdf") {
-                return;
-            }
-            data.append(name, $(this).val());
-        });
-        // individually add each theme
-        var themes = $(this).find(".themes select").val() || [];
-        $.each(themes, function(i, theme) {
-            data.append("themes", theme);
-        });
-        // set file data
-        if (isDoc) {
-            data.append("doc", window.doc);
-        } else {
-            data.append("doc", $(".field.doc input").val());
+    // populate with text data
+    $(this).find("input, textarea, .speed select").each(function() {
+        var name = $(this).attr("name");
+        if (name === undefined || name === "doc" || name === "pdf") {
+            return;
         }
-        if (isPdf) {
-            data.append("pdf", window.pdf);
-        } else {
-            data.append("pdf", $(".field.pdf input").val());
-        }
-        data.append("action", "save-song");
-
-        $.ajax({
-            url: "",
-            method: "POST",
-            data: data,
-            dataType: "json",
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                window.location = data.redirect;
-            },
-            error: function(xhr) {
-                var errors = [xhr.responseText];
-                if (xhr.responseJSON !== undefined) {
-                    var errors = xhr.responseJSON.errors;
-                    if (errors === undefined) {
-                        errors = [xhr.responseJSON.message];
-                    }
-                }
-                var messages = $("ul.feedback");
-                if (messages.length === 0) {
-                    messages = $("<ul>")
-                        .addClass("feedback")
-                        .insertBefore("form.song-form");
-                }
-                $.each(errors, function(i, error) {
-                    $("<li>")
-                        .addClass("error")
-                        .text(error)
-                        .appendTo(messages);
-                });
-            },
-        });
-
-        return false;
+        data.append(name, $(this).val());
+    });
+    // individually add each theme
+    var themes = $(this).find(".themes select").val() || [];
+    $.each(themes, function(i, theme) {
+        data.append("themes", theme);
+    });
+    // set file data
+    if (window.doc === null) {
+        data.append("doc", $(".field.doc input")[0].files[0]);
+    } else {
+        data.append("doc", window.doc);
     }
+    if (window.pdf === null) {
+        data.append("pdf", $(".field.pdf input")[0].files[0]);
+    } else {
+        data.append("pdf", window.pdf);
+    }
+    data.append("action", "save-song");
+
+    $.ajax({
+        url: "",
+        method: "POST",
+        data: data,
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            window.location = data.redirect;
+        },
+        error: function(xhr) {
+            var errors = [xhr.responseText];
+            if (xhr.responseJSON !== undefined) {
+                var errors = xhr.responseJSON.errors;
+                if (errors === undefined) {
+                    errors = [xhr.responseJSON.message];
+                }
+            }
+            $.each(errors, function(i, error) {
+                $("<li>")
+                    .addClass("error")
+                    .text(error)
+                    .appendTo(messages);
+            });
+            $("body").scrollTop(0);
+        },
+    });
+
+    return false;
 };
 
 var submitTheme = function() {
