@@ -116,6 +116,8 @@ var updateFileText = function(input, text) {
 };
 
 var submitSongForm = function() {
+    $("ul.feedback").empty();
+
     // if there are drag-n-dropped files, use AJAX to submit form
     var isDoc = window.doc !== null;
     var isPdf = window.pdf !== null;
@@ -156,10 +158,28 @@ var submitSongForm = function() {
             contentType: false,
             processData: false,
             success: function(data) {
-                // TODO: redirect
+                window.location = data.redirect;
             },
             error: function(xhr) {
-                // TODO: extract errors from xhr.responseJSON
+                var errors = [xhr.responseText];
+                if (xhr.responseJSON !== undefined) {
+                    var errors = xhr.responseJSON.errors;
+                    if (errors === undefined) {
+                        errors = [xhr.responseJSON.message];
+                    }
+                }
+                var messages = $("ul.feedback");
+                if (messages.length === 0) {
+                    messages = $("<ul>")
+                        .addClass("feedback")
+                        .insertBefore("form.song-form");
+                }
+                $.each(errors, function(i, error) {
+                    $("<li>")
+                        .addClass("error")
+                        .text(error)
+                        .appendTo(messages);
+                });
             },
         });
 

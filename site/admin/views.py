@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http.response import HttpResponse, JsonResponse
+from django.core.urlresolvers import reverse
 
 from admin.forms import *
 from database.models import Song, Theme
@@ -46,9 +47,13 @@ class MainView(LoginRequiredMixin, TemplateView):
         context['songs'] = Song.objects.order_by('title')
         return context
 
-def _save_song(form):
+def _save_song(view):
+    form = view.get_form()
     if form.is_valid():
-        raise
+        view.form_valid(form)
+        return {
+            'redirect': reverse('admin:index'),
+        }
     else:
         data = {
             'errors': [
@@ -72,8 +77,7 @@ class AddSongView(LoginRequiredMixin, ActionMixin, CreateView):
         return redirect('admin:index')
 
     def save_song(self):
-        form = self.get_form()
-        return _save_song(form)
+        return _save_song(self)
 
 class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
     template_name = 'admin/song_object.html'
@@ -96,8 +100,8 @@ class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
         return redirect('admin:index')
 
     def save_song(self):
-        form = self.get_form()
-        return _save_song(form)
+        self.object = self.get_object()
+        return _save_song(self)
 
     def delete_song(self):
         song = self.get_object()

@@ -41,7 +41,7 @@ class Song(models.Model):
     )
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     artist = models.CharField(max_length=50)
     themes = models.ManyToManyField('Theme', related_name='songs')
     speed = models.CharField(max_length=2, choices=SPEEDS)
