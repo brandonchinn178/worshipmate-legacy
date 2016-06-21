@@ -15,6 +15,11 @@ $form-width: 500px;
                 @include display-button($red);
                 margin-right: 0;
             }
+            .message {
+                margin-bottom: 10px;
+                font-weight: $weight-bold;
+                font-size: 1.1em;
+            }
         }
     }
     .field {

@@ -147,6 +147,10 @@ var submitSongForm = function() {
     }
     data.append("action", "save-song");
 
+    $("<p>")
+        .addClass("message")
+        .text("Saving...")
+        .prependTo(".song-form .buttons");
     $.ajax({
         url: "",
         method: "POST",
@@ -159,6 +163,7 @@ var submitSongForm = function() {
             window.location = data.redirect;
         },
         error: function(xhr) {
+            $(".song-form .buttons .message").remove();
             var errors = [xhr.responseText];
             if (xhr.responseJSON !== undefined) {
                 var errors = xhr.responseJSON.errors;
