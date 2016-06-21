@@ -1,7 +1,7 @@
 // check if drag-n-drop is supported
 var isAdvancedUpload = function() {
     var div = $("<div>")[0];
-    var hasDragNDrop = ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
+    var hasDragNDrop = 'ondragstart' in div && 'ondrop' in div;
     var hasDataTransfer = 'FormData' in window && 'FileReader' in window;
     return hasDragNDrop && hasDataTransfer;
 }();
@@ -42,10 +42,9 @@ $(document).ready(function() {
     });
 
     // drag-n-drop feature (https://css-tricks.com/drag-and-drop-file-uploading/)
+    window.doc = null;
+    window.pdf = null;
     if (isAdvancedUpload) {
-        var droppedFiles = false;
-        window.doc = null;
-        window.pdf = null;
         $(".content")
             .on("drag dragstart dragend dragover dragenter dragleave drop", function(e) {
                 return false;
