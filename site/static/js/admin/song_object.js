@@ -45,7 +45,7 @@ $(document).ready(function() {
     window.doc = null;
     window.pdf = null;
     if (isAdvancedUpload) {
-        $(".content")
+        $("body")
             .on("drag dragstart dragend dragover dragenter dragleave drop", function(e) {
                 return false;
             })
