@@ -118,7 +118,7 @@ var updateFileText = function(input, text) {
  * Submit form via AJAX in case of drag-n-drop files, plus keeps selected files in place
  */
 var submitSongForm = function() {
-    var messages = $("ul.feedback").empty();
+    $("ul.feedback").remove();
     var data = new FormData();
 
     // populate with text data
@@ -171,12 +171,14 @@ var submitSongForm = function() {
                     errors = [xhr.responseJSON.message];
                 }
             }
+            var messages = $("<ul>").addClass("feedback");
             $.each(errors, function(i, error) {
                 $("<li>")
                     .addClass("error")
                     .text(error)
                     .appendTo(messages);
             });
+            messages.prependTo(".content");
             $("body").scrollTop(0);
         },
     });
