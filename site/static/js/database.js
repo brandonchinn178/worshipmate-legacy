@@ -233,7 +233,7 @@ var doSearch = function(settings, data, dataIndex) {
     var themes = data[2].split(", ");
     var speed = data[3];
 
-    var tags = $.merge([], themes, [speed]);
+    var tags = $.merge(themes, [speed]);
     // Fast/Slow also acts as both Fast and Slow
     if (speed === "Fast/Slow") {
         tags.push("Fast");
