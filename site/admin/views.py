@@ -50,9 +50,9 @@ class MainView(LoginRequiredMixin, TemplateView):
 def _save_song(view):
     form = view.get_form()
     if form.is_valid():
-        view.form_valid(form)
+        song = form.save()
         return {
-            'redirect': reverse('admin:index'),
+            'redirect': song.get_absolute_url(),
         }
     else:
         data = {
@@ -71,11 +71,6 @@ class AddSongView(LoginRequiredMixin, ActionMixin, CreateView):
         'save-song': 'save_song', # AJAX saving for file uploads
     }
 
-    def form_valid(self, form):
-        song = form.save()
-        messages.success(self.request, 'Song "%s" successfully created' % song.title)
-        return redirect('admin:index')
-
     def save_song(self):
         return _save_song(self)
 
@@ -93,11 +88,6 @@ class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
         context = super(EditSongView, self).get_context_data(**kwargs)
         context['is_edit'] = True
         return context
-
-    def form_valid(self, form):
-        song = form.save()
-        messages.success(self.request, 'Song "%s" successfully saved' % song.title)
-        return redirect('admin:index')
 
     def save_song(self):
         self.object = self.get_object()
