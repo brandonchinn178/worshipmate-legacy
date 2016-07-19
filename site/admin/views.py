@@ -47,51 +47,36 @@ class MainView(LoginRequiredMixin, TemplateView):
         context['songs'] = Song.objects.order_by('title')
         return context
 
-def _save_song(view):
-    form = view.get_form()
-    if form.is_valid():
-        song = form.save()
-        return {
-            'redirect': song.get_absolute_url(),
-        }
-    else:
-        data = {
-            'errors': [
-                message
-                for messages in form.errors.values()
-                for message in messages
-            ]
-        }
-        return json_error(data)
-
-class AddSongView(LoginRequiredMixin, ActionMixin, CreateView):
-    template_name = 'admin/song_object.html'
-    form_class = AddSongForm
-    actions = {
-        'save-song': 'save_song', # AJAX saving for file uploads
-    }
-
-    def save_song(self):
-        return _save_song(self)
-
-class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
+class SongObjectMixin(LoginRequiredMixin, ActionMixin):
     template_name = 'admin/song_object.html'
     model = Song
-    form_class = EditSongForm
     actions = {
-        'save-song': 'save_song', # AJAX saving for file uploads
-        'delete': 'delete_song',
+        'save-song': 'save_song', # AJAX
         'add-theme': 'add_theme',
+        'delete': 'delete_song',
     }
 
-    def get_context_data(self, **kwargs):
-        context = super(EditSongView, self).get_context_data(**kwargs)
-        context['is_edit'] = True
-        return context
+    def get_form_kwargs(self):
+        kwargs = super(SongObjectMixin, self).get_form_kwargs()
+        kwargs['artists'] = Song.objects.order_by('artist').values_list('artist', flat=True).distinct()
+        return kwargs
 
     def save_song(self):
-        self.object = self.get_object()
-        return _save_song(self)
+        form = self.get_form()
+        if form.is_valid():
+            song = form.save()
+            return {
+                'redirect': song.get_absolute_url(),
+            }
+        else:
+            data = {
+                'errors': [
+                    message
+                    for messages in form.errors.values()
+                    for message in messages
+                ]
+            }
+            return json_error(data)
 
     def delete_song(self):
         song = self.get_object()
@@ -105,6 +90,21 @@ class EditSongView(LoginRequiredMixin, ActionMixin, UpdateView):
             'id': theme.id,
             'name': theme.name,
         }
+
+class AddSongView(SongObjectMixin, CreateView):
+    form_class = AddSongForm
+
+class EditSongView(SongObjectMixin, UpdateView):
+    form_class = EditSongForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditSongView, self).get_context_data(**kwargs)
+        context['is_edit'] = True
+        return context
+
+    def save_song(self):
+        self.object = self.get_object()
+        return super(EditSongView, self).save_song()
 
 class ThemesView(LoginRequiredMixin, ActionMixin, TemplateView):
     template_name = 'admin/themes.html'

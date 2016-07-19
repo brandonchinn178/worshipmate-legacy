@@ -67,21 +67,6 @@ class ThemeManager(models.Manager):
         except IntegrityError:
             raise ValidationError('Theme "%s" already exists' % name)
 
-    def update_from_post(self, data):
-        pk = data['pk']
-        name = data['name']
-        if name == '':
-            raise ValidationError('No name provided')
-
-        theme = Theme.objects.get(pk=pk)
-        theme.name = name
-        try:
-            theme.save()
-        except IntegrityError:
-            raise ValidationError('Theme "%s" already exists' % name)
-
-        return theme
-
 class Theme(models.Model):
     class Meta:
         ordering = ['name']

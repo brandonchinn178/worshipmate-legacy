@@ -2,8 +2,8 @@
 {% load partials utils %}
 
 {% block head %}
-    {% add_style 'admin/song_object.css' %}
-    {% add_script 'admin/song_object.js' %}
+    {% add_style 'vendor/selectize.default.css' 'admin/song_object.css' %}
+    {% add_script 'vendor/selectize.min.js' 'admin/song_object.js' %}
     {% if is_edit %}
         {% add_script 'admin/edit_song.js' %}
     {% endif %}
@@ -12,12 +12,7 @@
 {% block content %}
     <form class="song-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {% create_field form.title form.artist form.lyrics %}
-        <div class="field themes">
-            <label>{{ form.themes.label }} <a class="add-theme" href="#"></a></label>
-            {{ form.themes }}
-        </div>
-        {% create_field form.speed %}
+        {% create_field form.title form.artist form.lyrics form.themes form.speed %}
         <div class="field doc" data-filename="{{ song.doc.name|filename }}">
             {{ form.doc.label_tag }}
             <input id="id_doc" name="doc" type="file">
@@ -39,20 +34,6 @@
     </form>
     <div class="popup file-upload">
         <h2>Drop doc or pdf files here</h2>
-    </div>
-    <div class="popup theme-popup">
-        <div class="wrapper theme-box">
-            <h1>Add Theme</h1>
-            <p>Please provide the name of the theme you would like to add.</p>
-            <form method="post">
-                {% csrf_token %}
-                <input name="name">
-                <div class="buttons">
-                    <button class="submit">Submit</button>
-                    <button class="cancel">Close</button>
-                </div>
-            </form>
-        </div>
     </div>
     {% if is_edit %}
         <div class="popup delete-popup">

@@ -20,9 +20,6 @@ class SongObjectForm(forms.ModelForm):
             'title': {
                 'required': 'Please provide the title of the song',
             },
-            'artist': {
-                'required': 'Please provide the artist of the song',
-            },
             'lyrics': {
                 'required': 'Please provide the lyrics of the song',
             },
@@ -40,8 +37,14 @@ class SongObjectForm(forms.ModelForm):
             },
         }
 
-    def __init__(self, *args, **kwargs):
+    artist = forms.CharField(widget=forms.Select, error_messages={
+        'required': 'Please provide the artist of the song',
+    })
+
+    def __init__(self, artists, *args, **kwargs):
         super(SongObjectForm, self).__init__(*args, **kwargs)
+
+        self.fields['artist'].widget.choices = [('', '')] + [(a, a) for a in artists]
 
         # remove label suffix
         for field in ['lyrics', 'themes', 'doc', 'pdf']:
