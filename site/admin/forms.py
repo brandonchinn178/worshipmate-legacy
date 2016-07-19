@@ -41,8 +41,7 @@ class SongObjectForm(forms.ModelForm):
         'required': 'Please provide the artist of the song',
     })
 
-    def __init__(self, *args, **kwargs):
-        artists = kwargs.pop('artists')
+    def __init__(self, artists, *args, **kwargs):
         super(SongObjectForm, self).__init__(*args, **kwargs)
 
         self.fields['artist'].widget.choices = [('', '')] + [(a, a) for a in artists]

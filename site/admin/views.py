@@ -58,7 +58,7 @@ class SongObjectMixin(LoginRequiredMixin, ActionMixin):
 
     def get_form_kwargs(self):
         kwargs = super(SongObjectMixin, self).get_form_kwargs()
-        kwargs['artists'] = Song.objects.values_list('artist', flat=True).distinct()
+        kwargs['artists'] = Song.objects.order_by('artist').values_list('artist', flat=True).distinct()
         return kwargs
 
     def save_song(self):
