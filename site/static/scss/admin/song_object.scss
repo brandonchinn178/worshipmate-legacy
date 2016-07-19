@@ -28,6 +28,13 @@ $form-width: 500px;
             display: inline-block;
             width: 80px;
         }
+        &.artist {
+            .selectize-control {
+                width: 300px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
         &.lyrics {
             label {
                 @include block-label;
@@ -41,15 +48,13 @@ $form-width: 500px;
             label {
                 @include block-label;
             }
-            select {
+            .selectize-input {
                 width: $form-width;
-            }
-            .add-theme {
-                margin-left: 5px;
-                font-weight: $weight-bold;
-                text-decoration: none;
-                &:before {
-                    content: "+";
+                text-align: left;
+                .item {
+                    background: $blue;
+                    border-radius: 0;
+                    border: 1px solid darken($blue, 5);
                 }
             }
         }

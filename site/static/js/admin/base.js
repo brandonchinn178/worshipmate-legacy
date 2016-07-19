@@ -3,10 +3,28 @@
  */
 
 /**
- * Gets the value of the input with the given name, in the given container
+ * Gets the value of the input/select/textarea with the given name, in the given container
  */
 var getVal = function(container, name) {
-    return container.find("input[name=" + name + "]").val();
+    return $(container).find("[name=" + name + "]").val();
+};
+
+var sendAjax = function(options) {
+    var defaults = {
+        url: "",
+        method: "POST",
+        dataType: "json",
+    };
+    var settings = $.extend(defaults, options);
+
+    // get/set CSRF
+    var token = getVal($("body"), "csrfmiddlewaretoken");
+    if (settings.data instanceof FormData) {
+        settings.data.append("csrfmiddlewaretoken", token);
+    } else {
+        settings.data.csrfmiddlewaretoken = token;
+    }
+    $.ajax(settings);
 };
 
 /**
@@ -24,9 +42,6 @@ var postData = function(popup, settings) {
     }
 
     var defaults = {
-        type: "POST",
-        url: "",
-        dataType: "json",
         error: function(xhr) {
             var text = "An error occurred";
             if (xhr.responseJSON !== undefined) {
@@ -40,8 +55,5 @@ var postData = function(popup, settings) {
         },
     };
     var ajaxSettings = $.extend(defaults, settings);
-
-    // set CSRF token
-    ajaxSettings.data.csrfmiddlewaretoken = getVal(popup, "csrfmiddlewaretoken");
-    $.ajax(ajaxSettings);
+    sendAjax(ajaxSettings);
 };

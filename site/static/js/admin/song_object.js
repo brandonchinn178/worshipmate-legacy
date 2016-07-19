@@ -7,8 +7,11 @@ var isAdvancedUpload = function() {
 }();
 
 $(document).ready(function() {
-    $(".themes select").chosen({
-        placeholder_text_multiple: "Start typing...",
+    $(".artist select").selectize({
+        create: true,
+    });
+    $(".themes select").selectize({
+        create: addTheme,
     });
     $(".speed select").chosen({
         placeholder_text_single: " ",
@@ -26,20 +29,6 @@ $(document).ready(function() {
             }
         });
     $(".song-form").submit(submitSongForm);
-
-    // init theme popup
-    $(".add-theme").click(function() {
-        $("body").addClass("no-scroll");
-        $(".theme-popup").show();
-        $(".theme-popup [name=name]").focus();
-        return false;
-    });
-    $(".theme-popup .submit").click(submitTheme);
-    $(".theme-popup .cancel").click(function() {
-        $("body").removeClass("no-scroll");
-        $(".theme-popup").hide();
-        return false;
-    });
 
     // drag-n-drop feature (https://css-tricks.com/drag-and-drop-file-uploading/)
     window.doc = null;
@@ -120,21 +109,17 @@ var updateFileText = function(input, text) {
 var submitSongForm = function() {
     $("ul.feedback").remove();
     var data = new FormData();
+    data.append("action", "save-song");
+    data.append("title", getVal(this, "title"));
+    data.append("artist", getVal(this, "artist"));
+    data.append("lyrics", getVal(this, "lyrics"));
+    data.append("speed", getVal(this, "speed"));
 
-    // populate with text data
-    $(this).find("input, textarea, .speed select").each(function() {
-        var name = $(this).attr("name");
-        if (name === undefined || name === "doc" || name === "pdf") {
-            return;
-        }
-        data.append(name, $(this).val());
-    });
-    // individually add each theme
     var themes = $(this).find(".themes select").val() || [];
     $.each(themes, function(i, theme) {
         data.append("themes", theme);
     });
-    // set file data
+
     if (window.doc === null) {
         data.append("doc", $(".field.doc input")[0].files[0]);
     } else {
@@ -145,17 +130,14 @@ var submitSongForm = function() {
     } else {
         data.append("pdf", window.pdf);
     }
-    data.append("action", "save-song");
 
     $("<p>")
         .addClass("message")
         .text("Saving...")
         .prependTo(".song-form .buttons");
-    $.ajax({
-        url: "",
-        method: "POST",
+
+    sendAjax({
         data: data,
-        dataType: "json",
         cache: false,
         contentType: false,
         processData: false,
@@ -186,28 +168,17 @@ var submitSongForm = function() {
     return false;
 };
 
-var submitTheme = function() {
-    var popup = $(this).parents(".popup");
-    var data = {
-        action: "add-theme",
-        name: getVal(popup, "name"),
-    };
-    postData(popup, {
-        data: data,
+var addTheme = function(input, callback) {
+    sendAjax({
+        data: {
+            action: "add-theme",
+            name: input,
+        },
         success: function(data) {
-            // add theme to themes list
-            $("<option>")
-                .attr("value", data.id)
-                .prop("selected", true)
-                .text(data.name)
-                .appendTo("#id_themes");
-            $("#id_themes").trigger("chosen:updated");
-
-            $("<li>")
-                .text("Successfully added \"" + data.name + "\"")
-                .appendTo(".theme-popup .feedback");
-            $(".theme-popup [name=name]").val("");
+            callback({
+                value: data.id,
+                text: data.name,
+            });
         },
     });
-    return false;
 };
