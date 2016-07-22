@@ -1,8 +1,12 @@
 from django import forms
-from django.utils.text import slugify
+from django.utils.text import slugify as django_slugify
 from django.contrib.auth.models import User
 
 from database.models import Song, Theme
+
+def slugify(text):
+    text = text.replace('/', ' ')
+    return django_slugify(text)
 
 class SongObjectForm(forms.ModelForm):
     class Meta:
