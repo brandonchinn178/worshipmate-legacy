@@ -9,7 +9,8 @@ Installation
 ============
 
 1. Clone this repo
-1. `virtual venv` to initialize a new virtual environment
+1. Install [conda](http://conda.pydata.org/docs/install/quick.html)
+1. `conda env create` to set up the environment
+1. Get the `.env` file
 1. `source activate_environment` to activate the environment
-1. `pip install -r requirements.txt` to install all required packages
 1. `python site/manage.py runserver` and go to `localhost:8000` to see the site
