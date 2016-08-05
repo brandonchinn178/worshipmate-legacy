@@ -2,9 +2,11 @@ name: worship-database
 dependencies:
   - python=2.7
   - django==1.9.5
-  - requests==2.3.0
   - boto==2.35.2
+  - gunicorn==19.0.0
   - pip:
     - wsgiref==0.1.2
     - django-storages==1.1.8
     - facebook-sdk==0.4.0
+    - libsass==0.11.1
+    - dj-database-url==0.4.1
