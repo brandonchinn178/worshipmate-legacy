@@ -1,4 +1,4 @@
 # bash code to activate both virtualenv and the required environment variables
 
-source venv/bin/activate
+source activate worship-database
 source .env
