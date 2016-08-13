@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% load partials %}
+
+{% block head %}
+    {% add_style "admin/about.css" %}
+{% endblock %}
+
+{% block content %}
+    <h1>About</h1>
+    <p>The goal of this website is to provide simple, clean, and organized worship songs to make lives easy for worship leaders of any level. Because of this, we should aim to keep song sheets consistent in style and format. It might be helpful to have a finished song sheet open next to you to copy styles from (<a href="http://www.worshipdatabase.info/song/never-once/">Never Once</a> is a good template). Listed below are a few guidelines for adding a song to the database.</p>
+
+    <h2>Song Sheets</h2>
+    <p>When making song sheets, use the following list as the primary style we're trying to achieve.</p>
+    <ul>
+        <li>Keep the song sheet one column, one page</li>
+        <li>Use 0.5" margins on the top and bottom, and 0.75" margins on the left and right. Remove any tab stops.</li>
+        <li>Use the Trebuchet font, 12pt for lyrics, 14pt for title. Single-spaced.</li>
+        <li>Use proper grammar (like semicolons vs. commas vs. colons)</li>
+        <li>Don't use <a href="https://support.office.com/en-us/article/Change-curly-quotes-to-straight-quotes-and-vice-versa-017963a0-bc5f-486b-9c9d-0ec511a8fb8f">smart quotes</a></li>
+        <li>Capitalize "is" in the title, but not "the"</li>
+        <li>Capitalize all references to God/Jesus/Holy Spirit in the lyrics</li>
+        <li>Minimal, if any, punctuation at the end. No whitespace at the end of lines (usually happens when copy and pasting).</li>
+    </ul>
+    <p>The following guidelines are secondary style guidelines. These are less of a priority than the guidelines above, so if you have to break some of these rules in order to follow the above guidelines, do so.</p>
+    <ul>
+        <li>Keep chords simple. If the song still sounds okay without them, don't do "E7", "Esus", "E2", or any bass notes (unless it really feels like it should be there).</li>
+        <li>At the beginning of the line, if the chord is played before the first word, add five spaces to the beginning of the line.</li>
+        <li>Align chords over the syllable in the word that the chord changes on.</li>
+        <li>If necessary, use five lines between words for chord placement (if it makes sense, try to put lyrics on next line and indent with five spaces at the beginning).</li>
+        <li>For chords, use tabs as many times as possible to position the chords, then using spaces to move the chord to where it's supposed to be</li>
+        <li>If there are echos for the lyrics, tab the echos so they all start on the same vertical line. Italicize the echos.</li>
+        <li>Try to put the song into a "Verse" - "Chorus" format, if applicable. Other section types include "Pre-Chorus", "Bridge", and "Refrain". Add numbers where necessary to distinguish/group sections together (e.g. "Chorus 1" and "Chorus 2" have the same melody, but slightly different lyrics).</li>
+    </ul>
+
+    <h2>Admin Site</h2>
+    <p>Some guidelines when adding songs to the database:</p>
+    <ul>
+        <li>Take out chords, "Verse"/"Chorus" headings, and title/artist in the lyrics box.</li>
+        <li>Add relevant themes in the theme box (start with the Chorus and see what concepts are highlighted in the lyrics).</li>
+    </ul>
+{% endblock %}

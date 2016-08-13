@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^themes/$', ThemesView.as_view(), name='themes'),
     url(r'^add-theme/$', AddThemeView.as_view(), name='add_theme'),
     url(r'^edit-theme/(?P<name>.+)/$', EditThemeView.as_view(), name='edit_theme'),
+    url(r'^about/$', AboutView.as_view(), name='about'),
     url(r'^account/$', AccountView.as_view(), name='account'),
     # login urls
     url(r'^login/$', login, login_kwargs, name='login'),
