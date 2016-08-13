@@ -7,7 +7,7 @@ function message {
     echo -e "\n-----> $1"
 }
 
-source activate $CONDA_DEFAULT_ENV
+source activate heroku-env
 
 # Automatically migrate when deploying to Heroku
 message "Running Django Migrations"
