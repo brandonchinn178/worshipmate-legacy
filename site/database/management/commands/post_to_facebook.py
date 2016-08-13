@@ -40,6 +40,8 @@ class Command(BaseCommand):
             )
             self.post_facebook(message)
 
+        songs.update(post_facebook=True)
+
     def post_facebook(self, message):
         print 'Posting to Facebook: %s' % message
         graph = facebook.GraphAPI(access_token=access_token)
