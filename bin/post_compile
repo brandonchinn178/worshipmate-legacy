@@ -7,8 +7,6 @@ function message {
     echo -e "\n-----> $1"
 }
 
-source activate heroku-env
-
 # Automatically migrate when deploying to Heroku
 message "Running Django Migrations"
 python site/manage.py migrate
