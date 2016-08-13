@@ -1,3 +1,0 @@
-{% autoescape off %}
-    "{{ song.title}}" by {{ song.artist }} has been added to the website!
-{% endautoescape %}

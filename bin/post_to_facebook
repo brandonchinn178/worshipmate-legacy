@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python site/manage.py post_to_facebook
