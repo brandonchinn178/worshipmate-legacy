@@ -1,6 +1,5 @@
 # just using requirements.txt for heroku
 
-python=2.7
 django==1.9.5
 boto==2.35.2
 wsgiref==0.1.2
