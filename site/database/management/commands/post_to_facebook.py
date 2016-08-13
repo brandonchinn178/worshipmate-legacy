@@ -19,6 +19,7 @@ class Command(BaseCommand):
         songs = Song.objects.filter(post_facebook=False)
 
         if songs.count() == 0:
+            print 'No songs to post!'
             return
         elif songs.count() == 1:
             context = {
