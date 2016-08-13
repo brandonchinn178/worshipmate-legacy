@@ -48,6 +48,7 @@ class Song(models.Model):
     lyrics = models.TextField()
     doc = models.FileField(upload_to=doc_upload_file, validators=[doc_file_validator])
     pdf = models.FileField(upload_to=pdf_upload_file, validators=[pdf_file_validator])
+    post_facebook = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s | %s" % (self.title, self.artist)
