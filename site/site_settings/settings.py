@@ -12,34 +12,22 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os, sys
 import imp
 
-ON_CI = bool(os.environ.get('CIRCLECI'))
-ON_OPENSHIFT = bool(os.environ.get('OPENSHIFT_REPO_DIR'))
-COLLECT_STATIC = bool(os.environ.get('COLLECT_STATIC'))
+IS_HEROKU = bool(os.environ.get('IS_HEROKU'))
 
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'ascq#%bii8(tld52#(^*ht@pzq%=nyb7fdv+@ok$u^iwb@2hwh'
-
-default_keys = { 'SECRET_KEY': 'vm4rl5*ymb@2&d_(gc$gb-^twq9w(u69hi--%$5xrh!xk(t%hw' }
-use_keys = default_keys
-if ON_OPENSHIFT:
-     imp.find_module('openshiftlibs')
-     import openshiftlibs
-     use_keys = openshiftlibs.openshift_secure(default_keys)
-
-SECRET_KEY = use_keys['SECRET_KEY']
+SECRET_KEY = os.environ.get('WORSHIP_DB_SECRET_KEY', 'mysecretkey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not ON_OPENSHIFT
+DEBUG = not IS_HEROKU
 
-if DEBUG:
-    ALLOWED_HOSTS = ['*']
+if IS_HEROKU:
+    ALLOWED_HOSTS = ['.herokuapp.com', '.worshipdatabase.info']
 else:
-    ALLOWED_HOSTS = ['.rhcloud.com', '.worshipdatabase.info']
+    ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -64,24 +52,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-# If you want configure the REDISCLOUD
-if 'REDISCLOUD_URL' in os.environ and 'REDISCLOUD_PORT' in os.environ and 'REDISCLOUD_PASSWORD' in os.environ:
-    redis_server = os.environ['REDISCLOUD_URL']
-    redis_port = os.environ['REDISCLOUD_PORT']
-    redis_password = os.environ['REDISCLOUD_PASSWORD']
-    CACHES = {
-        'default' : {
-            'BACKEND' : 'redis_cache.RedisCache',
-            'LOCATION' : '%s:%d'%(redis_server,int(redis_port)),
-            'OPTIONS' : {
-                'DB':0,
-                'PARSER_CLASS' : 'redis.connection.HiredisParser',
-                'PASSWORD' : redis_password,
-            }
-        }
-    }
-    MIDDLEWARE_CLASSES = ('django.middleware.cache.UpdateCacheMiddleware',) + MIDDLEWARE_CLASSES + ('django.middleware.cache.FetchFromCacheMiddleware',)
-
 ROOT_URLCONF = 'site_settings.urls'
 
 WSGI_APPLICATION = 'site_settings.wsgi.application'
@@ -89,7 +59,7 @@ WSGI_APPLICATION = 'site_settings.wsgi.application'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '..', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
             'context_processors': (
                 'django.contrib.auth.context_processors.auth',
@@ -108,29 +78,18 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-if ON_OPENSHIFT:
-     DATABASES = {
-         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ['OPENSHIFT_APP_NAME'],
-            'USER': os.environ['OPENSHIFT_MYSQL_DB_USERNAME'],
-            'PASSWORD': os.environ['OPENSHIFT_MYSQL_DB_PASSWORD'],
-            'HOST': os.environ['OPENSHIFT_MYSQL_DB_HOST'],
-            'PORT': os.environ['OPENSHIFT_MYSQL_DB_PORT']
-         }
-     }
+if IS_HEROKU:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config()
+    }
 else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, '..', '..', 'worshipdb.db'),
+            'NAME': os.path.join(BASE_DIR, '..', 'worshipdb.db'),
         }
     }
-
-if ON_CI:
-    DATABASES["default"]["NAME"] = "circle_test"
-    DATABASES["default"]["USER"] = "ubuntu"
-    DATABASES["default"]["PASSWORD"] = ""
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -145,34 +104,29 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_PRELOAD_METADATA = True
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'songs'
-MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
-if ON_OPENSHIFT or COLLECT_STATIC:
-    STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
+if IS_HEROKU:
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
     DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
-    STATIC_ROOT = os.path.join(os.environ.get('OPENSHIFT_REPO_DIR', ''), 'wsgi', 'static')
 
-if ON_CI:
-    # don't KeyError out on MAILGUN api key
-    os.environ.update({'MAILGUN_KEY': ''})
-else:
     # email settings
-    EMAIL_HOST = 'smtp.mailgun.org'
-    EMAIL_HOST_USER = 'postmaster@worshipdatabase.info'
-    EMAIL_HOST_PASSWORD = os.environ['MAILGUN_PASSWORD']
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+    EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
 

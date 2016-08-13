@@ -14,7 +14,7 @@ def post_to_facebook(sender, instance, created, **kwargs):
     """
     When a Song is added to the database, post to Facebook automatically.
     """
-    if created and settings.ON_OPENSHIFT:
+    if created and settings.IS_HEROKU:
         access_token = os.environ.get('FACEBOOK_ACCESS_TOKEN')
         context = {
             'song': instance

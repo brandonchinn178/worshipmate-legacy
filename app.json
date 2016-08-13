@@ -1,0 +1,45 @@
+{
+    "name": "Worship Song Database",
+    "description": "A database of worship songs that can be filtered and sorted to easily compile a worship set.",
+    "website": "http://www.worshipdatabase.info",
+    "repository": "https://github.com/brandonchinn178/worshipdatabase",
+    "logo": "https://brandonchinn178-worship.s3.amazonaws.com/static/img/favicon.png",
+    "env": {
+        "AWS_ACCESS_KEY_ID": {
+            "description": "The access key for our Amazon AWS bucket."
+        },
+        "AWS_SECRET_ACCESS_KEY": {
+            "description": "The secret key for our Amazon AWS bucket."
+        },
+        "AWS_STORAGE_BUCKET_NAME": {
+            "description": "The bucket name for the static files in AWS."
+        },
+        "DISABLE_COLLECTSTATIC": {
+            "description": "Use our own collectstatic command in the post_compile hook",
+            "value": "1"
+        },
+        "ERROR_PAGE_URL": {
+            "description": "The page to display on a Heroku application error",
+            "value": "//s3-us-west-1.amazonaws.com/brandonchinn178-worship/heroku_error.html"
+        },
+        "IS_HEROKU": {
+            "description": "The existence of this environment variable signals to the code that we're on Heroku",
+            "value": "1"
+        },
+        "MAINTENANCE_PAGE_URL": {
+            "description": "The page to display when the Heroku app is under maintenance",
+            "value": "//s3-us-west-1.amazonaws.com/brandonchinn178-worship/heroku_maintenance.html"
+        },
+        "WORSHIP_DB_SECRET_KEY": {
+            "description": "The secret key to use for Django encryption schemes"
+        }
+    },
+    "addons": [
+        "heroku-postgresql"
+    ],
+    "buildpacks": [
+        {
+            "url": "https://github.com/conda/conda-buildpack.git"
+        }
+    ]
+}
