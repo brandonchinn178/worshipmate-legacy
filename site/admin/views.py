@@ -157,6 +157,9 @@ class EditThemeView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Theme "%s" successfully saved' % theme.name)
         return redirect('admin:themes')
 
+class AboutView(LoginRequiredMixin, TemplateView):
+    template_name = 'admin/about.html'
+
 class AccountView(LoginRequiredMixin, FormView):
     template_name = 'admin/account.html'
     form_class = AccountForm
