@@ -14,7 +14,7 @@ import imp
 
 IS_HEROKU = bool(os.environ.get('IS_HEROKU'))
 
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -59,7 +59,7 @@ WSGI_APPLICATION = 'site_settings.wsgi.application'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '..', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
             'context_processors': (
                 'django.contrib.auth.context_processors.auth',
@@ -87,7 +87,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, '..', '..', 'worshipdb.db'),
+            'NAME': os.path.join(BASE_DIR, '..', 'worshipdb.db'),
         }
     }
 
@@ -106,18 +106,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_PRELOAD_METADATA = True
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, '..', 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'songs'
-MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 if IS_HEROKU:
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-    STATICFILES_LOCATION = 'static'
+    MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
     STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
     DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
 
