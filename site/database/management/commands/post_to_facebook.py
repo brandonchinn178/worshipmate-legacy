@@ -33,8 +33,10 @@ class Command(BaseCommand):
                 for i, song in enumerate(songs)
                 if i != songs.count() - 1
             ])
+            if len(song_list) > 1:
+                song_list += ','
             last_song = songs.last()
-            message = '%s, and %s (%s) have been added to the database!' % (
+            message = '%s and %s (%s) have been added to the database!' % (
                 song_list,
                 last_song.title,
                 last_song.artist,
