@@ -28,16 +28,21 @@ class Command(BaseCommand):
             message = '"%s" by %s has been added to the database!' % (song.title, song.artist)
             self.post_facebook(message)
         else:
-            song_list = ', '.join([
-                '%s (%s)' % (song.title, song.artist)
-                for i, song in enumerate(songs)
-                if i != songs.count() - 1
-            ])
-            if len(song_list) > 1:
-                song_list += ','
+            song_list = [
+                '"%s" (%s)' % (song.title, song.artist)
+                for song in songs
+            ]
+            # add the "and" conjunction to the last element
+            song_list[-1] = 'and %s' % song_list[-1]
+
+            if len(song_list) == 2:
+                sep = ' '
+            else:
+                sep = ', '
+
             last_song = songs.last()
-            message = '%s and %s (%s) have been added to the database!' % (
-                song_list,
+            message = '%s have been added to the database!' % (
+                sep.join(song_list),
                 last_song.title,
                 last_song.artist,
             )
