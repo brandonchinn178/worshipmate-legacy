@@ -40,12 +40,7 @@ class Command(BaseCommand):
             else:
                 sep = ', '
 
-            last_song = songs.last()
-            message = '%s have been added to the database!' % (
-                sep.join(song_list),
-                last_song.title,
-                last_song.artist,
-            )
+            message = '%s have been added to the database!' % sep.join(song_list)
             self.post_facebook(message)
 
         songs.update(post_facebook=True)
