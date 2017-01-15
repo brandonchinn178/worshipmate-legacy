@@ -1,9 +1,0 @@
-#!/bin/bash
-
-day_of_week=$(date +'%u')
-
-# lets post every Friday
-if [[ $day_of_week -eq 5 ]]; then
-    echo "Running post_to_facebook script..."
-    python site/manage.py post_to_facebook
-fi
