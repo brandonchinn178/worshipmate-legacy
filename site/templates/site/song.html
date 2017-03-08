@@ -24,7 +24,5 @@
         </ul>
     </div>
 
-    <object type="application/pdf" data="{{ song.pdf.url }}" id="songpdf">
-        <p>Your browser does not support embedded PDF files. To download or view the song, please go to one of the links above.</p>
-    </object>
+    <iframe id="songpdf" src="http://docs.google.com/gview?url={{ song.pdf.url }}&embedded=true" frameborder="0"></iframe>
 {% endblock %}
