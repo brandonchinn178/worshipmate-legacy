@@ -17,32 +17,27 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         songs = Song.objects.filter(post_facebook=False)
+        count = songs.count()
 
-        if songs.count() == 0:
+        if count == 0:
             print 'No songs to post!'
             return
-        elif songs.count() == 1:
-            context = {
-                'song': song,
-            }
+        elif count == 1:
             message = '"%s" by %s has been added to the database!' % (song.title, song.artist)
-            self.post_facebook(message)
-        else:
+        elif count == 2:
             song_list = [
                 '"%s" (%s)' % (song.title, song.artist)
                 for song in songs
             ]
-            # add the "and" conjunction to the last element
-            song_list[-1] = 'and %s' % song_list[-1]
+            message = '{} and {} have been added to the database!'.format(*song_list)
+        else:
+            song_list = [
+                '\n- %s (%s)' % (song.title, song.artist)
+                for song in songs
+            ]
+            message = 'The following songs have been added to the database:%s' % song_list
 
-            if len(song_list) == 2:
-                sep = ' '
-            else:
-                sep = ', '
-
-            message = '%s have been added to the database!' % sep.join(song_list)
-            self.post_facebook(message)
-
+        self.post_facebook(message)
         songs.update(post_facebook=True)
 
     def post_facebook(self, message):
