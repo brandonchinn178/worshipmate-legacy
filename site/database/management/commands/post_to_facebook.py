@@ -35,7 +35,7 @@ class Command(BaseCommand):
                 '\n- %s (%s)' % (song.title, song.artist)
                 for song in songs
             ]
-            message = 'The following songs have been added to the database:%s' % song_list
+            message = 'The following songs have been added to the database:%s' % ''.join(song_list)
 
         self.post_facebook(message)
         songs.update(post_facebook=True)
