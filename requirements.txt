@@ -8,7 +8,7 @@ facebook-sdk==0.4.0
 
 # heroku-specific packages
 dj-database-url==0.4.1
-psycopg2==2.5.4
+psycopg2==2.8.6
 libsass==0.11.1
 gunicorn==19.0.0
 newrelic==2.68.0.50
