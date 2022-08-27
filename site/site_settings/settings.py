@@ -106,18 +106,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_PRELOAD_METADATA = True
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_LOCATION = 'static'
-MEDIAFILES_LOCATION = 'songs'
-
 if IS_HEROKU:
+    STATICFILES_LOCATION = 'static'
+    MEDIAFILES_LOCATION = 'songs'
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
     MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
     STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
@@ -129,6 +128,9 @@ if IS_HEROKU:
     #EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
     #EMAIL_PORT = 587
     #EMAIL_USE_TLS = True
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = 'admin:index'
 LOGIN_URL = 'admin:login'
