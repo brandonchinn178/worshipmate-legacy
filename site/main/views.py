@@ -15,7 +15,7 @@ class AboutView(TemplateView):
         context = super(AboutView, self).get_context_data(**kwargs)
         context['links'] = [
             ('Dropbox', 'https://www.dropbox.com/sh/c6rryyatkpsnmm8/AADt5uOeBHgHqdvN-1b2ndbYa'),
-            ('Facebook', 'http://facebook.com/WorshipMate'),
+            ('Facebook', 'https://facebook.com/WorshipMateApp'),
         ]
         return context
 
