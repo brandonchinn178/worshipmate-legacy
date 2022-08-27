@@ -15,5 +15,5 @@ COPY . .
 # Compile Sass files
 RUN sass site/static/scss:site/static/css --style=compressed
 
-EXPOSE 8000
+EXPOSE 8080
 ENTRYPOINT ["bin/entrypoint.sh"]

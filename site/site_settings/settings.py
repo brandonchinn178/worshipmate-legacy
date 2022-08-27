@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os, sys
 import imp
 
-IS_HEROKU = bool(os.environ.get('IS_HEROKU'))
+IS_FLY = bool(os.environ.get('IS_FLY'))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -22,10 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 SECRET_KEY = os.environ.get('WORSHIP_DB_SECRET_KEY', 'mysecretkey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not IS_HEROKU
+DEBUG = not IS_FLY
 
-if IS_HEROKU:
-    ALLOWED_HOSTS = ['.fly.io', '.worshipmate.app']
+if IS_FLY:
+    ALLOWED_HOSTS = ['.fly.dev', '.worshipmate.app']
 else:
     ALLOWED_HOSTS = []
 
@@ -78,7 +78,7 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-if IS_HEROKU:
+if IS_FLY:
     import dj_database_url
     DATABASES = {
         'default': dj_database_url.config()
@@ -112,7 +112,7 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_PRELOAD_METADATA = True
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-if IS_HEROKU:
+if IS_FLY:
     STATICFILES_LOCATION = 'static'
     MEDIAFILES_LOCATION = 'songs'
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

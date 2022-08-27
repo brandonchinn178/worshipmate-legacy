@@ -14,4 +14,4 @@ exec gunicorn site_settings.wsgi \
     --log-level debug \
     --pythonpath './site' \
     --workers 2 \
-    --bind 0.0.0.0:8000
+    --bind 0.0.0.0:8080
