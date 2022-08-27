@@ -1,0 +1,15 @@
+*.pyc
+venv/
+.env
+*.db
+*.log
+*.sql
+node_modules/
+.sass-cache
+**/css/**/*.css
+!**/css/vendor/*.css
+!**/css/fonts/*
+*.css.map
+# media files for development
+doc/
+pdf/
