@@ -25,7 +25,7 @@ class AboutView(TemplateView):
         context = super(AboutView, self).get_context_data(**kwargs)
         context['links'] = [
             ('Dropbox', 'https://www.dropbox.com/sh/c6rryyatkpsnmm8/AADt5uOeBHgHqdvN-1b2ndbYa'),
-            ('Facebook', 'http://facebook.com/WorshipSongDatabase'),
+            ('Facebook', 'http://facebook.com/WorshipMate'),
             ('My SoundCloud', 'http://soundcloud.com/brandonchinn178'),
             ('My Website', 'http://brandonchinn178.github.io'),
         ]
@@ -50,7 +50,7 @@ class ContactView(FormView):
 
     def send_simple_message(self, name, email, message):
         send_mail(
-            '[Worship Song Database] Contact Form',
+            '[WorshipMate] Contact Form',
             message,
             '%s <%s>' % (name, email),
             ['Brandon Chinn <brandonchinn178@gmail.com>'],

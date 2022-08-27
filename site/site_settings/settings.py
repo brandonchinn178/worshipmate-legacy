@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('WORSHIP_DB_SECRET_KEY', 'mysecretkey')
 DEBUG = not IS_HEROKU
 
 if IS_HEROKU:
-    ALLOWED_HOSTS = ['.herokuapp.com', '.worshipdatabase.info']
+    ALLOWED_HOSTS = ['.fly.io', '.worshipmate.app']
 else:
     ALLOWED_HOSTS = []
 

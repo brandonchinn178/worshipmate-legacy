@@ -1,5 +1,5 @@
 """
-WSGI config for worshipdatabase.
+WSGI config for worshipmate.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

@@ -1,4 +1,4 @@
-# Worship Song Database
+# WorshipMate
 
 A Django-powered website that centralizes a collection of worship songs, for use by worship leaders in choosing worship sets. This website allows users to easily filter songs by category, search songs by lyrics, and download song sheets.
 
