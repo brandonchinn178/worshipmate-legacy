@@ -121,13 +121,6 @@ if IS_FLY:
     MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
     STATICFILES_STORAGE = 'main.custom_storages.StaticStorage'
     DEFAULT_FILE_STORAGE = 'main.custom_storages.MediaStorage'
-
-    # email settings
-    #EMAIL_HOST = 'smtp.sendgrid.net'
-    #EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-    #EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
-    #EMAIL_PORT = 587
-    #EMAIL_USE_TLS = True
 else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')

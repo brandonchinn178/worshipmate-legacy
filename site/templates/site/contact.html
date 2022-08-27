@@ -6,15 +6,6 @@
 {% endblock %}
 
 {% block content %}
-    <p>Please fill out this form if you would like to request songs, give feedback, or ask any questions.</p>
-    <div class="feedback">
-        {% if success %}
-            <p>Thank you! I will respond to your message as soon as I can.</p>
-        {% elif form.errors %}
-            <p class="error">Please fill in all required fields</p>
-        {% endif %}
-    </div>
-    {% create_form form %}
-        <button>Submit</button>
-    {% end_create_form %}
+    <p>Feel free to contact me if you have any questions or issues with the website.</p>
+    <p>My email can be found on my <a href="https://github.com/brandonchinn178">GitHub profile</a></p>
 {% endblock %}
