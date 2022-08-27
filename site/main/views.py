@@ -26,8 +26,6 @@ class AboutView(TemplateView):
         context['links'] = [
             ('Dropbox', 'https://www.dropbox.com/sh/c6rryyatkpsnmm8/AADt5uOeBHgHqdvN-1b2ndbYa'),
             ('Facebook', 'http://facebook.com/WorshipMate'),
-            ('My SoundCloud', 'http://soundcloud.com/brandonchinn178'),
-            ('My Website', 'http://brandonchinn178.github.io'),
         ]
         return context
 
